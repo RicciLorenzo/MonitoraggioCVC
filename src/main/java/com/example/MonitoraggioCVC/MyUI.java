@@ -10,6 +10,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -38,11 +39,33 @@ public class MyUI extends UI {
         
         layout.addComponent(title);
         layout.setComponentAlignment(title, Alignment.TOP_CENTER);
+
+        Label login = new Label(
+        		"<h4>\r\n" + 
+        		"	LOGIN</h4>\r\n");
+        login.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
+        layout.addComponent(login);
+        layout.setComponentAlignment(login, Alignment.TOP_CENTER);
+
+        
+        TextField nome = new TextField();
+        nome.setPlaceholder("Nome Utente");
+        nome.setMaxLength(20);
+        
+        PasswordField pass = new PasswordField();
+        pass.setMaxLength(10);
+ 
+        layout.addComponent(nome);
+        layout.setComponentAlignment(nome, Alignment.BOTTOM_CENTER);
+        
+        layout.addComponent(pass);
+        layout.setComponentAlignment(pass, Alignment.BOTTOM_CENTER);
+        
         
         layout.addComponents(name, button);
         layout.setComponentAlignment(name, Alignment.TOP_CENTER );
         layout.setComponentAlignment(button, Alignment.TOP_CENTER );
-                
+        
         Label authors = new Label(
         		"<address>\r\n" + 
         		"	Author: Lorenzo Ricci - Emil Tomellini</address>\r\n");
@@ -50,6 +73,8 @@ public class MyUI extends UI {
         
         layout.addComponent(authors);
         layout.setComponentAlignment(authors, Alignment.BOTTOM_RIGHT);
+        
+        
         
         setContent(layout);
     }
