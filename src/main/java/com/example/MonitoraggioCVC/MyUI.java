@@ -27,22 +27,16 @@ public class MyUI extends UI {
                 "<h1 style=\"text-align: center;\">\r\n" + 
                 "<strong>Gestore Cateteri</strong></h1>");
         title.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
-        
-        final TextField name = new TextField();
-        name.setCaption("Inserire il nome del paziente:");
 
-        Button button = new Button("Cerca");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
-        });
+        Button button = new Button("LOGIN");
+        
         
         layout.addComponent(title);
         layout.setComponentAlignment(title, Alignment.TOP_CENTER);
 
         Label login = new Label(
         		"<h4>\r\n" + 
-        		"	LOGIN</h4>\r\n");
+        		"	Login</h4>\r\n");
         login.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
         layout.addComponent(login);
         layout.setComponentAlignment(login, Alignment.TOP_CENTER);
@@ -53,6 +47,7 @@ public class MyUI extends UI {
         nome.setMaxLength(20);
         
         PasswordField pass = new PasswordField();
+        pass.setPlaceholder("Password");
         pass.setMaxLength(10);
  
         layout.addComponent(nome);
@@ -62,8 +57,7 @@ public class MyUI extends UI {
         layout.setComponentAlignment(pass, Alignment.BOTTOM_CENTER);
         
         
-        layout.addComponents(name, button);
-        layout.setComponentAlignment(name, Alignment.TOP_CENTER );
+        layout.addComponents(button);
         layout.setComponentAlignment(button, Alignment.TOP_CENTER );
         
         Label authors = new Label(
