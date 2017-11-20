@@ -28,15 +28,14 @@ public class MyUI extends UI {
                 "<strong>Gestore Cateteri</strong></h1>");
         title.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
 
-        Button button = new Button("LOGIN");
+        Button button = new Button("Login");
         
         
         layout.addComponent(title);
         layout.setComponentAlignment(title, Alignment.TOP_CENTER);
 
         Label login = new Label(
-        		"<h4>\r\n" + 
-        		"	Login</h4>\r\n");
+        		"<h4>\r\nLogin</h4>\r\n");
         login.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
         layout.addComponent(login);
         layout.setComponentAlignment(login, Alignment.TOP_CENTER);
