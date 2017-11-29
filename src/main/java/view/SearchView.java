@@ -2,6 +2,7 @@ package view;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
@@ -21,7 +22,6 @@ public class SearchView extends VerticalLayout{
 	Button searchButton = new Button("Ricerca");
 	
 	public SearchView() {
-		
 		GridLayout grid = new GridLayout(3,2);
 		
 		setSizeFull();

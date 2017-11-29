@@ -1,35 +1,29 @@
 package dao;
 
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Date;
 
-
+import model.Patient;
 import model.User;
 import model.UserType;
 
-
-public class UserDAO {
+public class PatientDao {
 
 	private final static String jdbcUrl = "jdbc:postgresql://localhost:5432/tesi";
 	private final static String jdbcUsername = "postgres";
 	private final static String jdbcPassword = "ciao";
 	
-	private final static String tableName = "users";
+	private final static String tableName = "Patient";
 	
 	
-	public static boolean addUser(String username, String password, String name, String surname, UserType type) {
+	
+	private final Patient getPatient(String id) {
+		
+		Patient patient = null;
 		
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -41,54 +35,19 @@ public class UserDAO {
 			
 			try (Statement st = con.createStatement()) {
 				
-				String query = "INSERT INTO "+tableName+" VALUES ('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+type.toString()+"')";
-				System.out.println(query);
-				
-				if (st.executeUpdate(query)!=0)
-					return true;
-				else
-					return false;
-				
-			} catch(SQLException e) {
-				System.out.println("Query error in table: "+tableName);
-				}
-			
-		} catch(SQLException e) {
-					System.out.println("Connection error to the database check credential");
-			
-		}
-		
-		return false;
-	}
-	
-	
-	public static User getUser(String username, String password) throws UnknownHostException {
-		
-		User user = null;
-		
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			}
-		
-		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
-			
-			try (Statement st = con.createStatement()) {
-				
-				String query = "SELECT * FROM "+tableName+" WHERE username ILIKE '"+username+"' AND password LIKE '"+password+"'";
+				String query = "SELECT * FROM "+tableName+" WHERE username ILIKE '"+id+"'";
 				System.out.println(query);
 				st.executeQuery(query);
 				ResultSet rs = st.getResultSet();
 				
 				while (rs.next()) {
+					String patientLabel = rs.getString("patient_label");
+					String fiscalCode = rs.getString("fiscal_code");
 					String name = rs.getString("name");
 					String surname = rs.getString("surname");
-					String typeS = rs.getString("type");
-					
-					UserType type = UserType.valueOf(typeS);
-					
-					user = new User(name, surname, type);
+					Date dateOfPlacement = rs.getDate("date_of_placement");
+
+					patient = new Patient(patientLabel, fiscalCode, name, surname, dateOfPlacement);
 				}
 				
 				
@@ -100,12 +59,12 @@ public class UserDAO {
 					System.out.println("Connection error to the database check credential");
 			}
 		
-		return user;
+		
+		return patient;
 	}
 	
-	
-	
-	public static boolean userExists(String username) {
+	private final boolean patientExist(String id) {
+		
 		System.out.println("Try Database Connection");
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -117,7 +76,7 @@ public class UserDAO {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			String sql = "SELECT * FROM "+tableName+" WHERE username ILIKE '"+username+"'";
+			String sql = "SELECT * FROM "+tableName+" WHERE patient_label ILIKE '"+id+"'";
 			
 			st.executeQuery(sql);
 				

@@ -5,7 +5,6 @@ public class User {
 	private String name;
 	private String surname;
 	private UserType type;
-	//private String fiscalCode;
 	
 	public User(String name, String surname, UserType type) {
 		this.name = name;
@@ -14,8 +13,15 @@ public class User {
 	}
 	
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
+	public String getSurname() {
+		return this.surname;
+	}
+	
+	public String getType() {
+		return type.toString();
+	}
 	
 }
