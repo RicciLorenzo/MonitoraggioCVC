@@ -20,8 +20,7 @@ public class Patient {
 		this.surname = surname;
 		this.dateOfPlacement = dateOfPlacement;
 		this.allergy = new Allergy(allergy0, allergy1, aT);
-	}
-	
+	}	
 	
 	public String getPateintLabel() {
 		return this.patientLabel;
