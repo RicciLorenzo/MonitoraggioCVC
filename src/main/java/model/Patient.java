@@ -9,19 +9,17 @@ public class Patient {
 	private String name;
 	private String surname;
 	private Date dateOfPlacement;
-	private String allergy1;
-	private String allergy2;
-	private String allergy3;
-	private boolean anticoagulantTheraphy;
+	private Allergy allergy;
 	private String placementType;
 	private String otherPlacement;
 	
-	public Patient(String patientLabel, String fiscalCode, String name, String surname, Date dateOfPlacement) {
+	public Patient(String patientLabel, String fiscalCode, String name, String surname, Date dateOfPlacement, boolean allergy0, boolean allergy1, boolean aT) {
 		this.patientLabel = patientLabel;
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
 		this.dateOfPlacement = dateOfPlacement;
+		this.allergy = new Allergy(allergy0, allergy1, aT);
 	}
 	
 	
@@ -44,6 +42,7 @@ public class Patient {
 	public Date getDateOfPlacement() {
 		return this.dateOfPlacement;
 	}
+	
 	
 	
 	
