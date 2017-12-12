@@ -44,6 +44,14 @@ public class MyUI extends UI {
     	updateContent();
         
     }
+	
+	public void userLoggedOut() {
+		Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
+    		localAuth.doLogout();
+    		UI.getCurrent().getSession().setAttribute("AUTH", localAuth);
+        VaadinSession.getCurrent().close();
+        Page.getCurrent().reload();
+    }
 
     public void updateContent() {
     	

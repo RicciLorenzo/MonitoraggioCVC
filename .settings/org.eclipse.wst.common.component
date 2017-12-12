@@ -19,7 +19,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-resources/gwt"/>
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <dependent-module archiveName="postgresql-42.1.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/emil/Downloads/postgresql-42.1.4.jar">
+        <dependent-module archiveName="postgresql-42.1.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//Users/emil/Documents/PostgreSQL Driver/postgresql-42.1.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
                         

@@ -7,6 +7,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
@@ -14,20 +16,34 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import controller.Authentication;
+import controller.MyUI;
 
 
 public class SearchView extends VerticalLayout{
 
 	TextField searchPatient = new TextField("Codice Paziente");
+	Button logout = new Button("Logout");
 	Button searchButton = new Button("Ricerca");
 	
 	public SearchView() {
-		GridLayout grid = new GridLayout(3,2);
-		
+		//GridLayout grid = new GridLayout(3,2);
+		setSpacing(false);
 		setSizeFull();
 		
+		addComponent(logout);
+		setComponentAlignment(logout, Alignment.TOP_RIGHT);
+		logout.addClickListener(e -> doLogout());
+		
 		addComponent(searchPatient);
+		setComponentAlignment(searchPatient, Alignment.MIDDLE_LEFT);
+		
 		addStyleName("searchview");
+	}
+	
+	private void doLogout() {
+		System.out.println("logout utente");
+		((MyUI) UI.getCurrent()).userLoggedOut();
 	}
 	
 }
