@@ -1,10 +1,14 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.*;
 
 public class Patient {
 
 	private String patientLabel;
+	//private Blob image;
 	private String fiscalCode;
 	private String name;
 	private String surname;
@@ -15,6 +19,7 @@ public class Patient {
 	
 	public Patient(String patientLabel, String fiscalCode, String name, String surname, Date dateOfPlacement, boolean allergy0, boolean allergy1, boolean aT) {
 		this.patientLabel = patientLabel;
+		//this.image = image;
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
@@ -25,7 +30,11 @@ public class Patient {
 	public String getPateintLabel() {
 		return this.patientLabel;
 	}
-	
+	/*
+	public Blob getImageLabel() {
+		return this.image;
+	}
+	*/
 	public String getFiscalCode() {
 		return this.fiscalCode;
 	}
@@ -38,11 +47,23 @@ public class Patient {
 		return this.surname;
 	}
 	
-	public Date getDateOfPlacement() {
-		return this.dateOfPlacement;
+	public String getDateOfPlacement() {
+		 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		 Date date=null;
+		try {
+			date = formatter.parse(dateOfPlacement.toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		 return formatter.format(date);
 	}
 	
+	public String getPlacementType() {
+		return placementType;
+	}
 	
-	
+	public String getOtherPlacement() {
+		return otherPlacement;
+	}
 	
 }

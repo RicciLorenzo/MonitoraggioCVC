@@ -2,27 +2,12 @@ package view;
 
 import com.vaadin.ui.VerticalLayout;
 
-public class FormView extends VerticalLayout{
+import model.Patient;
 
-	private PatientView pv = new PatientView();
+public class FormView extends VerticalLayout{
 	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-	private class PatientView extends VerticalLayout{
-		
-		public PatientView() {
-			
-		}
-		
-		
-	}
+	private Patient p;
+	private PatientView pv = new PatientView(p);
+	
 	
 }
