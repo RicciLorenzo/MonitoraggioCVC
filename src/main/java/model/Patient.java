@@ -58,6 +58,10 @@ public class Patient {
 		 return formatter.format(date);
 	}
 	
+	public Allergy getAllergy() {
+		return allergy;
+	}
+	
 	public String getPlacementType() {
 		return placementType;
 	}

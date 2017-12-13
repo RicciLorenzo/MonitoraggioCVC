@@ -31,7 +31,13 @@ public class PatientView extends VerticalLayout {
 		fiscalCode = new Label(p.getFiscalCode());
 		//image
 		dateOfPlacement = new Label(p.getDateOfPlacement());
-		//allergy
+		if(!(p.getAllergy().getA0() && p.getAllergy().getA1()))
+			allergy1 = new Label("Nessuna");
+		if(p.getAllergy().getA0())
+			allergy1 = new Label("Clorexidina");
+		if(p.getAllergy().getA1())
+			allergy2 = new Label("Iodio");
+		
 		anticoagulant = new CheckBox("Terapia anticoagulante");
 		anticoagulant.setReadOnly(true);
 		placement = new Label(p.getPlacementType());
