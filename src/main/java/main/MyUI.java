@@ -1,4 +1,4 @@
-package controller;
+package main;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -14,6 +14,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 import model.User;
+import view.AddPatientView;
 import view.LoginView;
 import view.SearchView;
 
@@ -59,7 +60,7 @@ public class MyUI extends UI {
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
-    	setContent(new LoginView());
+    	setContent(new AddPatientView());
     	/*
     	if(user==null) {
     		setContent(new SearchView());

@@ -16,8 +16,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import controller.Authentication;
-import controller.MyUI;
+
+import main.Authentication;
+import main.MyUI;
 
 
 public class SearchView extends VerticalLayout{

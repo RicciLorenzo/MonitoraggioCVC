@@ -43,7 +43,7 @@ public class PatientDao {
 				
 				while (rs.next()) {
 					String patientLabel = rs.getString("patient_label");
-					Blob imageLabel = rs.getBlob("image_label");
+					//Blob imageLabel = rs.getBlob("image_label");
 					//convert to image or inputstream
 					String fiscalCode = rs.getString("fiscal_code");
 					String name = rs.getString("name");
