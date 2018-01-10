@@ -30,6 +30,7 @@ public class AddPatientView extends FormLayout{
 	private TextField name = new TextField("Nome");
 	private TextField surname = new TextField("Cognome");
 	private TextField fiscalCode = new TextField("Codice Fiscale");
+	private DateField birthday = new DateField("Data di Nascita");
 	private DateField placementDate = new DateField("Data Posizionamento", LocalDate.now());
 	private CheckBox allergy1 = new CheckBox("Nessuna");
 	private CheckBox allergy2 = new CheckBox("Clorexidina");
@@ -51,7 +52,7 @@ public class AddPatientView extends FormLayout{
 		placementList.add("ALTRO");
 		placement = new NativeSelect("Posizionamento", placementList);
 		setMargin(true);
-		addComponents(title, name, surname, fiscalCode, placementDate, allergy1, allergy2, allergy3, anticoagulant, placement, otherP, save, saveCVC);
+		addComponents(title, name, surname, fiscalCode, birthday, placementDate, allergy1, allergy2, allergy3, anticoagulant, placement, otherP, save, saveCVC);
 		
 		setSizeFull();
 	}
