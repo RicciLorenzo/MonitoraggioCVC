@@ -17,6 +17,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.TextField;
@@ -25,7 +26,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AddCVCView extends FormLayout {
-
+	private Panel view = new Panel();
 	private Label title = new Label("Aggiungi CVC");
 	private TextField fc = new TextField("Codice Fiscale Paziente");
 	private RadioButtonGroup<String> insertionM = new RadioButtonGroup<>("Modalità Inserimento", Arrays.asList("Urgente","Programmato"));
@@ -47,7 +48,7 @@ public class AddCVCView extends FormLayout {
 	private NativeSelect fis = new NativeSelect("Fissaggio", Arrays.asList("Griplock", "Statlock", "Securacath", "Punti Sutura", "Altro"));
 	private TextField otherFis = new TextField("Specificare Altro");
 	private RadioButtonGroup<String> tip = new RadioButtonGroup<>("Punta", Arrays.asList("Aperta","Chiusa"));
-	//private RadioButtonGroup<String> way = new RadioButtonGroup<>("N. Vie", Arrays.asList("1 via",""));
+	private RadioButtonGroup<String> way = new RadioButtonGroup<>("N. Vie", Arrays.asList("1","2","3"));
 	private RadioButtonGroup<String> med1 = new RadioButtonGroup<>("Punta", Arrays.asList("Clorexidina alcolica","Poliuretano"));
 	private RadioButtonGroup<String> med2 = new RadioButtonGroup<>("Punta", Arrays.asList("Iodio","Garza e cerotto"));
 	private CheckBox glue = new CheckBox("Colla");
@@ -55,19 +56,29 @@ public class AddCVCView extends FormLayout {
 	private RadioButtonGroup<String> des1 = new RadioButtonGroup<>("Sede di Destinazione del Paziente", Arrays.asList("Domicilio","Ospedale", "U.O./Servizio"));
 	private NativeSelect des2 = new NativeSelect("Reparto Osepdale", Arrays.asList("Chirurgia", "Intensivo"));
 	private TextField vein = new TextField("Diametro Vena (mm)");
-	//private NativeSelect lum = new NativeSelect("Numero Lumi", Arrays.asList("Chirurgia", "Intensivo"));
-	//private NativeSelect fr = new NativeSelect("French", Arrays.asList("Chirurgia", "Intensivo"));
+	private NativeSelect lum = new NativeSelect("Numero Lumi", Arrays.asList(1,2,3));
+	private NativeSelect fr = new NativeSelect("French", Arrays.asList(1,2,3,4,5,6));
 
 	private TextField sign = new TextField("Firma del Medico");
 
 	
 	public AddCVCView(){
 		setMargin(true);
+		pres.setEmptySelectionAllowed(false);
+		ins.setEmptySelectionAllowed(false);
+		fis.setEmptySelectionAllowed(false);
+		way.setItemCaptionGenerator(item -> item + " " + ((item=="1")?"via":"vie"));
+		des2.setEmptySelectionAllowed(false);
+		lum.setEmptySelectionAllowed(false);
+		fr.setEmptySelectionAllowed(false);
+		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
+        		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign);
 	}
 	
 	
 	public AddCVCView(String fiscalCode) {
-		
-		super();
-	}
+		this();
+		fc.setValue(fiscalCode);
+		}
+	
 }

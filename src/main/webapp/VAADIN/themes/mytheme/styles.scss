@@ -9,3 +9,7 @@
   @include mytheme;
 
 }
+
+.v-verticallayout > div {
+    overflow-y: auto ! important;
+}

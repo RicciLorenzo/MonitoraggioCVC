@@ -14,6 +14,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 import model.User;
+import view.AddCVCView;
 import view.AddPatientView;
 import view.LoginView;
 import view.SearchView;
@@ -60,7 +61,7 @@ public class MyUI extends UI {
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
-    	setContent(new AddPatientView());
+    	setContent(new AddCVCView("VR382155"));
     	/*
     	if(user==null) {
     		setContent(new SearchView());
