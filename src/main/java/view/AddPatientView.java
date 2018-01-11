@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -24,7 +26,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class AddPatientView extends FormLayout{
+public class AddPatientView extends FormLayout implements View{
 
 	private Label title = new Label("Aggiungi Paziente");
 	private TextField name = new TextField("Nome");
@@ -55,5 +57,11 @@ public class AddPatientView extends FormLayout{
 		addComponents(title, name, surname, fiscalCode, birthday, placementDate, allergy1, allergy2, allergy3, anticoagulant, placement, otherP, save, saveCVC);
 		
 		setSizeFull();
+	}
+
+	@Override
+	public void enter(ViewChangeEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

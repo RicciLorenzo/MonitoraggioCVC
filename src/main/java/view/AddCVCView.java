@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -25,8 +27,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class AddCVCView extends FormLayout {
-	private Panel view = new Panel();
+public class AddCVCView extends FormLayout implements View{
+
 	private Label title = new Label("Aggiungi CVC");
 	private TextField fc = new TextField("Codice Fiscale Paziente");
 	private RadioButtonGroup<String> insertionM = new RadioButtonGroup<>("Modalità Inserimento", Arrays.asList("Urgente","Programmato"));
@@ -49,8 +51,8 @@ public class AddCVCView extends FormLayout {
 	private TextField otherFis = new TextField("Specificare Altro");
 	private RadioButtonGroup<String> tip = new RadioButtonGroup<>("Punta", Arrays.asList("Aperta","Chiusa"));
 	private RadioButtonGroup<String> way = new RadioButtonGroup<>("N. Vie", Arrays.asList("1","2","3"));
-	private RadioButtonGroup<String> med1 = new RadioButtonGroup<>("Punta", Arrays.asList("Clorexidina alcolica","Poliuretano"));
-	private RadioButtonGroup<String> med2 = new RadioButtonGroup<>("Punta", Arrays.asList("Iodio","Garza e cerotto"));
+	private RadioButtonGroup<String> med1 = new RadioButtonGroup<>("Medicazione", Arrays.asList("Clorexidina alcolica","Poliuretano"));
+	private RadioButtonGroup<String> med2 = new RadioButtonGroup<>("", Arrays.asList("Iodio","Garza e cerotto"));
 	private CheckBox glue = new CheckBox("Colla");
 	private CheckBox biop = new CheckBox("Biopatch");
 	private RadioButtonGroup<String> des1 = new RadioButtonGroup<>("Sede di Destinazione del Paziente", Arrays.asList("Domicilio","Ospedale", "U.O./Servizio"));
@@ -60,6 +62,7 @@ public class AddCVCView extends FormLayout {
 	private NativeSelect fr = new NativeSelect("French", Arrays.asList(1,2,3,4,5,6));
 
 	private TextField sign = new TextField("Firma del Medico");
+	private Button add = new Button("Aggiungi");
 
 	
 	public AddCVCView(){
@@ -72,7 +75,7 @@ public class AddCVCView extends FormLayout {
 		lum.setEmptySelectionAllowed(false);
 		fr.setEmptySelectionAllowed(false);
 		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
-        		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign);
+        		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
 	}
 	
 	
@@ -80,5 +83,12 @@ public class AddCVCView extends FormLayout {
 		this();
 		fc.setValue(fiscalCode);
 		}
+
+
+	@Override
+	public void enter(ViewChangeEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

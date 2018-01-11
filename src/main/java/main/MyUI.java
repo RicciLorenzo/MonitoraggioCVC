@@ -6,6 +6,7 @@ import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -16,6 +17,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import model.User;
 import view.AddCVCView;
 import view.AddPatientView;
+import view.AddRemovalCVCView;
+import view.AddScoreView;
 import view.LoginView;
 import view.SearchView;
 
@@ -34,6 +37,8 @@ import view.SearchView;
 
 public class MyUI extends UI {
 	
+	public Navigator navigator;
+	
 	@Override
     protected void init(VaadinRequest vaadinRequest) {
 		
@@ -43,7 +48,7 @@ public class MyUI extends UI {
     	setTheme("mytheme");
     	addStyleName(ValoTheme.UI_WITH_MENU);
     System.out.println("banana");  
-    	updateContent();
+    updateContent();
         
     }
 	
@@ -61,7 +66,7 @@ public class MyUI extends UI {
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
-    	setContent(new AddCVCView("VR382155"));
+    	setContent(new AddRemovalCVCView(""));
     	/*
     	if(user==null) {
     		setContent(new SearchView());

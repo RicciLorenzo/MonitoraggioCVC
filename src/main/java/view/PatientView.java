@@ -2,6 +2,8 @@ package view;
 
 import java.time.*;
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -9,7 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import model.Patient;
 
-public class PatientView extends VerticalLayout {
+public class PatientView extends VerticalLayout implements View{
 
 	private Label patientLabel;
 	private Label name;
@@ -47,6 +49,12 @@ public class PatientView extends VerticalLayout {
 		}
 		
 		
+		
+	}
+
+	@Override
+	public void enter(ViewChangeEvent event) {
+		// TODO Auto-generated method stub
 		
 	}
 	
