@@ -41,6 +41,7 @@ public class AddPatientView extends FormLayout implements View{
 	private ArrayList<String> placementList = new ArrayList<String>();
 	private NativeSelect placement;
 	private TextField otherP = new TextField("Altro Posizionamento");
+	private Button back = new Button("Annulla");
 	private Button save = new Button("Salva");
 	private Button saveCVC = new Button("Salva e aggiungi CVC");
 	
@@ -55,12 +56,13 @@ public class AddPatientView extends FormLayout implements View{
 		placementList.add("HOSPICE");
 		placementList.add("ALTRO");
 		placement = new NativeSelect("Posizionamento", placementList);
+		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 		setMargin(true);
 		setSpacing(true);
 		setSizeFull();
-		addComponents(title, name, surname, fiscalCode, birthday, placementDate, allergy1, allergy2, allergy3, anticoagulant, placement, otherP, save, saveCVC);
-
-		//UI.getCurrent().setContent(vert);
+		addComponents(title, name, surname, fiscalCode, birthday, placementDate, allergy1, allergy2, allergy3,
+				anticoagulant, placement, otherP, back, save, saveCVC);
+		
 		
 	}
 
