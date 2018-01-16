@@ -11,14 +11,14 @@ import model.Patient;
 public class CVCView extends VerticalLayout implements View{
 	
 	private Patient p;
-	Component patient = new PatientView(p);
-	private Button back = new Button("Ricerca");
+	//Component patient = new PatientView(p);
+	private Button back = new Button("belobelo");
 	
 	
 	
 	public CVCView() {
 		setMargin(true);
-		addComponents(patient);
+		this.addComponent(back);
 	}
 	
 	private Component PatientView(Patient p){

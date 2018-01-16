@@ -37,7 +37,6 @@ import view.SearchView;
 
 public class MyUI extends UI {
 	
-	public Navigator navigator;
 	
 	@Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -45,10 +44,10 @@ public class MyUI extends UI {
 		Authentication auth = new Authentication();
 		VaadinSession.getCurrent().setAttribute("AUTH", auth);
     	
-    	setTheme("mytheme");
-    	addStyleName(ValoTheme.UI_WITH_MENU);
-    System.out.println("banana");  
-    updateContent();
+		setTheme("mytheme");
+		addStyleName(ValoTheme.UI_WITH_MENU);
+		System.out.println("banana");  
+		updateContent();
         
     }
 	
@@ -66,11 +65,14 @@ public class MyUI extends UI {
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
-    	setContent(new AddRemovalCVCView(""));
-    	/*
+    	setContent(new SearchView());
+    /*	
     	if(user==null) {
     		setContent(new SearchView());
     		}
+    	else if(user.getName().equalsIgnoreCase("admin")) {
+    		System.out.println("view admin aggiunta utenti");
+    	}
     	else {
     		setContent(new SearchView());
     		System.out.println("view di ricerca");

@@ -3,6 +3,7 @@ package view;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -28,18 +29,34 @@ public class SearchView extends VerticalLayout implements View{
 
 	private TextField searchPatient = new TextField("Codice Paziente");
 	private Button logout = new Button("Logout");
-	private Button searchButton = new Button("Ricerca");
+	private Button searchButton = new Button("Aggiunta Paziente");
 	
 	public SearchView() {
+
 		//GridLayout grid = new GridLayout(3,2);
 		setSpacing(false);
 		setSizeFull();
 		
-		addComponent(logout);
-		setComponentAlignment(logout, Alignment.TOP_RIGHT);
+		VerticalLayout contentView = new VerticalLayout();
+        
+		new Navigator(UI.getCurrent(), contentView);
+	
+        UI.getCurrent().getNavigator().addView("", SearchView.class);
+		
 		logout.addClickListener(e -> doLogout());
 		
-		addComponent(searchPatient);
+		searchButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+            		UI.getCurrent().getNavigator().addView("addpatient", new AddPatientView());
+            		UI.getCurrent().getNavigator().navigateTo("addpatient" + "/" + "bana" );
+            		System.out.println("aggiunta paziente???");
+          //  	UI.getCurrent().setContent(new AddPatientView());
+            }
+        });
+		
+		addComponents(logout, searchPatient, searchButton);
+		setComponentAlignment(logout, Alignment.TOP_RIGHT);
 		setComponentAlignment(searchPatient, Alignment.MIDDLE_LEFT);
 		
 		addStyleName("searchview");
@@ -52,8 +69,10 @@ public class SearchView extends VerticalLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		UI.getCurrent().setContent(new SearchView());
 		
 	}
+
+	
 	
 }
