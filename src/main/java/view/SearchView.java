@@ -33,40 +33,23 @@ import main.MyUI;
 public class SearchView extends VerticalLayout implements View{
 
 	private Label title = new Label("Ricerca dei CVC");
-	private TextField searchPatient = new TextField("Codice Fiscale Paziente");
 	private Button logout = new Button("Logout");
-	private Button searchButton = new Button("Ricerca Paziente");
 	private Button addP = new Button("Aggiungi Paziente");
 	private Button stat = new Button("Statistiche");
-	private ArrayList<String> result = new ArrayList<>();
-	
 	public SearchView() {
 		
 		VerticalLayout contentView = new VerticalLayout();
 		new Navigator(UI.getCurrent(), contentView);
-	
         UI.getCurrent().getNavigator().addView("", SearchView.class);
 		
 		logout.addClickListener(e -> doLogout());
 		
-		searchButton.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(final ClickEvent event) {
-            		UI.getCurrent().getNavigator().navigateTo("" + "/" + searchPatient.getValue() );
-            		System.out.println("ricerca???");
-            }
-        });
 		
-		addP.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(final ClickEvent event) {
-            		UI.getCurrent().getNavigator().addView("addpatient", AddPatientView.class);
-            		UI.getCurrent().getNavigator().navigateTo("addpatient");
-            		System.out.println("aggiunta paziente???");
-            }
-        });
+		
+		addP.addClickListener(event -> addCVC());
 		
 		Component search = search();
+		Component pt = result();
 		addComponents(logout, title, search, addP, stat);
 		setComponentAlignment(logout, Alignment.TOP_RIGHT);
 		setMargin(true);
@@ -80,6 +63,7 @@ public class SearchView extends VerticalLayout implements View{
 		pan.setSizeUndefined();
 		TextField searchPatient = new TextField("Codice Fiscale Paziente");
 		Button searchButton = new Button("Ricerca Paziente");
+		searchButton.addClickListener(event -> doSearch(searchPatient.getValue()));
 		search.addComponents(searchPatient, searchButton);
 		search.setComponentAlignment(searchButton, Alignment.MIDDLE_RIGHT);
 		search.setMargin(true);
@@ -89,9 +73,11 @@ public class SearchView extends VerticalLayout implements View{
 	}
 	
 	private Component result() {
+		HorizontalLayout hor = new HorizontalLayout();
 		GridLayout res = new GridLayout(6,2);
 		res.setSizeUndefined();
 		Panel pan = new Panel();
+		Panel pan1 = new Panel();
 		pan.setSizeUndefined();
 		
 		Label name = new Label("Nome");
@@ -100,6 +86,7 @@ public class SearchView extends VerticalLayout implements View{
 		Label fiscal = new Label("Codice Fiscale");
 		Label ins = new Label("Inserimento");
 		Label closed = new Label("Chiuso");
+		Button vis = new Button("Visualizza");
 		
 		Label nameT = new Label("Mario");
 		Label surnameT = new Label("Rossi");
@@ -108,9 +95,30 @@ public class SearchView extends VerticalLayout implements View{
 		Label insT = new Label("Succlavia DX");
 		Label closedT = new Label("No");
 		
-		return res;
+		res.addComponents(name, surname, date, fiscal, ins, closed, nameT, surnameT, birthT, fiscalT, insT, closedT);
+		
+		res.setMargin(true);
+		res.setSpacing(true);
+		pan1.setContent(res);
+		hor.addComponents(pan1, vis);
+		
+		hor.setMargin(true);
+		hor.setSpacing(true);
+		hor.setComponentAlignment(vis, Alignment.MIDDLE_CENTER);
+		pan.setContent(hor);
+		return pan;
 	}
 	
+	private void doSearch(String code) {
+		UI.getCurrent().getNavigator().addView(SearchResultView.NAME, new SearchResultView(code));
+		UI.getCurrent().getNavigator().navigateTo(SearchResultView.NAME +"/" + code);
+	}
+	
+	private void addCVC() {
+		UI.getCurrent().getNavigator().addView(AddPatientView.Name, new AddPatientView());
+		UI.getCurrent().getNavigator().navigateTo(AddPatientView.Name);
+		System.out.println("aggiunta paziente???");
+	}
 	
 	private void doLogout() {
 		System.out.println("logout utente");
@@ -120,7 +128,6 @@ public class SearchView extends VerticalLayout implements View{
 	@Override
 	public void enter(ViewChangeEvent event) {
 		UI.getCurrent().setContent(new SearchView());
-		
 	}
 
 	

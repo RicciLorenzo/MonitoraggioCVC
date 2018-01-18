@@ -1,5 +1,7 @@
 package model;
 
+
+//TO BE MODIFIED!!!
 public enum Structure {
 	CVC_TUNNELLIZZATO("CVC tunnellizzato"),
 	CVC_NON_TUNNELLIZZATO("CVC non tunnellizzato"),

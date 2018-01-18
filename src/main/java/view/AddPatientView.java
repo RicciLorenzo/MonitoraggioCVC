@@ -27,6 +27,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AddPatientView extends FormLayout implements View{
+	
+	public final static String Name = "ADD_PATIENT";
 
 	private Label title = new Label("Aggiungi Paziente");
 	private TextField name = new TextField("Nome");
@@ -70,5 +72,6 @@ public class AddPatientView extends FormLayout implements View{
 	public void enter(ViewChangeEvent event) {
 		System.out.println(event.getParameters());
 		UI.getCurrent().setContent(new AddPatientView());
+		Page.getCurrent().reload();
 	}
 }
