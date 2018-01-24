@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 import model.User;
-import model.UserType;
+
 
 
 public class UserDAO {
@@ -29,7 +29,7 @@ public class UserDAO {
 	private final static String tableName = "users";
 	
 	
-	public static boolean addUser(String username, String password, String name, String surname, UserType type) {
+	public static boolean addUser(String username, String password, String name, String surname, String type) {
 		
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -41,7 +41,7 @@ public class UserDAO {
 			
 			try (Statement st = con.createStatement()) {
 				
-				String query = "INSERT INTO "+tableName+" VALUES ('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+type.toString()+"')";
+				String query = "INSERT INTO "+tableName+" VALUES ('"+username+"', '"+password+"', '"+name+"', '"+surname+"', '"+type.toString().toLowerCase()+"')";
 				System.out.println(query);
 				
 				if (st.executeUpdate(query)!=0)
@@ -84,9 +84,7 @@ public class UserDAO {
 				while (rs.next()) {
 					String name = rs.getString("name");
 					String surname = rs.getString("surname");
-					String typeS = rs.getString("type");
-					
-					UserType type = UserType.valueOf(typeS);
+					String type = rs.getString("type");
 					
 					user = new User(name, surname, type);
 				}

@@ -36,6 +36,8 @@ public class SearchView extends VerticalLayout implements View{
 	private Button logout = new Button("Logout");
 	private Button addP = new Button("Aggiungi Paziente");
 	private Button stat = new Button("Statistiche");
+	
+	
 	public SearchView() {
 		
 		VerticalLayout contentView = new VerticalLayout();

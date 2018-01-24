@@ -74,11 +74,19 @@ public class LoginView extends VerticalLayout{
             	}
             	
             	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
-            
-            	if(localAuth.authenticate(name.getValue(), psw.getValue())) {
+            	
+            	if(name.getValue().equalsIgnoreCase("admin")) {
+        
+            		if((localAuth.authenticate(name.getValue(), psw.getValue()))) {
+            			//admin psw 21232f297a57a5a743894a0e4a801fc3
+            			goToAddUserView();
+            			System.out.println("Login utente admin");
+            		}
+            	}
+            	else if(localAuth.authenticate(name.getValue(), psw.getValue())) {
             		goToSearchView();
             		System.out.println("Login utente");
-            	}
+            		}
             	else {
             		Notification notif = new Notification("CREDENZIALI INVALIDE", Notification.Type.TRAY_NOTIFICATION);
             		notif.setDelayMsec(1000);
@@ -97,6 +105,12 @@ public class LoginView extends VerticalLayout{
     private void goToSearchView() {
     		Page.getCurrent().setTitle("CVC ricerca");
     		UI.getCurrent().setContent(new SearchView());
+    		removeStyleName("loginview");
+    }
+    
+    private void goToAddUserView() {
+    		Page.getCurrent().setTitle("ADMIN");
+    		UI.getCurrent().setContent(new AddUserView());
     		removeStyleName("loginview");
     }
     

@@ -66,14 +66,11 @@ public class MyUI extends UI {
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
-    	setContent(new CVCView());
+    	setContent(new LoginView());
     /*	
     	if(user==null) {
-    		setContent(new SearchView());
+    		setContent(new LoginView());
     		}
-    	else if(user.getName().equalsIgnoreCase("admin")) {
-    		System.out.println("view admin aggiunta utenti");
-    	}
     	else {
     		setContent(new SearchView());
     		System.out.println("view di ricerca");

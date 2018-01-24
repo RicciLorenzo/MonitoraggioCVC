@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -16,6 +18,8 @@ import com.vaadin.ui.VerticalLayout;
 public class SearchResultView extends VerticalLayout implements View{
 
 	public final static String NAME = "SEARCH_RESULT";
+	
+	private ArrayList<String> result;
 	private Label nores = new Label("Non ci sono risultati corrispondenti alla ricerca");
 	
 	private Button back = new Button("Indietro");
@@ -28,7 +32,7 @@ public class SearchResultView extends VerticalLayout implements View{
 		addComponents(back, nores);
 		setComponentAlignment(back, Alignment.TOP_RIGHT);
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
-		//if(name.equals(null))
+		if(name.equals("") || !(dao.PatientDao.patientExist(name)))
 			nores.setVisible(true);
 		addComponent(result());
 		
@@ -51,6 +55,7 @@ public class SearchResultView extends VerticalLayout implements View{
 		Label ins = new Label("Inserimento");
 		Label closed = new Label("Chiuso");
 		Button vis = new Button("Visualizza");
+		Button cvc = new Button("Aggiungi CVC al Paziente");
 		
 		Label nameT = new Label("Mario");
 		Label surnameT = new Label("Rossi");
@@ -64,11 +69,12 @@ public class SearchResultView extends VerticalLayout implements View{
 		res.setMargin(true);
 		res.setSpacing(true);
 		pan1.setContent(res);
-		hor.addComponents(pan1, vis);
+		hor.addComponents(pan1, vis, cvc);
 		
 		hor.setMargin(true);
 		hor.setSpacing(true);
 		hor.setComponentAlignment(vis, Alignment.MIDDLE_CENTER);
+		hor.setComponentAlignment(cvc, Alignment.MIDDLE_CENTER);
 		pan.setContent(hor);
 		return pan;
 	}

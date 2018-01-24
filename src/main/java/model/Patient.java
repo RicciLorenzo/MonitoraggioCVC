@@ -12,17 +12,30 @@ public class Patient {
 	private String fiscalCode;
 	private String name;
 	private String surname;
-	private Date dateOfPlacement;
+	private LocalDate birthday;
+	private LocalDate dateOfPlacement;
 	private Allergy allergy;
 	private String placementType;
 	private String otherPlacement;
 	
-	public Patient(String patientLabel, String fiscalCode, String name, String surname, Date dateOfPlacement, boolean allergy0, boolean allergy1, boolean aT) {
+	public Patient(String patientLabel, String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, boolean aT) {
 		this.patientLabel = patientLabel;
 		//this.image = image;
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
+		this.birthday=birthday;
+		this.dateOfPlacement = dateOfPlacement;
+		this.allergy = new Allergy(allergy0, aT);
+	}
+	
+	public Patient(String patientLabel, String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, String allergy1, boolean aT) {
+		this.patientLabel = patientLabel;
+		//this.image = image;
+		this.fiscalCode = fiscalCode;
+		this.name = name;
+		this.surname = surname;
+		this.birthday=birthday;
 		this.dateOfPlacement = dateOfPlacement;
 		this.allergy = new Allergy(allergy0, allergy1, aT);
 	}	

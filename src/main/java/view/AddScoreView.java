@@ -13,6 +13,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class AddScoreView extends FormLayout implements View{
@@ -26,7 +27,7 @@ public class AddScoreView extends FormLayout implements View{
 	 * The options are normally laid out vertically.
 	 * You can switch to horizontal layout by using the style name ValoTheme.OPTIONGROUP_HORIZONTAL with addStyleName().
 	 * */ 
-	
+	private String cvcId;
 	private Label title = new Label("Aggingi valutazione CVC");
 	private DateField date = new DateField("Data", LocalDate.now());
 	private Label score0 = new Label("Cute sana, integra, senza segni di flogosi");
@@ -49,7 +50,8 @@ public class AddScoreView extends FormLayout implements View{
 	private TextField sign = new TextField("Firma");
 	private Button add = new Button("Aggiungi");
 	
-	public AddScoreView() {
+	public AddScoreView(String id) {
+		this.cvcId=id;
 		setMargin(true);
 		sostMed.setEmptySelectionAllowed(false);
 		score.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
@@ -59,7 +61,7 @@ public class AddScoreView extends FormLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		UI.getCurrent().setContent(new AddScoreView(event.getParameters()));
 		
 	}
 

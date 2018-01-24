@@ -29,6 +29,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class AddCVCView extends FormLayout implements View{
 
+	public final static String Name = "ADD_CVC";
 	private Label title = new Label("Aggiungi CVC");
 	private TextField fc = new TextField("Codice Fiscale Paziente");
 	private RadioButtonGroup<String> insertionM = new RadioButtonGroup<>("Modalità Inserimento", Arrays.asList("Urgente","Programmato"));
@@ -62,6 +63,7 @@ public class AddCVCView extends FormLayout implements View{
 	private NativeSelect fr = new NativeSelect("French", Arrays.asList(1,2,3,4,5,6));
 
 	private TextField sign = new TextField("Firma del Medico");
+	private Button back = new Button("Indietro");
 	private Button add = new Button("Aggiungi");
 
 	
@@ -76,6 +78,8 @@ public class AddCVCView extends FormLayout implements View{
 		fr.setEmptySelectionAllowed(false);
 		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
         		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
+	
+		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 	}
 	
 	
@@ -87,8 +91,10 @@ public class AddCVCView extends FormLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
+		if(event.getParameters().isEmpty())
+			UI.getCurrent().setContent(new AddCVCView());
+		else
+			UI.getCurrent().setContent(new AddCVCView(event.getParameters()));
 	}
 	
 }

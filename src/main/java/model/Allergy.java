@@ -4,21 +4,26 @@ import java.util.ArrayList;
 
 public class Allergy {
 
-	private boolean allergy0;
-	private boolean allergy1;
+	private String allergy0="";
+	private String allergy1=null;
 	private boolean anticoagulantTheraphy;
 	
-	public Allergy(boolean allergy0, boolean allergy1, boolean aT) {
+	public Allergy(String allergy0, boolean aT) {
+		this.allergy0=allergy0;
+		this.anticoagulantTheraphy=aT;
+	}
+	
+	public Allergy(String allergy0, String allergy1, boolean aT) {
 		this.allergy0=allergy0;
 		this.allergy1=allergy1;
 		this.anticoagulantTheraphy=aT;
 	}
 	
-	public boolean getA0() {
+	public String getA0() {
 		return this.allergy0;
 	}
 	
-	public boolean getA1() {
+	public String getA1() {
 		return this.allergy1;
 	}
 	

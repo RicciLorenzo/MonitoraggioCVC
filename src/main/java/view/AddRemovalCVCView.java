@@ -47,7 +47,7 @@ public class AddRemovalCVCView extends FormLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		UI.getCurrent().setContent(new AddRemovalCVCView(event.getParameters()));
 		
 	}
 	
