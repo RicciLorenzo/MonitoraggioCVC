@@ -17,12 +17,43 @@ public class PatientDao {
 	private final static String jdbcUrl = "jdbc:postgresql://localhost:5432/tesi";
 	private final static String jdbcUsername = "postgres";
 	private final static String jdbcPassword = "ciao";
-	
 	private final static String tableName = "Patient";
 	
 	
+	public boolean addPatient(String name, String surname, String fiscalCode, Date dateOfBirth) {
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement()) {
+				
+				String query = "INSERT INTO "+tableName+" VALUES";
+				
+				
+				//SQL QUERY
+				
+				
+				
+				
+				
+			} catch(SQLException e) {
+				System.out.println("Query error in table: "+tableName);
+				}
+			
+		} catch(SQLException e) {
+					System.out.println("Connection error to the database check credential");
+			}		
+
+		return false;
+	}
 	
-	private final Patient getPatient(String id) {
+	
+	
+	public final Patient getPatient(String id) {
 		
 		Patient patient = null;
 		
@@ -69,7 +100,7 @@ public class PatientDao {
 		return patient;
 	}
 	
-	private final boolean patientExist(String id) {
+	public final boolean patientExist(String id) {
 		
 		System.out.println("Try Database Connection");
 		try {
