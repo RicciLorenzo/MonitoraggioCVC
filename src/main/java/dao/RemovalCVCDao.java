@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class RemoveCVCDao {
+import model.RemovalCVC;
+
+public class RemovalCVCDao {
 
 	private final static String jdbcUrl = "jdbc:postgresql://localhost:5432/tesi";
 	private final static String jdbcUsername = "postgres";
@@ -14,7 +16,19 @@ public class RemoveCVCDao {
 	private final static String tableName = "CVC_remove";
 	
 	
-	public static boolean CVCRemoveExist(String id) {
+	public static boolean addRemovalCVC(RemovalCVC removalCVC) {
+		
+		
+		
+		return false;
+	}
+	
+	public static RemovalCVC getRemovalCVC(int id) {
+		
+		return null;
+	}
+	
+	public static boolean CVCRemovalExist(int id) {
 		
 		System.out.println("Try Database Connection");
 		try {
@@ -27,7 +41,7 @@ public class RemoveCVCDao {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			String sql = "SELECT * FROM "+tableName+" WHERE id_remove ILIKE "+Integer.parseInt(id)+"";
+			String sql = "SELECT * FROM "+tableName+" WHERE id_remove ILIKE "+id+"";
 			
 			st.executeQuery(sql);
 				

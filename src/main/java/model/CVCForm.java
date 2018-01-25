@@ -6,7 +6,6 @@ import java.util.Date;
 public class CVCForm {
 
 	private int idCVC;
-	//private image patient label ----add TO-DO----
 	private String patientLabel;
 	private Patient patient;
 	private Insertion insertion;
@@ -17,6 +16,7 @@ public class CVCForm {
 	private Medication medication;
 	private String sign;
 	private String destinationOfPatient;
+	
 	//check of cvc form
 	private ArrayList<ScoreForm> scores;
 	

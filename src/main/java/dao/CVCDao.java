@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import model.CVCPreview;
 
@@ -57,7 +58,7 @@ public class CVCDao {
 	
 	//getPreviewCVC
 		public static CVCPreview CVCPreview(String id) {
-		
+		CVCPreview res=null;
 		System.out.println("Try Database Connection");
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -69,24 +70,27 @@ public class CVCDao {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			String sql = "SELECT * FROM "+tableName+" WHERE id_cvc ILIKE "+Integer.parseInt(id)+"";
-			
+			String sql = "SELECT id_cvc, patient_label, insertion_site, insertion_site_side FROM "+tableName+" WHERE patient_label ILIKE '"+id+"'";
 			st.executeQuery(sql);
-				
 			ResultSet rs = st.getResultSet();
-
-			return null;
+			int idCVC = rs.getInt("id_cvc");
+			String patientLabel=rs.getString("patient_label");
+			boolean side= rs.getBoolean("insertion_site_site");
+			String insertion=rs.getString("insertion_site")+(side?" dx":" sx");
+			//dx true, sx false
+			model.Patient p = dao.PatientDao.getPatient(patientLabel);
+			res = new CVCPreview(idCVC, p.getName(), p.getSurname(), LocalDate.parse(p.getBirthday()), patientLabel, insertion, dao.RemovalCVCDao.CVCRemovalExist(idCVC) );
 			}
 			catch (SQLException e) {
 					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
 			}
-
+			
 		} catch (SQLException e) {
 					System.out.println("Connection error to the database check exist"+ e.getMessage());
 				}
 		
 		
-		return null;
+		return res;
 	}
 	
 	

@@ -4,11 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class Patient {
 
 	private String patientLabel;
-	//private Blob image;
 	private String fiscalCode;
 	private String name;
 	private String surname;
@@ -20,7 +20,6 @@ public class Patient {
 	
 	public Patient(String patientLabel, String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, boolean aT) {
 		this.patientLabel = patientLabel;
-		//this.image = image;
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
@@ -31,7 +30,6 @@ public class Patient {
 	
 	public Patient(String patientLabel, String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, String allergy1, boolean aT) {
 		this.patientLabel = patientLabel;
-		//this.image = image;
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
@@ -43,11 +41,7 @@ public class Patient {
 	public String getPateintLabel() {
 		return this.patientLabel;
 	}
-	/*
-	public Blob getImageLabel() {
-		return this.image;
-	}
-	*/
+	
 	public String getFiscalCode() {
 		return this.fiscalCode;
 	}
@@ -58,6 +52,17 @@ public class Patient {
 	
 	public String getSurname() {
 		return this.surname;
+	}
+	
+	public String getBirthday() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
+		try {
+			 return birthday.format(dtf);
+		} catch (java.time.format.DateTimeParseException e) {
+		   e.printStackTrace();
+		}
+		return "";
 	}
 	
 	public String getDateOfPlacement() {
