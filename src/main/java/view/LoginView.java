@@ -82,6 +82,11 @@ public class LoginView extends VerticalLayout{
             			goToAddUserView();
             			System.out.println("Login utente admin");
             		}
+            		else {
+            			Notification notif = new Notification("CREDENZIALI INVALIDE ADMIN", Notification.Type.TRAY_NOTIFICATION);
+                		notif.setDelayMsec(1000);
+                		notif.show(Page.getCurrent());
+            		}
             	}
             	else if(localAuth.authenticate(name.getValue(), psw.getValue())) {
             		goToSearchView();

@@ -12,6 +12,11 @@ public class ScoreForm {
 	//to change in enum ???
 	private String medicationCause;
 	private Medication medication;
+	private boolean diffInfusion;
+	private boolean diffAspiration;
+	private boolean suspInfection;
+	private boolean obstruction;
+	private String cvcBlodd;
 	private String sign;
 	
 	public ScoreForm(Date date, int score, boolean wash, boolean eparinizz, boolean sostInfusive, String medicationCause, Medication medication, String sign) {

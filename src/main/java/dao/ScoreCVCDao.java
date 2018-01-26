@@ -19,7 +19,12 @@ public class ScoreCVCDao {
 	
 	public static boolean addScoreCVC(ScoreForm score) {
 		
-		
+		System.out.println("Try Database Connection");
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
 		
 		
 		
@@ -29,15 +34,33 @@ public class ScoreCVCDao {
 		return false;
 	}
 	
-	public static ArrayList<ScoreForm> getScoreCVC() {
+	public static ArrayList<ScoreForm> getScoreCVC(int id) {
+		
+		System.out.println("Try Database Connection");
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
+		
 		
 		
 		return null;
 	}
 	
+	//get list of id of scores
+	private static ArrayList<Integer> getIdScore(int id) {
+		return null;
+	}
+	
+	//get single score form
+	private static ScoreForm getSingleScoreCVC(int id) {
+		return null;
+	}
 	
 	
-	public static boolean CVCRemovalExist(int id) {
+	
+	public static boolean CVCScoreExist(int id) {
 		
 		System.out.println("Try Database Connection");
 		try {
@@ -50,7 +73,7 @@ public class ScoreCVCDao {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			String sql = "SELECT * FROM "+tableName+" WHERE id_cvc ILIKE "+id+"";
+			String sql = "SELECT * FROM "+tableName+" WHERE id_cvc = "+id+"";
 			
 			st.executeQuery(sql);
 				

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import model.CVCForm;
 import model.CVCPreview;
 
 public class CVCDao {
@@ -53,8 +55,18 @@ public class CVCDao {
 	}
 	
 	//addcvc
+	public static boolean addCVC() {
+		
+		return false;
+	}
+	
 	
 	//getCVC
+	public static CVCForm getCVC() {
+		
+		return null;
+	}
+	
 	
 	//getPreviewCVC
 		public static CVCPreview CVCPreview(String id) {
@@ -97,7 +109,37 @@ public class CVCDao {
 	
 	//get cvc id from patient
 	public static ArrayList<Integer> getCVCId(String patient) {
-		return null;
+		
+		ArrayList<Integer> res = new ArrayList<>();
+		System.out.println("Try Database Connection");
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
+		
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			String sql = "SELECT id_cvc FROM "+tableName+" WHERE patient_label ILIKE '"+patient+"'";
+			st.executeQuery(sql);
+			ResultSet rs = st.getResultSet();
+			while(rs.next()) {
+				res.add(new Integer(rs.getInt("id_cvc")));
+			}
+
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+			
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}
+		
+		
+		
+		return res;
 	}
 	
 	

@@ -1,5 +1,6 @@
 package view;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 import com.vaadin.annotations.Theme;
@@ -28,6 +29,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import main.Authentication;
 import main.MyUI;
+import model.User;
 
 
 public class SearchView extends VerticalLayout implements View{
@@ -37,13 +39,15 @@ public class SearchView extends VerticalLayout implements View{
 	private Button addP = new Button("Aggiungi Paziente");
 	private Button stat = new Button("Statistiche");
 	
+	private Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
+	protected User user = localAuth.getUser();
 	
 	public SearchView() {
-		
 		VerticalLayout contentView = new VerticalLayout();
 		new Navigator(UI.getCurrent(), contentView);
         UI.getCurrent().getNavigator().addView("", SearchView.class);
-		
+        UI.getCurrent().getNavigator().setErrorView(SearchView.class);
+
 		logout.addClickListener(e -> doLogout());
 		
 		

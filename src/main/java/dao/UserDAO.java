@@ -76,7 +76,7 @@ public class UserDAO {
 			
 			try (Statement st = con.createStatement()) {
 				
-				String query = "SELECT * FROM "+tableName+" WHERE username ILIKE '"+username+"' AND password LIKE '"+password+"'";
+				String query = "SELECT * FROM "+tableName+" WHERE username LIKE '"+username+"' AND password LIKE '"+password+"'";
 				System.out.println(query);
 				st.executeQuery(query);
 				ResultSet rs = st.getResultSet();

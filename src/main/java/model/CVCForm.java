@@ -12,7 +12,7 @@ public class CVCForm {
 	private boolean ecoguidedPositioning;
 	private boolean chestRx;
 	private Complication complication;
-	private Structure type;
+	private String type; //structure type
 	private Medication medication;
 	private String sign;
 	private String destinationOfPatient;

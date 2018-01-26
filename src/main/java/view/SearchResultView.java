@@ -1,9 +1,11 @@
 package view;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.navigator.ViewProvider;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -27,6 +29,8 @@ public class SearchResultView extends VerticalLayout implements View{
 	
 	
 	public SearchResultView(String name) {
+		
+		System.out.println(name);
 		setMargin(true);
 		setSpacing(true);
 		addComponents(back, nores);
@@ -79,11 +83,13 @@ public class SearchResultView extends VerticalLayout implements View{
 		return pan;
 	}
 	
+
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
+		UI.getCurrent().getNavigator().setErrorView(new SearchResultView(""));
 		System.out.println("ricerca eff???" + event.getParameters());
 		UI.getCurrent().setContent(new SearchResultView(event.getParameters()));
-		Page.getCurrent().reload();
 	}
 
 	
