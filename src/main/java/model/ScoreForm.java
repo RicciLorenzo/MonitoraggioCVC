@@ -1,10 +1,13 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ScoreForm {
-
-	private Date date;
+	
+	private int idScore;
+	private int idCVC;
+	private LocalDate date;
 	private int score;
 	private boolean wash;
 	private boolean eparinizz;
@@ -16,10 +19,12 @@ public class ScoreForm {
 	private boolean diffAspiration;
 	private boolean suspInfection;
 	private boolean obstruction;
-	private String cvcBlodd;
+	private String cvcBlood;
 	private String sign;
 	
-	public ScoreForm(Date date, int score, boolean wash, boolean eparinizz, boolean sostInfusive, String medicationCause, Medication medication, String sign) {
+	public ScoreForm(int idScore, LocalDate date, int score, boolean wash, boolean eparinizz, boolean sostInfusive, String medicationCause,
+			Medication medication, boolean diffInfusion, boolean diffAspiration, boolean suspInfection, boolean obstruction, String cvcBlood, String sign) {
+		this.idScore=idScore;
 		this.date=date;
 		this.score=score;
 		this.wash=wash;
@@ -27,10 +32,25 @@ public class ScoreForm {
 		this.sostInfusive=sostInfusive;
 		this.medicationCause=medicationCause;
 		this.medication=medication;
+		this.diffInfusion=diffInfusion;
+		this.diffAspiration=diffAspiration;
+		this.suspInfection=suspInfection;
+		this.obstruction=obstruction;
+		this.cvcBlood=cvcBlood;
 		this.sign=sign;
 	}
 
-	public Date getDate() {
+	public ScoreForm(int idScore, int idCVC,LocalDate date, int score, boolean wash, boolean eparinizz, boolean sostInfusive, String medicationCause,
+			Medication medication, boolean diffInfusion, boolean diffAspiration, boolean suspInfection, boolean obstruction, String cvcBlood, String sign) {
+		this(idScore, date, score, wash, eparinizz, sostInfusive, medicationCause, medication, diffInfusion, diffAspiration, suspInfection, obstruction, cvcBlood, sign);
+		this.idCVC=idCVC;
+	}
+	
+	public int getIdCVC() {
+		return this.idCVC;
+	}
+	
+	public LocalDate getDate() {
 		return this.date;
 	}
 	
@@ -56,6 +76,26 @@ public class ScoreForm {
 	
 	public Medication getMedication() {
 		return this.medication;
+	}
+	
+	public boolean getDiffInfusion() {
+		return this.diffInfusion;
+	}
+	
+	public boolean getDiffAspiration() {
+		return this.diffAspiration;
+	}
+	
+	public boolean getSuspInfection() {
+		return this.suspInfection;
+	}
+	
+	public boolean getObstruction() {
+		return this.obstruction;
+	}
+	
+	public String getCvcBlood() {
+		return this.cvcBlood;
 	}
 	
 	public String getSign() {

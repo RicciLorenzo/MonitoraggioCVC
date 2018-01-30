@@ -2,34 +2,28 @@ package model;
 
 public class Medication {
 
-	private boolean chlorhexidine;
-	private boolean iodine;
-	private boolean polyurethane;
-	private boolean gauze;
+	private boolean chlOrPoly;
+	private boolean iodOrGau;
 	private boolean glue;
+	private boolean biopatch;
 	
-	public Medication(boolean chlorhexidine, boolean iodine, boolean polyurethane, boolean gauze, boolean glue) {
-		this.chlorhexidine=chlorhexidine;
-		this.iodine=iodine;
-		this.polyurethane=polyurethane;
-		this.gauze=gauze;
+	public Medication(boolean chlOrPoly, boolean iodOrGau, boolean glue, boolean biopatch) {
+		this.chlOrPoly=chlOrPoly;
+		this.iodOrGau=iodOrGau;
+		this.biopatch=biopatch;
 		this.glue=glue;
 	}
 	
-	public boolean getClorhexidine() {
-		return this.chlorhexidine;
+	public boolean getChlOrPoly() {
+		return this.chlOrPoly;
 	}
 	
-	public boolean getIodine() {
-		return this.iodine;
+	public boolean getIodOrGau() {
+		return this.iodOrGau;
 	}
 	
-	public boolean getPoly() {
-		return this.polyurethane;
-	}
-	
-	public boolean getGauze() {
-		return this.gauze;
+	public boolean getBioptach() {
+		return this.biopatch;
 	}
 	
 	public boolean getGlue() {
