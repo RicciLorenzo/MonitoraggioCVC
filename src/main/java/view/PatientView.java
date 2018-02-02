@@ -14,7 +14,6 @@ import model.Patient;
 
 public class PatientView extends VerticalLayout implements View{
 
-	private Label patientLabel;
 	private Label name;
 	private Label surname;
 	private Label fiscalCode;
@@ -29,7 +28,6 @@ public class PatientView extends VerticalLayout implements View{
 	
 	
 	public PatientView(Patient p) {
-		patientLabel = new Label(p.getPateintLabel());
 		name = new Label(p.getName());
 		surname = new Label(p.getSurname());
 		fiscalCode = new Label(p.getFiscalCode());
@@ -44,12 +42,8 @@ public class PatientView extends VerticalLayout implements View{
 		
 		anticoagulant = new CheckBox("Terapia anticoagulante");
 		anticoagulant.setReadOnly(true);
-		placement = new Label(p.getPlacementType());
-		if(p.getPlacementType().equalsIgnoreCase("altro"))
-		{
-			otherPlacement = new Label(p.getOtherPlacement());
-		}
-		
+		placement = new Label(p.getPlacement());
+
 		
 		
 	}

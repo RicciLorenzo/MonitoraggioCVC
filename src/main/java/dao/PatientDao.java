@@ -87,8 +87,9 @@ public class PatientDao {
 					String allergy0 = rs.getString("allergy1");
 					String allergy1 = rs.getString("allergy2");
 					boolean aT = rs.getBoolean("anticoagulant_therapy");
+					
 
-					patient = new Patient(patientLabel, fiscalCode, name, surname, birthday, dateOfPlacement, allergy0, allergy1, aT);
+					patient = new Patient(fiscalCode, name, surname, birthday, dateOfPlacement, allergy0, allergy1, aT, rs.getString("placement"));
 				}
 				
 				

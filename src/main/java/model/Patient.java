@@ -8,18 +8,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Patient {
 
-	private String patientLabel;
 	private String fiscalCode;
 	private String name;
 	private String surname;
 	private LocalDate birthday;
 	private LocalDate dateOfPlacement;
 	private Allergy allergy;
-	private String placementType;
-	private String otherPlacement;
+	private String placement;
 	
-	public Patient(String patientLabel, String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, boolean aT) {
-		this.patientLabel = patientLabel;
+	public Patient(String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, boolean aT, String Placement) {
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
@@ -28,8 +25,7 @@ public class Patient {
 		this.allergy = new Allergy(allergy0, aT);
 	}
 	
-	public Patient(String patientLabel, String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, String allergy1, boolean aT) {
-		this.patientLabel = patientLabel;
+	public Patient(String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, String allergy1, boolean aT, String Placement) {
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
@@ -37,10 +33,6 @@ public class Patient {
 		this.dateOfPlacement = dateOfPlacement;
 		this.allergy = new Allergy(allergy0, allergy1, aT);
 	}	
-	
-	public String getPateintLabel() {
-		return this.patientLabel;
-	}
 	
 	public String getFiscalCode() {
 		return this.fiscalCode;
@@ -80,12 +72,8 @@ public class Patient {
 		return allergy;
 	}
 	
-	public String getPlacementType() {
-		return placementType;
-	}
-	
-	public String getOtherPlacement() {
-		return otherPlacement;
+	public String getPlacement() {
+		return placement;
 	}
 	
 }
