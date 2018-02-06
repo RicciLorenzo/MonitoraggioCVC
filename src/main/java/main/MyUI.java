@@ -19,6 +19,7 @@ import view.AddCVCView;
 import view.AddPatientView;
 import view.AddRemovalCVCView;
 import view.AddScoreView;
+import view.AddUserView;
 import view.CVCView;
 import view.LoginView;
 import view.SearchView;
@@ -66,15 +67,20 @@ public class MyUI extends UI {
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
+    	
     	setContent(new LoginView());
-    /*	
+    /*
     	if(user==null) {
     		setContent(new LoginView());
     		}
-    	else {
-    		setContent(new SearchView());
-    		System.out.println("view di ricerca");
+    	else if (user.getType().equalsIgnoreCase("admin")){
+    		setContent(new AddUserView());
+    		System.out.println("view admin");
     		}
+    	else {
+    		setContent(new SearchView()); 
+    		System.out.println("view di ricerca");  		
+    	}
    */
     }
     

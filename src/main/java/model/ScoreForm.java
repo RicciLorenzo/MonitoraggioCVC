@@ -22,6 +22,23 @@ public class ScoreForm {
 	private String cvcBlood;
 	private String sign;
 	
+	public ScoreForm(LocalDate date, int score, boolean wash, boolean eparinizz, boolean sostInfusive, String medicationCause,
+			Medication medication, boolean diffInfusion, boolean diffAspiration, boolean suspInfection, boolean obstruction, String cvcBlood, String sign) {
+		this.date=date;
+		this.score=score;
+		this.wash=wash;
+		this.eparinizz=eparinizz;
+		this.sostInfusive=sostInfusive;
+		this.medicationCause=medicationCause;
+		this.medication=medication;
+		this.diffInfusion=diffInfusion;
+		this.diffAspiration=diffAspiration;
+		this.suspInfection=suspInfection;
+		this.obstruction=obstruction;
+		this.cvcBlood=cvcBlood;
+		this.sign=sign;
+	}
+	
 	public ScoreForm(int idScore, LocalDate date, int score, boolean wash, boolean eparinizz, boolean sostInfusive, String medicationCause,
 			Medication medication, boolean diffInfusion, boolean diffAspiration, boolean suspInfection, boolean obstruction, String cvcBlood, String sign) {
 		this.idScore=idScore;

@@ -75,28 +75,22 @@ public class LoginView extends VerticalLayout{
             	
             	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
             	
-            	if(name.getValue().equalsIgnoreCase("admin")) {
-        
-            		if((localAuth.authenticate(name.getValue(), psw.getValue()))) {
-            			//admin psw 21232f297a57a5a743894a0e4a801fc3
+            	if((localAuth.authenticate(name.getValue(), psw.getValue()))) {
+            		if(localAuth.getUser().getType().equalsIgnoreCase("admin")) {
             			goToAddUserView();
             			System.out.println("Login utente admin");
             		}
             		else {
-            			Notification notif = new Notification("CREDENZIALI INVALIDE ADMIN", Notification.Type.TRAY_NOTIFICATION);
-                		notif.setDelayMsec(1000);
-                		notif.show(Page.getCurrent());
-            		}
+                		goToSearchView();
+                		System.out.println("Login utente");
+                		}
             	}
-            	else if(localAuth.authenticate(name.getValue(), psw.getValue())) {
-            		goToSearchView();
-            		System.out.println("Login utente");
-            		}
             	else {
             		Notification notif = new Notification("CREDENZIALI INVALIDE", Notification.Type.TRAY_NOTIFICATION);
             		notif.setDelayMsec(1000);
             		notif.show(Page.getCurrent());
-            	}
+            	}	
+
             }
         });
        

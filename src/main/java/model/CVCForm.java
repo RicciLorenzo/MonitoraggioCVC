@@ -22,7 +22,30 @@ public class CVCForm {
 	private boolean tip;
 	private int nWay;
 	private String fasteningType;
+
 	
+	public CVCForm(Patient patient, Insertion insertion, boolean eco, boolean chest, 
+			Complication complication, String type, boolean tunneled, boolean uncuffed, Medication medication, int lumi, int french, float vein, boolean tip,
+			int way, String fastening, String destination, String sign ) {
+		
+		this.patient = patient;
+		this.insertion = insertion;
+		this.ecoguidedPositioning = eco;
+		this.chestRx = chest;
+		this.complication = complication;
+		this.type = type;
+		this.tunneled=tunneled;
+		this.uncuffed=uncuffed;
+		this.medication = medication;
+		this.lumi = lumi;
+		this.french = french;
+		this.veinDiameter = vein;
+		this.tip = tip;
+		this.nWay = way;
+		this.fasteningType = fastening;
+		this.destinationOfPatient = destination;
+		this.sign = sign;
+	} 
 	
 	public CVCForm(int idCVC, Patient patient, Insertion insertion, boolean eco, boolean chest, 
 			Complication complication, String type, boolean tunneled, boolean uncuffed, Medication medication, int lumi, int french, float vein, boolean tip,

@@ -19,6 +19,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.RadioButtonGroup;
@@ -26,6 +27,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+
+import model.CVCForm;
+import model.Complication;
+import model.Insertion;
+import model.Medication;
+import model.Patient;
 
 public class AddCVCView extends FormLayout implements View{
 
@@ -36,31 +43,31 @@ public class AddCVCView extends FormLayout implements View{
 	private CheckBox insertionD = new CheckBox("Difficoltà Inserimento");
 	private RadioButtonGroup<String> eco = new RadioButtonGroup<>("Posizionamento Ecoguidato", Arrays.asList("Sì","No"));
 	private RadioButtonGroup<String> rx = new RadioButtonGroup<>("Rx Torace", Arrays.asList("Sì","No"));
-	private RadioButtonGroup<String> complication = new RadioButtonGroup<>("Complicanze", Arrays.asList("Sì","No"));
+	private CheckBox complication = new CheckBox("Complicanze");
 	private CheckBox ema = new CheckBox("Ematoma");
 	private CheckBox punct = new CheckBox("Puntura Arteria");
 	private CheckBox pnx = new CheckBox("PNX");
 	private CheckBox otherCompC = new CheckBox("Altro");
 	private TextField otherCompT = new TextField("Specificare Altro");
-	private NativeSelect pres = new NativeSelect("Tipologia di Presidio", Arrays.asList("CICC","PICC", "FICC", "Midline", "Minimidline", "Port-A-Cath", "Broviac", "Quinton", "Tesio"));
+	private NativeSelect<String> pres = new NativeSelect<>("Tipologia di Presidio", Arrays.asList("CICC","PICC", "FICC", "Midline", "Minimidline", "Port-A-Cath", "Broviac", "Quinton", "Tesio"));
 	private RadioButtonGroup<String> tunn = new RadioButtonGroup<>("Tunnellizzato", Arrays.asList("Sì","No"));
 	private RadioButtonGroup<String> cuff = new RadioButtonGroup<>("Cuffuiato", Arrays.asList("Sì","No"));
-	private NativeSelect ins = new NativeSelect("Sito Inserimento", Arrays.asList("Succlavia", "Guigulare", "Braccio", "Altro"));
+	private NativeSelect<String> ins = new NativeSelect<String>("Sito Inserimento", Arrays.asList("Succlavia", "Guigulare", "Braccio", "Altro"));
 	private TextField otherIns = new TextField("Specificare Altro");
 	private RadioButtonGroup<String> side = new RadioButtonGroup<>("Lato", Arrays.asList("Dx","Sx"));
-	private NativeSelect fis = new NativeSelect("Fissaggio", Arrays.asList("Griplock", "Statlock", "Securacath", "Punti Sutura", "Altro"));
+	private NativeSelect<String> fis = new NativeSelect<String>("Fissaggio", Arrays.asList("Griplock", "Statlock", "Securacath", "Punti Sutura", "Altro"));
 	private TextField otherFis = new TextField("Specificare Altro");
-	private RadioButtonGroup<String> tip = new RadioButtonGroup<>("Punta", Arrays.asList("Aperta","Chiusa"));
+	private RadioButtonGroup<String> tip = new RadioButtonGroup<String>("Punta", Arrays.asList("Aperta","Chiusa"));
 	private RadioButtonGroup<String> way = new RadioButtonGroup<>("N. Vie", Arrays.asList("1","2","3"));
 	private RadioButtonGroup<String> med1 = new RadioButtonGroup<>("Medicazione", Arrays.asList("Clorexidina alcolica","Poliuretano"));
 	private RadioButtonGroup<String> med2 = new RadioButtonGroup<>("", Arrays.asList("Iodio","Garza e cerotto"));
 	private CheckBox glue = new CheckBox("Colla");
 	private CheckBox biop = new CheckBox("Biopatch");
 	private RadioButtonGroup<String> des1 = new RadioButtonGroup<>("Sede di Destinazione del Paziente", Arrays.asList("Domicilio","Ospedale", "U.O./Servizio"));
-	private NativeSelect des2 = new NativeSelect("Reparto Osepdale", Arrays.asList("Chirurgia", "Intensivo"));
+	private NativeSelect<String> des2 = new NativeSelect<String>("Reparto Osepdale", Arrays.asList("Chirurgia", "Intensivo"));
 	private TextField vein = new TextField("Diametro Vena (mm)");
-	private NativeSelect lum = new NativeSelect("Numero Lumi", Arrays.asList(1,2,3));
-	private NativeSelect fr = new NativeSelect("French", Arrays.asList(1,2,3,4,5,6));
+	private NativeSelect<Integer> lum = new NativeSelect<Integer>("Numero Lumi", Arrays.asList(1,2,3));
+	private NativeSelect<Integer> fr = new NativeSelect<Integer>("French", Arrays.asList(1,2,3,4,5,6));
 
 	private TextField sign = new TextField("Firma del Medico");
 	private Button back = new Button("Indietro");
@@ -79,6 +86,67 @@ public class AddCVCView extends FormLayout implements View{
 		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
         		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
 	
+		
+		add.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+            		
+            	Patient p = dao.PatientDao.getPatient(fc.getValue());
+            	String insertion="";
+            	if(String.valueOf(ins.getValue()).equals("Altro")) {
+            		insertion=otherIns.getValue();
+            	}
+            	else {
+            		insertion=ins.getValue();
+            	}
+            	Insertion insF = new Insertion(insertionM.getValue().equalsIgnoreCase("urgente"), insertionD.getValue(), insertion, (side.getValue().equals("DX")?true:false) ); 
+            	Complication compl = null;
+            	if(complication.getValue()) {
+            		if(otherCompC.getValue()) {
+            		compl = new Complication(true, ema.getValue(), punct.getValue(), pnx.getValue(), otherCompT.getValue());
+            		}
+            		else {
+                		compl = new Complication(true, ema.getValue(), punct.getValue(), pnx.getValue());            			
+            		}
+            	}
+            	else {
+            		compl = new Complication(false);
+            	}
+            	Medication med = new Medication((med1.getValue().equalsIgnoreCase("Clorexidina alcolica")?true:false), (med2.getValue().equalsIgnoreCase("Iodio")?true:false), glue.getValue(), biop.getValue());
+            	String fix = "";
+            	if(fis.getValue().equalsIgnoreCase("altro")) {
+            		fix=otherFis.getValue();
+            	}
+            	else {
+            		fix=fis.getValue();
+            	}
+            	String destin="";
+            	if(des1.getValue().equals("Ospedale")) {
+            		destin=des2.getValue();
+            	}
+            	else {
+            		destin=des1.getValue();
+            	}
+            	
+            	CVCForm cvc= new CVCForm(p, insF, (eco.getValue().equals("DX")?true:false), (rx.getValue().equals("DX")?true:false), compl, pres.getValue(), (tunn.getValue().equals("Sì")?true:false), (cuff.getValue().equals("Sì")?true:false), med, lum.getValue(), fr.getValue(),
+            			Float.parseFloat(vein.getValue()), (tip.getValue().equals("Aperta")?true:false), Integer.valueOf(way.getValue()).intValue(), fix, destin, sign.getValue());
+ 	
+            		if ( dao.CVCDao.addCVC(cvc) ) {
+            				Notification notif = new Notification("SCHEDA SALVATA", Notification.Type.TRAY_NOTIFICATION);
+            				notif.setDelayMsec(1000);//salvato con successo
+            				notif.show(Page.getCurrent());
+            				UI.getCurrent().getNavigator().navigateTo("");
+            			}
+            		else {
+            			Notification notif = new Notification("SCHEDA NON SALVATA", Notification.Type.TRAY_NOTIFICATION);
+                		notif.setDelayMsec(1000);
+                		notif.show(Page.getCurrent());
+            			}
+            		}
+			});		
+		
+		
+		
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 	}
 	

@@ -5,16 +5,23 @@ import java.util.Arrays;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
+
+import model.Medication;
+import model.ScoreForm;
 
 public class AddScoreView extends FormLayout implements View{
 
@@ -45,6 +52,10 @@ public class AddScoreView extends FormLayout implements View{
 	private RadioButtonGroup<String> med2 = new RadioButtonGroup<>("", Arrays.asList("Iodio","Garza e cerotto"));
 	private CheckBox glue = new CheckBox("Colla");
 	private CheckBox biop = new CheckBox("Biopatch");
+	private CheckBox diffInf = new CheckBox("Difficoltà Infusione");
+	private CheckBox diffAsp = new CheckBox("Difficoltà Aspirazione");
+	private CheckBox sospInf = new CheckBox("Sospetta Infezione");
+	private CheckBox obs = new CheckBox("Ostruzione");
 	private RadioButtonGroup<String> emCVC = new RadioButtonGroup<>("Emocultura da CVC", Arrays.asList("Sì","No", "Altro"));
 	private TextField otherEm = new TextField("Specificare Altro");
 	private TextField sign = new TextField("Firma");
@@ -55,7 +66,48 @@ public class AddScoreView extends FormLayout implements View{
 		setMargin(true);
 		sostMed.setEmptySelectionAllowed(false);
 		score.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
-		addComponents(title,date,score0,score1,score2,score3,score4,score5,score,wash,epa,inf,sostMed,med1,med2,glue,biop,emCVC,otherEm,sign,add);
+		addComponents(title,date,score0,score1,score2,score3,score4,score5,score,wash,epa,inf,sostMed,med1,med2,glue,biop,diffInf,diffAsp,sospInf,obs,emCVC,otherEm,sign,add);
+		
+
+		
+		add.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+            			
+        		LocalDate dateS = date.getValue();
+        		int point = Integer.valueOf(score.getValue()).intValue();
+        		boolean wa = wash.getValue().equalsIgnoreCase("sì")?true:false;
+        		boolean ep = epa.getValue().equalsIgnoreCase("sì")?true:false;
+        		boolean set = inf.getValue().equalsIgnoreCase("sì")?true:false;
+        		String motMed = sostMed.getValue();
+        		boolean md1 = med1.getValue().equalsIgnoreCase("Clorexidina alcolica")?true:false;
+        		boolean md2 = med2.getValue().equalsIgnoreCase("iodio")?true:false;
+        		Medication med = new Medication(md1, md2, glue.getValue(), biop.getValue());
+        		String emo="";
+        		if(emCVC.getValue().equalsIgnoreCase("altro")) {
+        			emo = otherEm.getValue();
+        		}
+        		else
+        		{
+        			emo = emCVC.getValue();
+        		}
+        		String sig = sign.getValue();
+        		//add field requested from medic
+        		ScoreForm scoreDB = new ScoreForm(dateS, point, wa, ep, set, motMed, med, diffInf.getValue(), diffAsp.getValue(), sospInf.getValue(), obs.getValue(), emo, sig);
+            	
+            		if ( dao.ScoreCVCDao.addScoreCVC(scoreDB)) {
+            				Notification notif = new Notification("SCORE SALVATO", Notification.Type.TRAY_NOTIFICATION);
+            				notif.setDelayMsec(1000);//salvato con successo
+            				notif.show(Page.getCurrent());
+            				UI.getCurrent().getNavigator().navigateTo("");
+            			}
+            		else {
+            			Notification notif = new Notification("SCORE NON SALVATO", Notification.Type.TRAY_NOTIFICATION);
+                		notif.setDelayMsec(1000);
+                		notif.show(Page.getCurrent());
+            			}
+            		}
+			});
 		
 	}
 
