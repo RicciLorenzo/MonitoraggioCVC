@@ -1,11 +1,14 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class StatisticDao {
@@ -14,7 +17,9 @@ public class StatisticDao {
 	private final static String jdbcUsername = "postgres";
 	private final static String jdbcPassword = "ciao";
 	
-	private final static String jdbcTable = "CVC_Form";
+	private final static String tableName = "CVC_Form";
+	
+	//for all date is the last day of the month or the current day
 	
 	//first position urgent, second programmed (modalità inserimento)
 	public static int[] getInsM(LocalDate date) {
@@ -26,6 +31,39 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}
+		
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND insertion_mode = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND insertion_mode = 0 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}
 		
 		
 		return res;
@@ -41,6 +79,39 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}
+
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND difficulty_insertion = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND difficulty_insertion = 0 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}		
 		
 		return res;
 	}
@@ -55,7 +126,40 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}	
+	
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND ecoguided_positioning = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND ecoguided_positioning = 0 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}		
+		
 		return res;
 	}
 	
@@ -69,7 +173,41 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}	
+
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND chest_rx = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx = 0 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}			
+		
+		
 		return res;
 	}
 	
@@ -83,10 +221,46 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}	
+
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND tip = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND tip = 0 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}			
+		
+		
 		return res;
 	}	
 	
+	
+	//TO DO
 	//first position 1, second 2, third 3 (n. vie)
 	public static int[] getWay(LocalDate date) {
 		int[] res = {0,0,0};
@@ -111,10 +285,46 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}	
+
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND complication_bool = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND complication_bool = 0 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}			
+		
+		
 		return res;
 	}	
 	
+	
+	//TO DO
 	//first position ematoma, second arteria, third pnx, fourth other (comlicanze sì)
 	public static int[] getComps(LocalDate date) {
 		int[] res = {0,0,0,0};
