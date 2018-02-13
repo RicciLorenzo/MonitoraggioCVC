@@ -48,7 +48,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND insertion_mode = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND insertion_mode = 0 GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -96,7 +96,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND difficulty_insertion = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND difficulty_insertion = 0 GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -143,7 +143,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND ecoguided_positioning = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND ecoguided_positioning = 0 GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -190,7 +190,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx = 0 GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -238,7 +238,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND tip = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND tip = 0 GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -271,7 +271,49 @@ public class StatisticDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			}	
+	
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(n_way) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND n_way = 1 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res[0]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(n_way) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND n_way = 2 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[1]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(n_way) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND n_way = 3 GROUP BY id_CVC";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+
+			res[2]=rs.getInt(1);
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}			
+				
+		
 		return res;
 	}	
 	
@@ -302,7 +344,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND complication_bool = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND complication_bool = 0 GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
