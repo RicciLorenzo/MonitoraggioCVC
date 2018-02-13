@@ -1,36 +1,22 @@
 package view;
 
-import java.net.URI;
-import java.util.ArrayList;
-
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.Page;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
-
 import main.Authentication;
 import main.MyUI;
 import model.User;
 
+@SuppressWarnings("serial")
 
 public class SearchView extends VerticalLayout implements View{
 
@@ -55,7 +41,6 @@ public class SearchView extends VerticalLayout implements View{
 		addP.addClickListener(event -> addCVC());
 		
 		Component search = search();
-		Component pt = result();
 		addComponents(logout, title, search, addP, stat);
 		setComponentAlignment(logout, Alignment.TOP_RIGHT);
 		setMargin(true);
@@ -75,43 +60,6 @@ public class SearchView extends VerticalLayout implements View{
 		search.setMargin(true);
 		search.setSpacing(true);
 		pan.setContent(search);
-		return pan;
-	}
-	
-	private Component result() {
-		HorizontalLayout hor = new HorizontalLayout();
-		GridLayout res = new GridLayout(6,2);
-		res.setSizeUndefined();
-		Panel pan = new Panel();
-		Panel pan1 = new Panel();
-		pan.setSizeUndefined();
-		
-		Label name = new Label("Nome");
-		Label surname = new Label("Cognome");
-		Label date = new Label("Data di Nascita");
-		Label fiscal = new Label("Codice Fiscale");
-		Label ins = new Label("Inserimento");
-		Label closed = new Label("Chiuso");
-		Button vis = new Button("Visualizza");
-		
-		Label nameT = new Label("Mario");
-		Label surnameT = new Label("Rossi");
-		Label birthT = new Label("17/09/1994");
-		Label fiscalT = new Label("RSSMRI94P17M172G");
-		Label insT = new Label("Succlavia DX");
-		Label closedT = new Label("No");
-		
-		res.addComponents(name, surname, date, fiscal, ins, closed, nameT, surnameT, birthT, fiscalT, insT, closedT);
-		
-		res.setMargin(true);
-		res.setSpacing(true);
-		pan1.setContent(res);
-		hor.addComponents(pan1, vis);
-		
-		hor.setMargin(true);
-		hor.setSpacing(true);
-		hor.setComponentAlignment(vis, Alignment.MIDDLE_CENTER);
-		pan.setContent(hor);
 		return pan;
 	}
 	

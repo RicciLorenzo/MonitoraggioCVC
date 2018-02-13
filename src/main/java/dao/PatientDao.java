@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Blob;
 import java.sql.Date;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,10 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-
 import model.Allergy;
 import model.Patient;
-import model.User;
 
 public class PatientDao {
 
@@ -78,7 +75,6 @@ public class PatientDao {
 				ResultSet rs = st.getResultSet();
 				
 				while (rs.next()) {
-					String patientLabel = rs.getString("patient_label");
 					String fiscalCode = rs.getString("fiscal_code");
 					String name = rs.getString("name");
 					String surname = rs.getString("surname");

@@ -1,8 +1,7 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
+import java.util.Arrays;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -16,10 +15,10 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-
 import main.MyUI;
-import model.Allergy;
 import model.Encode;
+
+@SuppressWarnings("serial")
 
 public class AddUserView extends VerticalLayout implements View{
 

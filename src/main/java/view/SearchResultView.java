@@ -1,12 +1,8 @@
 package view;
 
-import java.net.URI;
 import java.util.ArrayList;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.navigator.ViewProvider;
-import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -16,6 +12,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
+@SuppressWarnings("serial")
 
 public class SearchResultView extends VerticalLayout implements View{
 
@@ -34,6 +32,7 @@ public class SearchResultView extends VerticalLayout implements View{
 		setMargin(true);
 		setSpacing(true);
 		addComponents(back, nores);
+		nores.setVisible(false);
 		setComponentAlignment(back, Alignment.TOP_RIGHT);
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 		if(name.equals("") || !(dao.PatientDao.patientExist(name)))
@@ -43,7 +42,7 @@ public class SearchResultView extends VerticalLayout implements View{
 	}
 	
 	
-	
+	//use model.cvcpreview 
 	private Component result() {
 		HorizontalLayout hor = new HorizontalLayout();
 		GridLayout res = new GridLayout(6,2);

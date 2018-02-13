@@ -73,7 +73,7 @@ public class ScoreCVCDao {
 	
 	public static ArrayList<ScoreForm> getScoreCVC(int id) {
 		
-		ArrayList<ScoreForm> res = new ArrayList();
+		ArrayList<ScoreForm> res = new ArrayList<ScoreForm>();
 	
 		for(Integer i : getIdScore(id)) {
 			res.add(	getSingleScoreCVC(i.intValue()));
@@ -85,7 +85,7 @@ public class ScoreCVCDao {
 	//get list of id of scores
 	private static ArrayList<Integer> getIdScore(int id) {
 		
-		ArrayList<Integer> res = new ArrayList();
+		ArrayList<Integer> res = new ArrayList<Integer>();
 		System.out.println("Try Database Connection");
 		try {
 			Class.forName("org.postgresql.Driver");

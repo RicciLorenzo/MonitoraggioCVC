@@ -1,38 +1,27 @@
 package view;
 
 import java.util.Arrays;
-
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
-
 import model.CVCForm;
 import model.Complication;
 import model.Insertion;
 import model.Medication;
 import model.Patient;
+
+@SuppressWarnings("serial")
 
 public class AddCVCView extends FormLayout implements View{
 
@@ -86,6 +75,28 @@ public class AddCVCView extends FormLayout implements View{
 		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
         		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
 	
+		ema.setEnabled(false);
+		punct.setEnabled(false);
+		pnx.setEnabled(false);
+		otherCompC.setEnabled(false);
+		otherCompT.setEnabled(false);
+		
+		complication.addValueChangeListener(e -> enableComp(complication.getValue()));
+		
+		otherCompC.addValueChangeListener(e -> enableOtherComp(otherCompC.getValue()));
+		
+		tunn.setEnabled(false);
+		cuff.setEnabled(false);
+		
+		pres.addValueChangeListener(e -> enableTC(pres.getValue()));
+		
+		otherIns.setEnabled(false);
+		
+		ins.addValueChangeListener(e -> enableIns(ins.getValue()));
+		
+		otherFis.setEnabled(false);
+		
+		fis.addValueChangeListener(e -> enableFis(fis.getValue()));
 		
 		add.addClickListener(new ClickListener() {
             @Override
@@ -151,12 +162,78 @@ public class AddCVCView extends FormLayout implements View{
 	}
 	
 	
+	private void enableFis(String value) {
+		if(value.equalsIgnoreCase("altro")) {
+			otherFis.setEnabled(true);
+		}
+		else {
+			otherFis.setEnabled(false);
+			otherFis.clear();
+		}
+	}
+
+
+	private void enableIns(String value) {
+		if(value.equalsIgnoreCase("altro")) {
+			otherIns.setEnabled(true);
+		}
+		else {
+			otherIns.setEnabled(false);
+			otherIns.clear();
+		}
+	}
+
+
+	private void enableTC(String value) {
+		if(value.equalsIgnoreCase("cicc") || value.equalsIgnoreCase("ficc") || value.equalsIgnoreCase("picc")) {
+			tunn.setEnabled(true);
+			cuff.setEnabled(true);
+		}
+		else {
+			tunn.setEnabled(false);
+			tunn.clear();
+			cuff.setEnabled(false);
+			cuff.clear();
+		}
+	}
+
+
+	private void enableOtherComp(boolean state) {
+		if(state) {
+			otherCompT.setEnabled(true);
+		}
+		else {
+			otherCompT.setEnabled(false);
+			otherCompT.clear();
+		}
+	}
+
+
 	public AddCVCView(String fiscalCode) {
 		this();
 		fc.setValue(fiscalCode);
 		}
 
-
+	private void enableComp(boolean state) {
+		if(state) {
+			ema.setEnabled(false);
+			ema.clear();
+			punct.setEnabled(false);
+			punct.clear();
+			pnx.setEnabled(false);
+			pnx.clear();
+			otherCompC.setEnabled(false);
+			otherCompC.clear();
+		}
+		else {
+			ema.setEnabled(true);
+			punct.setEnabled(true);
+			pnx.setEnabled(true);
+			otherCompC.setEnabled(true);
+		}
+	}
+	
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
 		if(event.getParameters().isEmpty())

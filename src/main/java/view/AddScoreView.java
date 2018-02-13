@@ -2,7 +2,6 @@ package view;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -22,6 +21,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import model.Medication;
 import model.ScoreForm;
+
+@SuppressWarnings("serial")
 
 public class AddScoreView extends FormLayout implements View{
 
@@ -68,7 +69,9 @@ public class AddScoreView extends FormLayout implements View{
 		score.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
 		addComponents(title,date,score0,score1,score2,score3,score4,score5,score,wash,epa,inf,sostMed,med1,med2,glue,biop,diffInf,diffAsp,sospInf,obs,emCVC,otherEm,sign,add);
 		
-
+		otherEm.setEnabled(false);
+		
+		emCVC.addValueChangeListener(e -> enableEm(emCVC.getValue()));
 		
 		add.addClickListener(new ClickListener() {
             @Override
@@ -93,7 +96,7 @@ public class AddScoreView extends FormLayout implements View{
         		}
         		String sig = sign.getValue();
         		//add field requested from medic
-        		ScoreForm scoreDB = new ScoreForm(dateS, point, wa, ep, set, motMed, med, diffInf.getValue(), diffAsp.getValue(), sospInf.getValue(), obs.getValue(), emo, sig);
+        		ScoreForm scoreDB = new ScoreForm(Integer.valueOf(cvcId).intValue(), dateS, point, wa, ep, set, motMed, med, diffInf.getValue(), diffAsp.getValue(), sospInf.getValue(), obs.getValue(), emo, sig);
             	
             		if ( dao.ScoreCVCDao.addScoreCVC(scoreDB)) {
             				Notification notif = new Notification("SCORE SALVATO", Notification.Type.TRAY_NOTIFICATION);
@@ -109,6 +112,16 @@ public class AddScoreView extends FormLayout implements View{
             		}
 			});
 		
+	}
+
+	private void enableEm(String value) {
+		if(value.equalsIgnoreCase("altro")) {
+			otherEm.setEnabled(true);
+		}
+		else {
+			otherEm.setEnabled(false);
+			otherEm.clear();
+		}
 	}
 
 	@Override
