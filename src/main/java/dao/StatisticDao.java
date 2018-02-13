@@ -40,7 +40,7 @@ public class StatisticDao {
 			String firstS = year+"-"+month+"-1";
 			Date first = Date.valueOf(firstS);
 			Date last = Date.valueOf(date);
-			String sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND insertion_mode = 1 GROUP BY id_CVC";
+			String sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND insertion_mode IS TRUE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -48,7 +48,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND insertion_mode = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND insertion_mode IS FALSE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -88,7 +88,7 @@ public class StatisticDao {
 			String firstS = year+"-"+month+"-1";
 			Date first = Date.valueOf(firstS);
 			Date last = Date.valueOf(date);
-			String sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND difficulty_insertion = 1 GROUP BY id_CVC";
+			String sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND difficulty_insertion IS TRUE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -96,7 +96,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND difficulty_insertion = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND difficulty_insertion IS FALSE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -135,7 +135,7 @@ public class StatisticDao {
 			String firstS = year+"-"+month+"-1";
 			Date first = Date.valueOf(firstS);
 			Date last = Date.valueOf(date);
-			String sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND ecoguided_positioning = 1 GROUP BY id_CVC";
+			String sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND ecoguided_positioning IS TRUE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -143,7 +143,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND ecoguided_positioning = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND ecoguided_positioning IS FALSE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -182,7 +182,7 @@ public class StatisticDao {
 			String firstS = year+"-"+month+"-1";
 			Date first = Date.valueOf(firstS);
 			Date last = Date.valueOf(date);
-			String sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND chest_rx = 1 GROUP BY id_CVC";
+			String sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND chest_rx IS TRUE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -190,7 +190,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx IS FALSE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -230,7 +230,7 @@ public class StatisticDao {
 			String firstS = year+"-"+month+"-1";
 			Date first = Date.valueOf(firstS);
 			Date last = Date.valueOf(date);
-			String sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND tip = 1 GROUP BY id_CVC";
+			String sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND tip IS TRUE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -238,7 +238,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND tip = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND tip IS FALSE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -336,7 +336,7 @@ public class StatisticDao {
 			String firstS = year+"-"+month+"-1";
 			Date first = Date.valueOf(firstS);
 			Date last = Date.valueOf(date);
-			String sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND complication_bool = 1 GROUP BY id_CVC";
+			String sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"') AND complication_bool IS TRUE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
@@ -344,7 +344,7 @@ public class StatisticDao {
 
 			res[0]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND complication_bool = 0 GROUP BY id_CVC";
+			sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND complication_bool IS FALSE GROUP BY id_CVC";
 			
 			st.executeQuery(sql);
 				
