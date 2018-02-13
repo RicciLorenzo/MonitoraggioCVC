@@ -381,5 +381,44 @@ public class StatisticDao {
 		return res;
 	}	
 	
+	
+	public static int getNumPatient(LocalDate date) {
+		int res = 0;
+		
+		System.out.println("Try Database Connection");
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
+
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			int month = date.getMonthValue();
+			int year = date.getYear();
+			String firstS = year+"-"+month+"-1";
+			Date first = Date.valueOf(firstS);
+			Date last = Date.valueOf(date);
+			String sql = "SELECT COUNT(fiscal_code) FROM Patient WHERE date_of_placement BETWEEN '"+first+"' AND '"+last+"'";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			res=rs.getInt(1);
+
+			
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}		
+		
+		return res;
+	}
 		
 }
