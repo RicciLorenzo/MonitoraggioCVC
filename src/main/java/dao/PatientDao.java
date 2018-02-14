@@ -134,5 +134,39 @@ public class PatientDao {
 		return false;
 	}
 	
+	public static boolean updatePlacement(String place, String id) {
+		
+		System.out.println("Try Database Connection");
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
+		
+		
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			String sql = "UPDATE "+tableName+" SET placement = '"+place+"' WHERE fiscal_code ILIKE '"+id+"'";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			return rs.first();
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}
+		
+		
+		return false;
+		
+	}
+	
 	
 }

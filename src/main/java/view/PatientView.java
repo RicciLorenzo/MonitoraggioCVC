@@ -2,33 +2,40 @@ package view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.ui.CheckBox;
+import com.vaadin.server.Page;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import model.Patient;
 
 @SuppressWarnings("serial")
 
 public class PatientView extends VerticalLayout implements View{
 
+	public final static String NAME = "PATIENT"; 
 	private Label name;
 	private Label surname;
 	private Label fiscalCode;
+	private Label birthday;
 	private Label dateOfPlacement;
 	private Label allergy1;
 	private Label allergy2;
 	private Label allergy3;
-	private CheckBox anticoagulant;
-	private Label placement;	
+	private Label anticoagulant;
+	private TextField placement;
+	private Button save;
 	
 	public PatientView(Patient p) {
-		name = new Label(p.getName());
-		surname = new Label(p.getSurname());
-		fiscalCode = new Label(p.getFiscalCode());
-		//image
-		dateOfPlacement = new Label(p.getDateOfPlacement());
+		name = new Label("Nome: "+p.getName());
+		surname = new Label("Cognome: "+p.getSurname());
+		fiscalCode = new Label("Codice Fiscale: "+p.getFiscalCode());
+		birthday = new Label("Data di Nascita: "+p.getBirthday());
+		dateOfPlacement = new Label("Data Posizionamento: "+p.getDateOfPlacement());
 		if(!(p.getAllergy().getA0().equals("nessuna")))
 			allergy1 = new Label("Nessuna");
 
@@ -36,11 +43,28 @@ public class PatientView extends VerticalLayout implements View{
 		if(!(p.getAllergy().getA1().isEmpty()))
 			allergy2 = new Label(p.getAllergy().getA1());
 		
-		anticoagulant = new CheckBox("Terapia anticoagulante");
-		anticoagulant.setReadOnly(true);
-		placement = new Label(p.getPlacement());
-
-		addComponents(name, surname, fiscalCode, dateOfPlacement, allergy1, allergy2, allergy3, anticoagulant, placement);
+		anticoagulant = new Label("Terapia anticoagulante: "+(p.getAllergy().getAT()?"Sì":"No"));
+		placement = new TextField("Posizionamento in: ");
+		save = new Button("Salva Modifiche");
+		addComponents(new Label("Modifica Paziente"), name, surname, fiscalCode, birthday, dateOfPlacement, new Label("Allergie:"), allergy1, allergy2, allergy3, anticoagulant, placement, save);
+		
+		save.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+            			
+            		if ( dao.PatientDao.updatePlacement(placement.getValue(), p.getFiscalCode()) ) {
+            				Notification notif = new Notification("PAZIENTE SALVATO", Notification.Type.TRAY_NOTIFICATION);
+            				notif.setDelayMsec(1000);//salvato con successo
+            				notif.show(Page.getCurrent());
+            				UI.getCurrent().getNavigator().navigateTo("");
+            			}
+            		else {
+            			Notification notif = new Notification("DATI ERRATI, PAZIENTE NON SALVATO", Notification.Type.TRAY_NOTIFICATION);
+                		notif.setDelayMsec(1000);
+                		notif.show(Page.getCurrent());
+            			}
+            		}
+			});
 		
 	}
 

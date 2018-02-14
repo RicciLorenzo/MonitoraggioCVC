@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
@@ -13,13 +12,14 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import model.CVCPreview;
+
 @SuppressWarnings("serial")
 
 public class SearchResultView extends VerticalLayout implements View{
 
 	public final static String NAME = "SEARCH_RESULT";
 	
-	private ArrayList<String> result;
 	private Label nores = new Label("Non ci sono risultati corrispondenti alla ricerca");
 	
 	private Button back = new Button("Indietro");
@@ -37,13 +37,15 @@ public class SearchResultView extends VerticalLayout implements View{
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 		if(name.equals("") || !(dao.PatientDao.patientExist(name)))
 			nores.setVisible(true);
-		addComponent(result());
+		for(CVCPreview cvc: dao.CVCDao.CVCPreview(name)) {
+			addComponent(result(cvc));
+		}
 		
 	}
 	
 	
 	//use model.cvcpreview 
-	private Component result() {
+	private Component result(CVCPreview cvcP) {
 		HorizontalLayout hor = new HorizontalLayout();
 		GridLayout res = new GridLayout(6,2);
 		res.setSizeUndefined();
@@ -60,12 +62,12 @@ public class SearchResultView extends VerticalLayout implements View{
 		Button vis = new Button("Visualizza");
 		Button cvc = new Button("Aggiungi CVC al Paziente");
 		
-		Label nameT = new Label("Mario");
-		Label surnameT = new Label("Rossi");
-		Label birthT = new Label("17/09/1994");
-		Label fiscalT = new Label("RSSMRI94P17M172G");
-		Label insT = new Label("Succlavia DX");
-		Label closedT = new Label("No");
+		Label nameT = new Label(cvcP.getName());
+		Label surnameT = new Label(cvcP.getSurname());
+		Label birthT = new Label(cvcP.getBirthday());
+		Label fiscalT = new Label(cvcP.getFiscalCode());
+		Label insT = new Label(cvcP.getSite());
+		Label closedT = new Label(cvcP.getClosed()?"Sì":"No");
 		
 		res.addComponents(name, surname, date, fiscal, ins, closed, nameT, surnameT, birthT, fiscalT, insT, closedT);
 		
@@ -73,7 +75,7 @@ public class SearchResultView extends VerticalLayout implements View{
 		res.setSpacing(true);
 		pan1.setContent(res);
 		hor.addComponents(pan1, vis, cvc);
-		
+		vis.addClickListener(e -> goToCVC(cvcP.getCVCId()));
 		hor.setMargin(true);
 		hor.setSpacing(true);
 		hor.setComponentAlignment(vis, Alignment.MIDDLE_CENTER);
@@ -84,6 +86,11 @@ public class SearchResultView extends VerticalLayout implements View{
 	
 
 	
+	private void goToCVC(int id) {
+		UI.getCurrent().getNavigator().navigateTo(CVCView.NAME+"/"+id);
+	}
+
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 		UI.getCurrent().getNavigator().setErrorView(new SearchResultView(""));

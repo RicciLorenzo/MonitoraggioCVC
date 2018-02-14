@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Allergy {
 
 	private String allergy0="";

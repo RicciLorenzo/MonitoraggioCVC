@@ -62,6 +62,10 @@ public class ScoreForm {
 		this.idCVC=idCVC;
 	}
 	
+	public int getIdScore() {
+		return this.idScore;
+	}
+	
 	public int getIdCVC() {
 		return this.idCVC;
 	}

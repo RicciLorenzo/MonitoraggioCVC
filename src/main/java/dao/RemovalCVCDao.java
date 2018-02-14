@@ -33,10 +33,9 @@ public class RemovalCVCDao {
 			Date sqlDate = java.sql.Date.valueOf(removalCVC.getRemovalDate());
 			String sql = "INSERT INTO "+tableName+"(id_remove, removal_date, motivation, cvc_bacteremia, cvc_tip_culture, closed) VALUES "
 					+ "			("+removalCVC.getId()+", "+sqlDate+", "+removalCVC.getMotivation()+", "+removalCVC.getCVCBact()+", "+removalCVC.getCVCTip()+", true"+")";
-			
-			st.executeQuery(sql);
 				
-			ResultSet rs = st.getResultSet();
+			return st.executeUpdate(sql)!=0 ? true:false;
+			
 			
 			
 			}

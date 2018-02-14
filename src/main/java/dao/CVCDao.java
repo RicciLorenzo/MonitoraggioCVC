@@ -162,8 +162,8 @@ public class CVCDao {
 	
 	
 	//getPreviewCVC
-		public static CVCPreview CVCPreview(String id) {
-		CVCPreview res=null;
+		public static ArrayList<CVCPreview> CVCPreview(String id) {
+		ArrayList<CVCPreview> res = new ArrayList<CVCPreview>();
 		System.out.println("Try Database Connection");
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -178,13 +178,16 @@ public class CVCDao {
 			String sql = "SELECT id_cvc, patient_label, insertion_site, insertion_site_side FROM "+tableName+" WHERE patient_label ILIKE '"+id+"'";
 			st.executeQuery(sql);
 			ResultSet rs = st.getResultSet();
+			while(rs.next()) {
 			int idCVC = rs.getInt("id_cvc");
 			String patientLabel=rs.getString("patient_label");
 			boolean side= rs.getBoolean("insertion_site_site");
 			String insertion=rs.getString("insertion_site")+(side?" dx":" sx");
 			//dx true, sx false
 			model.Patient p = dao.PatientDao.getPatient(patientLabel);
-			res = new CVCPreview(idCVC, p.getName(), p.getSurname(), LocalDate.parse(p.getBirthday()), patientLabel, insertion, dao.RemovalCVCDao.CVCRemovalExist(idCVC) );
+			CVCPreview cvcP = new CVCPreview(idCVC, p.getName(), p.getSurname(), LocalDate.parse(p.getBirthday()), patientLabel, insertion, dao.RemovalCVCDao.CVCRemovalExist(idCVC) );
+			res.add(cvcP);
+				}
 			}
 			catch (SQLException e) {
 					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());

@@ -14,12 +14,14 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import model.CVCForm;
 import model.Patient;
+import model.RemovalCVC;
 import model.ScoreForm;
 
 @SuppressWarnings("serial")
 
 public class CVCView extends VerticalLayout implements View{
 	
+	public static final String NAME = "CVC";
 	private int cvcID;
 	private Patient p;
 	private CVCForm CVC;
@@ -30,20 +32,21 @@ public class CVCView extends VerticalLayout implements View{
 	
 	public CVCView(int id) {
 		this.cvcID=id;
-		CVC = dao.CVCDao.getCVC(id);
 		p = CVC.getPatient();
 	
 		setSpacing(true);
 		setMargin(true);
-		this.addComponents(buildTop(), title, buildPatient(p), scorL);
+		this.addComponents(buildTop(), title, buildPatient(p), buildCVC(Integer.valueOf(id).toString()), scorL);
 		
 		if(dao.ScoreCVCDao.CVCScoreExist(cvcID)) {
 			ArrayList<ScoreForm> scores = dao.ScoreCVCDao.getScoreCVC(cvcID);
 			for(ScoreForm score: scores)
 			this.addComponent(buildScore(score));
 		}
+		if(dao.RemovalCVCDao.CVCRemovalExist(id)) {
+			this.addComponents(remL, buildRemoval(Integer.valueOf(id).toString()));
+		}
 		
-		this.addComponent(scorL);
 		this.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
 		this.setComponentAlignment(scorL, Alignment.MIDDLE_CENTER);
 		this.setComponentAlignment(remL, Alignment.MIDDLE_CENTER);
@@ -79,11 +82,17 @@ public class CVCView extends VerticalLayout implements View{
 		Label anti = new Label("Terapia anticoagulante: "+ (p.getAllergy().getAT() ? "Sì":"No"));
 		Label position = new Label("Posizionamento in: "+p.getPlacement());
 		Button modify = new Button("Modifica");
+		modify.addClickListener(e -> modifyPatient(p.getFiscalCode()));
 		lay.addComponents(name, surname, birthday, fiscalCode, date, allergy, anti, position);
 		pan.setContent(lay);
 		return pan;
 	}
 	
+	private void modifyPatient(String id) {
+		UI.getCurrent().getNavigator().addView(PatientView.NAME, PatientView.class);
+		UI.getCurrent().getNavigator().navigateTo(PatientView.NAME+"/"+id);
+	}
+
 	private Component buildCVC(String CVCid){
 		VerticalLayout lay = new VerticalLayout();
 		CVCForm cvc = dao.CVCDao.getCVC(cvcID);
@@ -92,6 +101,7 @@ public class CVCView extends VerticalLayout implements View{
 		Label insD = new Label("Difficoltà Inserimento: "+(cvc.getInsertion().getdiffInsertion()?"Sì":"No"));
 		Label eco = new Label("Poszionamento Ecoguidato: "+(cvc.getEco()?"Sì":"No"));
 		Label rx = new Label("RX Torace: "+(cvc.getChest()?"Sì":"No"));
+		Label compl;
 		if(cvc.getComplication().hasComplication()) {
 			
 			String c="";
@@ -142,10 +152,10 @@ public class CVCView extends VerticalLayout implements View{
 						break;
 				}
 			}
-			Label compl = new Label("Complicanze: "+c);
+			compl = new Label("Complicanze: "+c);
 		}
 		else {
-			Label compl = new Label("Complicanze: Nessuna");
+			compl = new Label("Complicanze: Nessuna");
 		}
 		String cT="";
 		if(cvc.getType().equalsIgnoreCase("cicc")||cvc.getType().equalsIgnoreCase("picc")||cvc.getType().equalsIgnoreCase("ficc")) {
@@ -166,7 +176,7 @@ public class CVCView extends VerticalLayout implements View{
 		Label closed = new Label(dao.RemovalCVCDao.CVCRemovalExist(cvcID)?"Chiuso":"");
 		
 		//TO ADD COMPONENTS
-		lay.addComponents();
+		lay.addComponents(insM, insD, eco, rx, compl, pres, ins, fiss, tip, way, med, dest, lum, french, vein, sign, closed);
 		
 		pan.setContent(lay);
 		return pan;
@@ -175,18 +185,20 @@ public class CVCView extends VerticalLayout implements View{
 	private Component buildScore(ScoreForm score){
 		VerticalLayout lay = new VerticalLayout();
 		Panel pan = new Panel();
-		Label date; //data score
-		Label scoreN; //score number
-		Label wash; //lavaggio
-		Label epa; //eparinizz.???
-		Label sostI; //sostituzione set infusivo
-		Label medS; //sostituizione medicazione
-		Label med; //medicata con 
-		
-		
-		
-		//TO ADD COMPONENTS
-		lay.addComponents();
+		Label date = new Label("Data: "+score.getDate().toString() ); //data score
+		Label scoreN = new Label("Score: "+score.getScore()); //score number
+		Label wash = new Label("Lavaggio: "+(score.getWash()?"Sì":"No")); //lavaggio
+		Label epa = new Label("Eparinizz.: "+(score.getEparinizz()?"Sì":"No")); //eparinizz.???
+		Label sostI = new Label("Sostituzione Set Infusivo: "+(score.getSostInfusive()?"Sì":"No"));; //sostituzione set infusivo
+		Label medS = new Label("Sostituzione Medicazione: "+score.getMedicationCause()); 
+		Label med = new Label("Medicazione: "+(score.getMedication().getChlOrPoly()?"Clorexidina Alcolica, ":"Poliuretano, ")+(score.getMedication().getIodOrGau()?"Iodio":"Garza + cerotto")+(score.getMedication().getGlue()?", Colla":"")+(score.getMedication().getBioptach()?", Bioptach":"")); 
+		Label diffInf = new Label("Difficoltà Infusione: "+(score.getDiffInfusion()?"Sì":"No"));
+		Label diffAsp = new Label("Difficoltà Aspirazione: "+(score.getDiffAspiration()?"Sì":"No"));
+		Label sospInf = new Label("Sospetta Infezione: "+(score.getSuspInfection()?"Sì":"No"));
+		Label obs = new Label("Ostruzione: "+(score.getObstruction()?"Sì":"No"));
+		Label emo = new Label("Emocultura da Catetere Venoso: "+score.getCvcBlood());
+		Label sign = new Label("Firma: "+score.getSign());
+		lay.addComponents(date, scoreN, wash, epa, sostI, medS, med, diffInf, diffAsp, sospInf, obs, emo, sign);
 		
 		pan.setContent(lay);
 		return pan;
@@ -194,11 +206,14 @@ public class CVCView extends VerticalLayout implements View{
 	private Component buildRemoval(String cvcID) {
 		VerticalLayout lay = new VerticalLayout();
 		Panel pan = new Panel();
-
+		RemovalCVC remove = dao.RemovalCVCDao.getRemovalCVC(Integer.valueOf(cvcID).intValue());
+		Label date = new Label("Data Rimozione CVC: "+remove.getRemovalDate().toString());
+		Label mot = new Label("Motivazione: "+remove.getMotivation());
+		Label tip = new Label("Coltura punta CVC: "+(remove.getCVCTip()?"Sì":"No"));
+		Label bact = new Label("Batteriemia da Catetere correlata: "+(remove.getCVCBact()?"Sì":"No"));
+		Label closed = new Label("Chiuso"+(remove.getClosed()?"Sì":"No"));
 		
-		
-		//TO ADD COMPONENTS
-		lay.addComponents();
+		lay.addComponents(date, mot, tip, bact, closed);
 		
 		pan.setContent(lay);
 		return pan;

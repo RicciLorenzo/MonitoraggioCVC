@@ -25,7 +25,6 @@ public class AddPatientView extends FormLayout implements View{
 	public final static String Name = "ADD_PATIENT";
 
 	private Label title = new Label("Aggiungi Paziente");
-	private Label title1 = new Label("Modifica Paziente");
 	private TextField name = new TextField("Nome");
 	private TextField surname = new TextField("Cognome");
 	private TextField fiscalCode = new TextField("Codice Fiscale");

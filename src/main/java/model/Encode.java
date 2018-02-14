@@ -9,17 +9,17 @@ public class Encode {
 
 	public static String cryptingString(String messageToEncrypt){
 		
-		MessageDigest md5 = null;
+		MessageDigest sha256 = null;
 		
 		try {
-			md5 = MessageDigest.getInstance("SHA-256");
+			sha256 = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			}
 		
-		md5.update(StandardCharsets.UTF_8.encode(messageToEncrypt));
+		sha256.update(StandardCharsets.UTF_8.encode(messageToEncrypt));
 		
-		return (String.format("%032x", new BigInteger(1, md5.digest())));
+		return (String.format("%032x", new BigInteger(1, sha256.digest())));
 		
 	}
 
