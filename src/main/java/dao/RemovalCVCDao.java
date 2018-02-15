@@ -70,6 +70,7 @@ public class RemovalCVCDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
+			rs.next();
 			LocalDate removalDate = rs.getDate("removal_date").toLocalDate();
 			String mot = rs.getString("motivation");
 			boolean tipCulture = rs.getBoolean("cvc_tip_culture");
