@@ -32,6 +32,7 @@ public class StatisticView extends VerticalLayout implements View {
 	private static LocalDate[] dates = buildLastDay();
 	private Button back = new Button("Indietro");
 	private Label date = new Label(LocalDate.now().toString());
+	private Component chartPatient;
 	private Component chartInsM;
 	private Component chartDiffI;
 	private Component chartFis;
