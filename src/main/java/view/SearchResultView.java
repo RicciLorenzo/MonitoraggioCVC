@@ -47,7 +47,7 @@ public class SearchResultView extends VerticalLayout implements View{
 	
 	private Component buildPatient(Patient p) {
 		HorizontalLayout hor = new HorizontalLayout();
-		GridLayout res = new GridLayout(6,2);
+		GridLayout res = new GridLayout(4,2);
 		res.setSizeUndefined();
 		Panel pan = new Panel();
 		Panel pan1 = new Panel();

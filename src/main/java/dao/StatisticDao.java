@@ -43,7 +43,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND fastening ILIKE 'statlock'";
@@ -51,7 +51,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND fastening ILIKE 'securacath'";
@@ -59,7 +59,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[2]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (fastening IS NOT NULL OR fastening IS NOT ILIKE 'griplock' OR fastening IS NOT ILIKE 'statlock' OR fastening IS NOT ILIKE 'securacath' )";
@@ -67,7 +67,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[3]=rs.getInt(1);
 			
 			}
@@ -107,7 +107,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(insertion_mode) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND insertion_mode IS FALSE";
@@ -115,7 +115,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			}
@@ -155,7 +155,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(difficulty_insertion) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND difficulty_insertion IS FALSE";
@@ -163,7 +163,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			}
@@ -202,7 +202,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(ecoguided_positioning) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND ecoguided_positioning IS FALSE";
@@ -210,7 +210,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			}
@@ -249,7 +249,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx IS FALSE";
@@ -257,7 +257,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			}
@@ -297,7 +297,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(tip) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND tip IS FALSE";
@@ -305,7 +305,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			}
@@ -346,7 +346,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(n_way) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND n_way = 2";
@@ -354,7 +354,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(n_way) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND n_way = 3";
@@ -362,7 +362,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[2]=rs.getInt(1);
 			
 			}
@@ -402,7 +402,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(complication_bool) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND complication_bool IS FALSE";
@@ -410,7 +410,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			}
@@ -451,7 +451,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(artery_puncture) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND artery_puncture IS TRUE";
@@ -459,7 +459,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(pnx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND pnx IS TRUE";
@@ -467,7 +467,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[2]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(complication_other) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (complication_other IS NOT NULL OR complication_other IS NOT ILIKE '')";
@@ -475,7 +475,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[3]=rs.getInt(1);
 			
 			}
@@ -514,7 +514,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res=rs.getInt(1);
 
 			
@@ -555,7 +555,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'picc'";
@@ -563,7 +563,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[1]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'ficc'";
@@ -571,7 +571,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[2]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'midline'";
@@ -579,7 +579,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[3]=rs.getInt(1);
 
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'minimidline'";
@@ -587,7 +587,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[4]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'port a cath'";
@@ -595,7 +595,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[5]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'broviac'";
@@ -603,7 +603,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[6]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'quinton'";
@@ -611,7 +611,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[7]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(typology_structure) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND typology_structure ILIKE 'tesio'";
@@ -619,7 +619,7 @@ public class StatisticDao {
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
-
+			rs.next();
 			res[8]=rs.getInt(1);
 			
 			

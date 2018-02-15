@@ -9,12 +9,14 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import at.downdrown.vaadinaddons.highchartsapi.HighChart;
 import at.downdrown.vaadinaddons.highchartsapi.HighChartFactory;
 import at.downdrown.vaadinaddons.highchartsapi.exceptions.HighChartsException;
+import at.downdrown.vaadinaddons.highchartsapi.model.Axis;
 import at.downdrown.vaadinaddons.highchartsapi.model.ChartConfiguration;
 import at.downdrown.vaadinaddons.highchartsapi.model.ChartType;
 import at.downdrown.vaadinaddons.highchartsapi.model.data.HighChartsData;
@@ -29,11 +31,15 @@ public class StatisticView extends VerticalLayout implements View {
 	public final static String NAME = "STATISTIC_VIEW";
 	private static LocalDate[] dates = buildLastDay();
 	private Button back = new Button("Indietro");
+	private Label date = new Label(LocalDate.now().toString());
 	
 	public StatisticView() {
 			back.addClickListener(e -> UI.getCurrent().getNavigator().navigateTo(""));
-			this.addComponents(back, getChartInsM());
+			Component chartInsM = getChartInsM();
+			this.addComponents(back, date, chartInsM);
+			this.setComponentAlignment(date, Alignment.TOP_CENTER);
 			this.setComponentAlignment(back, Alignment.TOP_RIGHT);
+			this.setComponentAlignment(chartInsM, Alignment.MIDDLE_CENTER);
 			
 	}
 	
@@ -54,6 +60,24 @@ public class StatisticView extends VerticalLayout implements View {
 		return ret;
 	}
 
+	private Axis buildAxis() {
+		Axis x = new Axis(Axis.AxisType.xAxis);
+		x.getCategories().add("Gen");
+		x.getCategories().add("Feb");
+		x.getCategories().add("Mar");
+		x.getCategories().add("Apr");
+		x.getCategories().add("Mag");
+		x.getCategories().add("Giu");
+		x.getCategories().add("Lug");
+		x.getCategories().add("Ago");
+		x.getCategories().add("Set");
+		x.getCategories().add("Ott");
+		x.getCategories().add("Nov");
+		x.getCategories().add("Dic");
+	
+		return x;
+	}
+	
 	private Component getChartInsM() {
 		
 		HighChart chart = null;	
@@ -62,21 +86,29 @@ public class StatisticView extends VerticalLayout implements View {
 		column.setTitle("Statistica Modalità Inserimento");
 		column.setChartType(ChartType.COLUMN);
 		
+		Axis x = buildAxis();
+		column.setxAxis(x);
+		
 		ColumnChartPlotOptions columnOptions = new ColumnChartPlotOptions();
 		column.setPlotOptions(columnOptions);
 		
 		List<HighChartsData> urgentValues = new ArrayList<>();
-		urgentValues.add(new IntData(7));
-		urgentValues.add(new IntData(7));
-		urgentValues.add(new IntData(7));
-		urgentValues.add(new IntData(7));
-		urgentValues.add(new IntData(7));
-		urgentValues.add(new IntData(7));
-		urgentValues.add(new IntData(7));
+		List<HighChartsData> programmedValues = new ArrayList<>();
+
+		
+		for(LocalDate d : dates) {
+			int[] values = dao.StatisticDao.getInsM(d);
+			
+			urgentValues.add(new IntData(values[0]));
+			programmedValues.add(new IntData(values[1]));
+
+		}
 		
 		ColumnChartSeries urgentColumn = new ColumnChartSeries("Urgente", urgentValues);
+		ColumnChartSeries programmedColumn = new ColumnChartSeries("Programmato", programmedValues);
 		
 		column.getSeriesList().add(urgentColumn);
+		column.getSeriesList().add(programmedColumn);
 		
 		try {
 			chart = HighChartFactory.renderChart(column);
