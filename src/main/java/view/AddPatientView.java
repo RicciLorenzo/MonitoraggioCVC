@@ -57,7 +57,7 @@ public class AddPatientView extends FormLayout implements View{
 		setMargin(true);
 		setSpacing(true);
 		setSizeFull();
-		addComponents(title, name, surname, fiscalCode, birthday, placementDate, allergy1, allergy2, allergy3,
+		addComponents(title, name, surname, fiscalCode, birthday, placementDate, new Label("Allergie"), allergy1, allergy2, allergy3,
 				anticoagulant, placement, otherP, back, save, saveCVC);
 		
 		otherP.setEnabled(false);

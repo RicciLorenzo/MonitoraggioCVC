@@ -34,6 +34,8 @@ public class SearchView extends VerticalLayout implements View{
         UI.getCurrent().getNavigator().addView("", SearchView.class);
         UI.getCurrent().getNavigator().setErrorView(SearchView.class);
         UI.getCurrent().getNavigator().addView(StatisticView.NAME, StatisticView.class);
+        UI.getCurrent().getNavigator().addView(CVCView.NAME, CVCView.class);
+        UI.getCurrent().getNavigator().addView(AddScoreView.NAME, AddScoreView.class);
 
 		logout.addClickListener(e -> doLogout());
 		

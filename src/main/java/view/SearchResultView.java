@@ -87,7 +87,9 @@ public class SearchResultView extends VerticalLayout implements View{
 
 	
 	private void goToCVC(int id) {
-		UI.getCurrent().getNavigator().navigateTo(CVCView.NAME+"/"+id);
+		System.out.println("spostamento in scheda cvc");
+        UI.getCurrent().getNavigator().addView(CVCView.NAME, new CVCView(id));
+		UI.getCurrent().getNavigator().navigateTo(CVCView.NAME+"/"+String.valueOf(id));
 	}
 
 

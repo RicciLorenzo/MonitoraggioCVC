@@ -17,6 +17,7 @@ public class Complication {
 		this.hematoma=hematoma;
 		this.arteryPuncture=arteryPuncture;
 		this.pnx=pnx;
+		this.otherC="";
 	}
 	
 	public Complication(boolean complication, boolean hematoma, boolean arteryPuncture, boolean pnx, String otherC) {

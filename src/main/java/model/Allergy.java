@@ -3,11 +3,12 @@ package model;
 public class Allergy {
 
 	private String allergy0="";
-	private String allergy1=null;
+	private String allergy1="";
 	private boolean anticoagulantTheraphy;
 	
 	public Allergy(String allergy0, boolean aT) {
 		this.allergy0=allergy0;
+		this.allergy1="";
 		this.anticoagulantTheraphy=aT;
 	}
 	

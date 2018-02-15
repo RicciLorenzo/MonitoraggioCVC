@@ -1,8 +1,5 @@
 package model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +20,7 @@ public class Patient {
 		this.birthday=birthday;
 		this.dateOfPlacement = dateOfPlacement;
 		this.allergy = new Allergy(allergy0, aT);
+		this.placement=Placement;
 	}
 	
 	public Patient(String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, String allergy1, boolean aT, String Placement) {
@@ -32,6 +30,7 @@ public class Patient {
 		this.birthday=birthday;
 		this.dateOfPlacement = dateOfPlacement;
 		this.allergy = new Allergy(allergy0, allergy1, aT);
+		this.placement=Placement;
 	}	
 	
 	public String getFiscalCode() {
@@ -58,14 +57,14 @@ public class Patient {
 	}
 	
 	public String getDateOfPlacement() {
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		 Date date=null;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
 		try {
-			date = formatter.parse(dateOfPlacement.toString());
-		} catch (ParseException e) {
-			e.printStackTrace();
+			 return dateOfPlacement.format(dtf);
+		} catch (java.time.format.DateTimeParseException e) {
+		   e.printStackTrace();
 		}
-		 return formatter.format(date);
+		return "";
 	}
 	
 	public Allergy getAllergy() {
@@ -74,6 +73,10 @@ public class Patient {
 	
 	public String getPlacement() {
 		return placement;
+	}
+
+	public LocalDate getBirthdayDate() {
+		return this.birthday;
 	}
 	
 }

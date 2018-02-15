@@ -24,7 +24,6 @@ public class CVCView extends VerticalLayout implements View{
 	public static final String NAME = "CVC";
 	private int cvcID;
 	private Patient p;
-	private CVCForm CVC;
 
 	private Label title = new Label("Scheda Monitoraggio CVC");
 	private Label scorL = new Label("Score di Valutazione");
@@ -32,7 +31,8 @@ public class CVCView extends VerticalLayout implements View{
 	
 	public CVCView(int id) {
 		this.cvcID=id;
-		p = CVC.getPatient();
+		
+		p = dao.CVCDao.getCVC(id).getPatient();
 	
 		setSpacing(true);
 		setMargin(true);
@@ -45,11 +45,12 @@ public class CVCView extends VerticalLayout implements View{
 		}
 		if(dao.RemovalCVCDao.CVCRemovalExist(id)) {
 			this.addComponents(remL, buildRemoval(Integer.valueOf(id).toString()));
+			this.setComponentAlignment(remL, Alignment.MIDDLE_CENTER);
 		}
 		
 		this.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
 		this.setComponentAlignment(scorL, Alignment.MIDDLE_CENTER);
-		this.setComponentAlignment(remL, Alignment.MIDDLE_CENTER);
+		
 	}
 	
 	private Component buildTop() {
@@ -63,12 +64,18 @@ public class CVCView extends VerticalLayout implements View{
 		Button addScore = new Button("Aggiungi Valutazione");
 		lay.addComponents(back, addScore);
 		back.addClickListener(e -> back(p.getFiscalCode()));
+		addScore.addClickListener(e -> goToScore(cvcID));
 		lay.setComponentAlignment(back, Alignment.MIDDLE_LEFT);
 		lay.setComponentAlignment(addScore, Alignment.MIDDLE_RIGHT);
 		pan.setContent(lay);
 		return pan;
 	}
 	
+	private void goToScore(int cvcID) {
+        UI.getCurrent().getNavigator().addView(AddScoreView.NAME, new AddScoreView(String.valueOf(cvcID)));
+		UI.getCurrent().getNavigator().navigateTo(AddScoreView.NAME+"/"+String.valueOf(cvcID));
+	}
+
 	private Component buildPatient(Patient p){
 		VerticalLayout lay = new VerticalLayout();		
 		Panel pan = new Panel();
@@ -78,7 +85,7 @@ public class CVCView extends VerticalLayout implements View{
 		Label birthday = new Label("Data di Nascita: "+p.getBirthday());
 		Label fiscalCode = new Label("Codice Fiscale: "+(p.getFiscalCode()));
 		Label date = new Label("Data Posizionamento: "+p.getDateOfPlacement());
-		Label allergy = new Label("Allergie note: "+p.getAllergy().getA0() +" "+ p.getAllergy().getA1());
+		Label allergy = new Label("Allergie note: "+p.getAllergy().getA0() +" "+ (p.getAllergy().getA1()==null?"":p.getAllergy().getA1()));
 		Label anti = new Label("Terapia anticoagulante: "+ (p.getAllergy().getAT() ? "Sì":"No"));
 		Label position = new Label("Posizionamento in: "+p.getPlacement());
 		Button modify = new Button("Modifica");
@@ -108,12 +115,6 @@ public class CVCView extends VerticalLayout implements View{
 			boolean first = true;
 			int i;
 			for(i=0 ;i <4;i++) {
-			if(first) {
-				c+="";
-			}
-			else {
-				c+=", ";
-				}
 				switch(i) {
 					case 0:
 						if(cvc.getComplication().getHematoma()) {
@@ -126,8 +127,14 @@ public class CVCView extends VerticalLayout implements View{
 						break;
 					case 1:
 						if(cvc.getComplication().getArtery()) {
-							c+="Puntura arteria";
-							first=false;
+							if(!first) {
+								c+=", Puntura arteria";
+							}
+							else {
+								c+="Puntura arteria";
+								first=false;
+							}
+							
 						}
 						else {
 							c+="";
@@ -135,20 +142,22 @@ public class CVCView extends VerticalLayout implements View{
 						break;
 					case 2:
 						if(cvc.getComplication().getPnx()) {
-							c+="PNX (anche a distanza di qualche giorno)";
-							first=false;
+							if(!first) {
+								c+=", PNX (anche a distanza di qualche giorno)";
+							}
+							else {
+								c+="PNX (anche a distanza di qualche giorno)";
+								first=false;								
+							}
+
 						}
 						else {
 							c+="";
 						}
 						break;
+						
 					case 3:
-						if(cvc.getComplication().getOtherC().equals("")) {
-							c+="";
-						}
-						else {
-							c+=cvc.getComplication().getOtherC();
-						}
+						c+=(cvc.getComplication().getOtherC()==null?"":", "+cvc.getComplication().getOtherC());
 						break;
 				}
 			}
@@ -159,9 +168,9 @@ public class CVCView extends VerticalLayout implements View{
 		}
 		String cT="";
 		if(cvc.getType().equalsIgnoreCase("cicc")||cvc.getType().equalsIgnoreCase("picc")||cvc.getType().equalsIgnoreCase("ficc")) {
-			cT+=cvc.getTunneled()+" "+cvc.getUncuffed();
+			cT+=(cvc.getTunneled()?"Tunellizzato":"")+(cvc.getUncuffed()?", Cuffiato":"");
 		}
-		Label pres = new Label("Tipologia di Presidio: "+cvc.getType()+" "+cT);
+		Label pres = new Label("Tipologia di Presidio: "+cvc.getType().toUpperCase()+" "+cT);
 		
 		Label ins = new Label("Sito Inserimento: "+cvc.getInsertion().getInsertionSite()+" "+(cvc.getInsertion().getInsertionSide()?"DX":"SX"));
 		Label fiss = new Label("Fissaggio: "+cvc.getFastening());
@@ -175,7 +184,6 @@ public class CVCView extends VerticalLayout implements View{
 		Label sign = new Label("Firma: "+cvc.getSign());
 		Label closed = new Label(dao.RemovalCVCDao.CVCRemovalExist(cvcID)?"Chiuso":"");
 		
-		//TO ADD COMPONENTS
 		lay.addComponents(insM, insD, eco, rx, compl, pres, ins, fiss, tip, way, med, dest, lum, french, vein, sign, closed);
 		
 		pan.setContent(lay);
@@ -226,7 +234,7 @@ public class CVCView extends VerticalLayout implements View{
 	@Override
 	public void enter(ViewChangeEvent event) {
 		System.out.println(event.getParameters());
-		UI.getCurrent().setContent(new CVCView(Integer.valueOf(event.getParameters().toString()).intValue()));
+		UI.getCurrent().setContent(new CVCView(Integer.valueOf((event.getParameters())).intValue()));
 	}
 	
 	

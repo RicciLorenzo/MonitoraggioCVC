@@ -123,7 +123,7 @@ public class AddCVCView extends FormLayout implements View{
             	else {
             		compl = new Complication(false);
             	}
-            	Medication med = new Medication((med1.getValue().equalsIgnoreCase("Clorexidina alcolica")?true:false), (med2.getValue().equalsIgnoreCase("Iodio")?true:false), glue.getValue(), biop.getValue());
+            	Medication med = new Medication((med1.getValue().equalsIgnoreCase("Clorexidina alcolica")), (med2.getValue().equalsIgnoreCase("Iodio")), glue.getValue(), biop.getValue());
             	String fix = "";
             	if(fis.getValue().equalsIgnoreCase("altro")) {
             		fix=otherFis.getValue();
@@ -216,6 +216,12 @@ public class AddCVCView extends FormLayout implements View{
 
 	private void enableComp(boolean state) {
 		if(state) {
+			ema.setEnabled(true);
+			punct.setEnabled(true);
+			pnx.setEnabled(true);
+			otherCompC.setEnabled(true);
+		}
+		else {
 			ema.setEnabled(false);
 			ema.clear();
 			punct.setEnabled(false);
@@ -224,12 +230,6 @@ public class AddCVCView extends FormLayout implements View{
 			pnx.clear();
 			otherCompC.setEnabled(false);
 			otherCompC.clear();
-		}
-		else {
-			ema.setEnabled(true);
-			punct.setEnabled(true);
-			pnx.setEnabled(true);
-			otherCompC.setEnabled(true);
 		}
 	}
 	

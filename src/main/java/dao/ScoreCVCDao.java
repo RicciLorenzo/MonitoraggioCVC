@@ -32,7 +32,7 @@ public class ScoreCVCDao {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			String sql = "INSERT INTO "+tableName+"(id_cvc, date_valutation, score, wash, eparinizz, sost_infusive, sostitution_medication, medication_1, medication_2, glue, biopatch, "
-					+ "difficulty_infusion, difficulty_aspiration, suspected_infection, obstruction, cvc_blood_culture, sign) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "difficulty_infusion, difficulty_aspiration, suspected_infection, obstruction, cvc_blood_culture, sign) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			try (PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
 			
@@ -56,7 +56,7 @@ public class ScoreCVCDao {
 				pst.setString(16, score.getCvcBlood());
 				pst.setString(17, score.getSign());
 
-			return pst.executeUpdate(sql)!=0 ? true:false;	
+			return pst.executeUpdate()!=0 ? true:false;	
 			
 			}
 			catch (SQLException e) {
@@ -139,7 +139,7 @@ public class ScoreCVCDao {
 			st.executeQuery(sql);
 				
 			ResultSet rs = st.getResultSet();
-
+			rs.next();
 			res = new ScoreForm(rs.getInt("id_score"), rs.getDate("date_valutation").toLocalDate(), rs.getInt("score"), rs.getBoolean("wash"),	
 									rs.getBoolean("eparinizz"), rs.getBoolean("sost_infusive"), rs.getString("sostitution_medication"),
 									new Medication((rs.getString("medication_1").equals("clorexidina")), (rs.getString("medication_2").equals("iodio")), rs.getBoolean("glue"), rs.getBoolean("biopatch")),

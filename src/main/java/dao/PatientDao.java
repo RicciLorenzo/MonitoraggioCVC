@@ -69,7 +69,7 @@ public class PatientDao {
 			
 			try (Statement st = con.createStatement()) {
 				
-				String query = "SELECT * FROM "+tableName+" WHERE username ILIKE '"+id+"'";
+				String query = "SELECT * FROM "+tableName+" WHERE fiscal_code ILIKE '"+id+"'";
 				System.out.println(query);
 				st.executeQuery(query);
 				ResultSet rs = st.getResultSet();

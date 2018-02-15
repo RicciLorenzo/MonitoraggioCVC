@@ -26,15 +26,7 @@ import model.ScoreForm;
 
 public class AddScoreView extends FormLayout implements View{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/* 
-	 * TO USE
-	 * The options are normally laid out vertically.
-	 * You can switch to horizontal layout by using the style name ValoTheme.OPTIONGROUP_HORIZONTAL with addStyleName().
-	 * */ 
+	public static final String NAME = "ADD_SCORE";
 	private String cvcId;
 	private Label title = new Label("Aggingi valutazione CVC");
 	private DateField date = new DateField("Data", LocalDate.now());

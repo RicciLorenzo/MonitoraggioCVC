@@ -67,17 +67,17 @@ public class CVCDao {
 		
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){	
 	
-		String sql = "INSERT INTO "+tableName+"(id_cvc, patient_label, lumi_number, french, typology_structure, tunneled, uncuffed, insertion_mode, difficulty_insertion, ecoguided_positioning,"
+		String sql = "INSERT INTO "+tableName+" (id_cvc, patient_label, lumi_number, french, typology_structure, tunneled, uncuffed, insertion_mode, difficulty_insertion, ecoguided_positioning,"
 				+ " chest_rx, complication_bool, hematoma, artery_puncture, pnx, complication_other, insertion_site, insertion_site_side, vein_diameter, tip, n_way, medication1, medication2, glue, biopatch, destination_of_patient, fastening, sign) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			try (PreparedStatement pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			
+				System.out.println(pst);
 				pst.setInt(1, cvc.getId());
 				pst.setString(2, cvc.getPatient().getFiscalCode());
 				pst.setInt(3, cvc.getLumi());
 				pst.setInt(4, cvc.getFrench());
-				pst.setString(5, cvc.getType());
+				pst.setString(5, cvc.getType().toLowerCase());
 				pst.setBoolean(6, cvc.getTunneled());
 				pst.setBoolean(7, cvc.getUncuffed());
 				pst.setBoolean(8, cvc.getInsertion().getInsertionMode());
@@ -89,8 +89,8 @@ public class CVCDao {
 				pst.setBoolean(14, cvc.getComplication().getArtery());
 				pst.setBoolean(15, cvc.getComplication().getPnx());
 				pst.setString(16, cvc.getComplication().getOtherC());
-				pst.setBoolean(17, cvc.getInsertion().getInsertionSide());
-				pst.setString(18, cvc.getInsertion().getInsertionSite());
+				pst.setString(17, cvc.getInsertion().getInsertionSite());
+				pst.setBoolean(18, cvc.getInsertion().getInsertionSide());
 				pst.setFloat(19, cvc.getVeinDiameter());
 				pst.setBoolean(20, cvc.getTip());
 				pst.setInt(21, cvc.getWay());
@@ -99,9 +99,10 @@ public class CVCDao {
 				pst.setBoolean(24, cvc.getMedication().getGlue());
 				pst.setBoolean(25, cvc.getMedication().getBioptach());
 				pst.setString(26, cvc.getDestination());
-				pst.setString(27, cvc.getSign());
+				pst.setString(27, cvc.getFastening());
+				pst.setString(28, cvc.getSign());
 				
-			return pst.executeUpdate(sql)!=0 ? true:false;	
+			return pst.executeUpdate()!=0 ? true:false;	
 			
 			}
 			catch (SQLException e) {
@@ -130,9 +131,10 @@ public class CVCDao {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			String sql = "SELECT * FROM "+tableName+" WHERE id_CVC ILIKE '"+id+"'";
+			String sql = "SELECT * FROM "+tableName+" WHERE id_cvc = "+id+"";
 			st.executeQuery(sql);
 			ResultSet rs = st.getResultSet();
+			rs.next();
 			//dx true, sx false
 			model.Patient p = dao.PatientDao.getPatient(rs.getString("patient_label"));
 			model.Insertion ins = new model.Insertion(rs.getBoolean("insertion_mode"), rs.getBoolean("difficulty_insertion"), rs.getString("insertion_site"), rs.getBoolean("insertion_site_side"));
@@ -181,11 +183,11 @@ public class CVCDao {
 			while(rs.next()) {
 			int idCVC = rs.getInt("id_cvc");
 			String patientLabel=rs.getString("patient_label");
-			boolean side= rs.getBoolean("insertion_site_site");
+			boolean side= rs.getBoolean("insertion_site_side");
 			String insertion=rs.getString("insertion_site")+(side?" dx":" sx");
 			//dx true, sx false
 			model.Patient p = dao.PatientDao.getPatient(patientLabel);
-			CVCPreview cvcP = new CVCPreview(idCVC, p.getName(), p.getSurname(), LocalDate.parse(p.getBirthday()), patientLabel, insertion, dao.RemovalCVCDao.CVCRemovalExist(idCVC) );
+			CVCPreview cvcP = new CVCPreview(idCVC, p.getName(), p.getSurname(), p.getBirthdayDate(), patientLabel, insertion, dao.RemovalCVCDao.CVCRemovalExist(idCVC) );
 			res.add(cvcP);
 				}
 			}
