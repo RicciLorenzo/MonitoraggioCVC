@@ -21,6 +21,7 @@ import model.RemovalCVC;
 
 public class AddRemovalCVCView extends FormLayout implements View{
 	
+	public static final String NAME = "REMOVE_CVC";
 	private String id;
 	private DateField dateRemoval = new DateField("Data rimozione", LocalDate.now());
 	private RadioButtonGroup<String> motivation = new RadioButtonGroup<>("Motivazione", Arrays.asList("Dislocazione", "Sospetta infezione", "Infezione da CVC", "Autorimozione", "Difficoltà aspirazione", "Sostituzione", "Decesso", "Altro"));

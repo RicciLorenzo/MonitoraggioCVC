@@ -25,7 +25,7 @@ import model.Patient;
 
 public class AddCVCView extends FormLayout implements View{
 
-	public final static String Name = "ADD_CVC";
+	public final static String NAME = "ADD_CVC";
 	private Label title = new Label("Aggiungi CVC");
 	private TextField fc = new TextField("Codice Fiscale Paziente");
 	private RadioButtonGroup<String> insertionM = new RadioButtonGroup<>("Modalità Inserimento", Arrays.asList("Urgente","Programmato"));

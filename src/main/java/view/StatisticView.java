@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -26,9 +28,12 @@ public class StatisticView extends VerticalLayout implements View {
 	
 	public final static String NAME = "STATISTIC_VIEW";
 	private static LocalDate[] dates = buildLastDay();
+	private Button back = new Button("Indietro");
 	
 	public StatisticView() {
-			this.addComponents(getChartInsM());
+			back.addClickListener(e -> UI.getCurrent().getNavigator().navigateTo(""));
+			this.addComponents(back, getChartInsM());
+			this.setComponentAlignment(back, Alignment.TOP_RIGHT);
 			
 	}
 	

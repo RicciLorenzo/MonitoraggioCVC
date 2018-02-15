@@ -129,8 +129,8 @@ public class AddPatientView extends FormLayout implements View{
             				Notification notif = new Notification("PAZIENTE SALVATO", Notification.Type.TRAY_NOTIFICATION);
             				notif.setDelayMsec(1000);//salvato con successo
             				notif.show(Page.getCurrent());
-            				UI.getCurrent().getNavigator().addView(AddCVCView.Name, AddCVCView.class);
-            				UI.getCurrent().getNavigator().navigateTo(AddCVCView.Name +"/"+fiscalCode.getValue());
+            				UI.getCurrent().getNavigator().addView(AddCVCView.NAME, AddCVCView.class);
+            				UI.getCurrent().getNavigator().navigateTo(AddCVCView.NAME +"/"+fiscalCode.getValue());
             			}
             		else {
             			Notification notif = new Notification("DATI ERRATI, PAZIENTE NON SALVATO", Notification.Type.TRAY_NOTIFICATION);

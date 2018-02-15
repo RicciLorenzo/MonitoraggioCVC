@@ -59,7 +59,7 @@ public class PatientView extends VerticalLayout implements View{
             				UI.getCurrent().getNavigator().navigateTo("");
             			}
             		else {
-            			Notification notif = new Notification("DATI ERRATI, PAZIENTE NON SALVATO", Notification.Type.TRAY_NOTIFICATION);
+            			Notification notif = new Notification("DATI ERRATI, POSIZIONAMENTO NON AGGIORNATO", Notification.Type.TRAY_NOTIFICATION);
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());
             			}

@@ -4,3 +4,4 @@
 *.MF
 *.prefs
 *.properties
+.classpath

@@ -62,15 +62,23 @@ public class CVCView extends VerticalLayout implements View{
 		pan.setSizeFull();
 		Button back = new Button("Indietro");
 		Button addScore = new Button("Aggiungi Valutazione");
-		lay.addComponents(back, addScore);
+		Button addRemove = new Button("Aggiungi Rimozione");
+		lay.addComponents(back, addScore, addRemove);
 		back.addClickListener(e -> back(p.getFiscalCode()));
+		addRemove.addClickListener(e -> goToRemove(cvcID));
 		addScore.addClickListener(e -> goToScore(cvcID));
 		lay.setComponentAlignment(back, Alignment.MIDDLE_LEFT);
 		lay.setComponentAlignment(addScore, Alignment.MIDDLE_RIGHT);
+		lay.setComponentAlignment(addRemove, Alignment.TOP_RIGHT);
 		pan.setContent(lay);
 		return pan;
 	}
 	
+	private void goToRemove(int cvcID) {
+		UI.getCurrent().getNavigator().addView(AddRemovalCVCView.NAME, new AddRemovalCVCView(String.valueOf(cvcID)));
+		UI.getCurrent().getNavigator().navigateTo(AddRemovalCVCView.NAME);
+	}
+
 	private void goToScore(int cvcID) {
         UI.getCurrent().getNavigator().addView(AddScoreView.NAME, new AddScoreView(String.valueOf(cvcID)));
 		UI.getCurrent().getNavigator().navigateTo(AddScoreView.NAME+"/"+String.valueOf(cvcID));
