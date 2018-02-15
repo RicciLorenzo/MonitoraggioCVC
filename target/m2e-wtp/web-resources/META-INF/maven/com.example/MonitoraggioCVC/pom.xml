@@ -44,6 +44,11 @@
 	</dependencyManagement>
 
 	<dependencies>
+	<dependency>
+  			<groupId>at.downdrown.vaadinaddons</groupId>
+   			<artifactId>highchartsapi</artifactId>
+  		    <version>2.2.1-QF</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
