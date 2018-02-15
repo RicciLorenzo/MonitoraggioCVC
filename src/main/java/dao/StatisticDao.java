@@ -62,7 +62,7 @@ public class StatisticDao {
 			rs.next();
 			res[2]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (fastening IS NOT NULL OR fastening IS NOT ILIKE 'griplock' OR fastening IS NOT ILIKE 'statlock' OR fastening IS NOT ILIKE 'securacath' )";
+			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (fastening IS NOT NULL OR fastening NOT ILIKE 'griplock' OR fastening NOT ILIKE 'statlock' OR fastening NOT ILIKE 'securacath' )";
 			
 			st.executeQuery(sql);
 				
@@ -470,7 +470,7 @@ public class StatisticDao {
 			rs.next();
 			res[2]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(complication_other) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (complication_other IS NOT NULL OR complication_other IS NOT ILIKE '')";
+			sql = "SELECT COUNT(complication_other) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (complication_other IS NOT NULL OR complication_other NOT ILIKE '')";
 			
 			st.executeQuery(sql);
 				
