@@ -14,6 +14,7 @@ public class Patient {
 	private String placement;
 	
 	public Patient(String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, boolean aT, String Placement) {
+		System.out.println("cane");
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;
@@ -24,6 +25,7 @@ public class Patient {
 	}
 	
 	public Patient(String fiscalCode, String name, String surname, LocalDate birthday, LocalDate dateOfPlacement, String allergy0, String allergy1, boolean aT, String Placement) {
+		System.out.println("cane");
 		this.fiscalCode = fiscalCode;
 		this.name = name;
 		this.surname = surname;

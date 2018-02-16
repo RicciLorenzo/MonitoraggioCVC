@@ -36,10 +36,14 @@ public class SearchResultView extends VerticalLayout implements View{
 		nores.setVisible(false);
 		setComponentAlignment(back, Alignment.TOP_RIGHT);
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
-		if(name.equals("") || (dao.PatientDao.patientExist(name)))
+		if(name.equals("") || !(dao.PatientDao.patientExist(name)))
 			nores.setVisible(true);
-		this.addComponent(buildPatient(dao.PatientDao.getPatient(name)));
+		boolean first = true;
 		for(CVCPreview cvc: dao.CVCDao.CVCPreview(name)) {
+			if(first) {
+				this.addComponent(buildPatient(dao.PatientDao.getPatient(cvc.getFiscalCode())));
+				first=false;
+			}
 			addComponent(result(cvc));
 		}
 		
