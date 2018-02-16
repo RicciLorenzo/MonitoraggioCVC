@@ -29,6 +29,7 @@ public class SearchView extends VerticalLayout implements View{
 	protected User user = localAuth.getUser();
 	
 	public SearchView() {
+		
 		VerticalLayout contentView = new VerticalLayout();
 		new Navigator(UI.getCurrent(), contentView);
         UI.getCurrent().getNavigator().addView("", SearchView.class);
@@ -57,7 +58,7 @@ public class SearchView extends VerticalLayout implements View{
 		pan.setSizeUndefined();
 		TextField searchPatient = new TextField("Codice Fiscale Paziente");
 		Button searchButton = new Button("Ricerca Paziente");
-		searchButton.addClickListener(event -> doSearch(searchPatient.getValue()));
+		searchButton.addClickListener(event -> doSearch(searchPatient.getValue().trim()));
 		search.addComponents(searchPatient, searchButton);
 		search.setComponentAlignment(searchButton, Alignment.MIDDLE_RIGHT);
 		search.setMargin(true);

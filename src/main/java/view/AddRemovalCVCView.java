@@ -45,7 +45,7 @@ public class AddRemovalCVCView extends FormLayout implements View{
 
             @Override
             public void buttonClick(final ClickEvent event) {
-            	
+            	if(checkFields()) {
         		LocalDate date = dateRemoval.getValue();
         		String mot="";
         		if(motivation.getValue().equalsIgnoreCase("altro")) {
@@ -74,9 +74,22 @@ public class AddRemovalCVCView extends FormLayout implements View{
                 		notif.show(Page.getCurrent());
             			}
             		}
+            	else {
+            		Notification notif = new Notification("DATI MANCANTI", Notification.Type.TRAY_NOTIFICATION);
+            		notif.setDelayMsec(1000);
+            		notif.show(Page.getCurrent());
+            	}
+            }
 			});
 	}
 
+	private boolean checkFields() {
+		if(motivation.getValue().equals("Altro")) {
+			return otherMot.getValue().isEmpty();
+		}
+		return dateRemoval.isEmpty()&&motivation.getValue().isEmpty()&&col.getValue().isEmpty()&&inf.getValue().isEmpty();
+	}
+	
 	private void enableMot(String value) {
 		if(value.equalsIgnoreCase("altro")) {
 			otherMot.setEnabled(true);

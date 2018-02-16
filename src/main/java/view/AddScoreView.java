@@ -30,12 +30,12 @@ public class AddScoreView extends FormLayout implements View{
 	private String cvcId;
 	private Label title = new Label("Aggingi valutazione CVC");
 	private DateField date = new DateField("Data", LocalDate.now());
-	private Label score0 = new Label("Cute sana, integra, senza segni di flogosi");
-	private Label score1 = new Label("Iperemia al punto di uscita del CVC < 1cm con o senza fibrina");
-	private Label score2 = new Label("Iperemia al punto di uscita del CVC compresa tra 1 e 2cm con o senza fibrina");
-	private Label score3 = new Label("Iperemia, secrezioni e/o pus, con o senza fibrina");
-	private Label score4 = new Label("Eritema, tumefazione/indurimento del tratto sottocutaneo del CVC > a 2cm dal sito d'uscita");
-	private Label score5 = new Label("Eritema/necrosi della cute al di sopra della camera del Port o presenza di essudato");
+	private Label score0 = new Label("1 -Cute sana, integra, senza segni di flogosi");
+	private Label score1 = new Label("2 -Iperemia al punto di uscita del CVC < 1cm con o senza fibrina");
+	private Label score2 = new Label("3 -Iperemia al punto di uscita del CVC compresa tra 1 e 2cm con o senza fibrina");
+	private Label score3 = new Label("4 -Iperemia, secrezioni e/o pus, con o senza fibrina");
+	private Label score4 = new Label("5 -Eritema, tumefazione/indurimento del tratto sottocutaneo del CVC > a 2cm dal sito d'uscita");
+	private Label score5 = new Label("6 -Eritema/necrosi della cute al di sopra della camera del Port o presenza di essudato");
 	private RadioButtonGroup<Integer> score = new RadioButtonGroup<>("Score", Arrays.asList(0,1,2,3,4,5));
 	private RadioButtonGroup<String> wash = new RadioButtonGroup<>("Lavaggio", Arrays.asList("Sì","No"));
 	private RadioButtonGroup<String> epa = new RadioButtonGroup<>("Eparinizz.", Arrays.asList("Sì","No"));
@@ -68,6 +68,7 @@ public class AddScoreView extends FormLayout implements View{
 		add.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
+            	if(checkFields()) {
             	int idScore = Math.abs(id.hashCode()^Long.valueOf(System.currentTimeMillis()).hashCode());
         		LocalDate dateS = date.getValue();
         		int point = Integer.valueOf(score.getValue()).intValue();
@@ -102,9 +103,22 @@ public class AddScoreView extends FormLayout implements View{
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());
             			}
+            	}
+            	else {
+            		Notification notif = new Notification("DATI MANCANTI", Notification.Type.TRAY_NOTIFICATION);
+            		notif.setDelayMsec(1000);
+            		notif.show(Page.getCurrent());
+            	}
             		}
 			});
 		
+	}
+	
+	private boolean checkFields() {
+		if(emCVC.getValue().equals("Altro")) {
+			return otherEm.getValue().isEmpty();
+		}
+		return date.isEmpty()&&score.isEmpty()&&wash.isEmpty()&&epa.isEmpty()&&inf.isEmpty()&&sostMed.isEmpty()&&med1.isEmpty()&&med2.isEmpty()&&sign.getValue().isEmpty();
 	}
 
 	private void enableEm(String value) {

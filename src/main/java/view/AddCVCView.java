@@ -41,7 +41,7 @@ public class AddCVCView extends FormLayout implements View{
 	private NativeSelect<String> pres = new NativeSelect<>("Tipologia di Presidio", Arrays.asList("CICC","PICC", "FICC", "Midline", "Minimidline", "Port-A-Cath", "Broviac", "Quinton", "Tesio"));
 	private RadioButtonGroup<String> tunn = new RadioButtonGroup<>("Tunnellizzato", Arrays.asList("Sì","No"));
 	private RadioButtonGroup<String> cuff = new RadioButtonGroup<>("Cuffuiato", Arrays.asList("Sì","No"));
-	private NativeSelect<String> ins = new NativeSelect<String>("Sito Inserimento", Arrays.asList("Succlavia", "Guigulare", "Braccio", "Altro"));
+	private NativeSelect<String> ins = new NativeSelect<String>("Sito Inserimento", Arrays.asList("Succlavia", "Giugulare", "Braccio", "Altro"));
 	private TextField otherIns = new TextField("Specificare Altro");
 	private RadioButtonGroup<String> side = new RadioButtonGroup<>("Lato", Arrays.asList("Dx","Sx"));
 	private NativeSelect<String> fis = new NativeSelect<String>("Fissaggio", Arrays.asList("Griplock", "Statlock", "Securacath", "Punti Sutura", "Altro"));
@@ -65,6 +65,8 @@ public class AddCVCView extends FormLayout implements View{
 	
 	public AddCVCView(){
 		setMargin(true);
+		fc.setEnabled(false);
+		vein.setMaxLength(4);
 		pres.setEmptySelectionAllowed(false);
 		ins.setEmptySelectionAllowed(false);
 		fis.setEmptySelectionAllowed(false);
@@ -72,6 +74,8 @@ public class AddCVCView extends FormLayout implements View{
 		des2.setEmptySelectionAllowed(false);
 		lum.setEmptySelectionAllowed(false);
 		fr.setEmptySelectionAllowed(false);
+		des2.setEnabled(false);	
+		des1.addValueChangeListener(e -> enableDes(des1.getValue()));
 		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
         		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
 	
@@ -102,6 +106,7 @@ public class AddCVCView extends FormLayout implements View{
             @Override
             public void buttonClick(final ClickEvent event) {
             		
+            	if(checkFields()) {
             	Patient p = dao.PatientDao.getPatient(fc.getValue());
             	String insertion="";
             	if(String.valueOf(ins.getValue()).equals("Altro")) {
@@ -139,8 +144,9 @@ public class AddCVCView extends FormLayout implements View{
             		destin=des1.getValue();
             	}
             	
+            	
             	CVCForm cvc= new CVCForm(p, insF, (eco.getValue().equals("DX")?true:false), (rx.getValue().equals("Sì")?true:false), compl, pres.getValue(), (tunn.getValue().equals("Sì")?true:false), (cuff.getValue().equals("Sì")?true:false), med, lum.getValue(), fr.getValue(),
-            			Float.parseFloat(vein.getValue()), (tip.getValue().equals("Aperta")?true:false), Integer.valueOf(way.getValue()).intValue(), fix, destin, sign.getValue());
+            			Float.parseFloat(vein.getValue().replace(',', '.')), (tip.getValue().equals("Aperta")?true:false), Integer.valueOf(way.getValue()).intValue(), fix, destin, sign.getValue());
  	
             		if ( dao.CVCDao.addCVC(cvc) ) {
             				Notification notif = new Notification("SCHEDA SALVATA", Notification.Type.TRAY_NOTIFICATION);
@@ -153,6 +159,14 @@ public class AddCVCView extends FormLayout implements View{
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());
             			}
+            	}
+            	else {
+        			Notification notif = new Notification("DATI MANCANTI", Notification.Type.TRAY_NOTIFICATION);
+            		notif.setDelayMsec(1000);
+            		notif.show(Page.getCurrent());           		
+            	}
+            		
+            		
             		}
 			});		
 		
@@ -161,6 +175,33 @@ public class AddCVCView extends FormLayout implements View{
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 	}
 	
+	private boolean checkFields() {
+		if(otherCompC.getValue()) {
+			return otherCompT.getValue().isEmpty();
+		}
+		if(ins.getValue().equals("Altro")) {
+			return otherIns.getValue().isEmpty();
+		}
+		if(fis.getValue().equals("Altro")) {
+			return otherFis.getValue().isEmpty();
+		}
+		boolean veinCheck=false;
+		if(Float.parseFloat(vein.getValue())>0.00&&Float.parseFloat(vein.getValue())<=9.99)
+			veinCheck=true;
+		
+		return insertionM.isEmpty()&&eco.isEmpty()&&rx.isEmpty()&&pres.isEmpty()&&ins.isEmpty()&&side.isEmpty()&&fis.isEmpty()&&tip.isEmpty()&&way.isEmpty()&&med1.isEmpty()&&med2.isEmpty()&&des1.isEmpty()&&vein.isEmpty()&&veinCheck&&lum.isEmpty()&&fr.isEmpty()&&sign.getValue().isEmpty();
+	}
+	
+	
+	private void enableDes(String value) {
+		if(value.equals("Ospedale")) {
+			des2.setEnabled(true);
+		}
+		else {
+			des2.setEnabled(false);
+			des2.setValue("");
+		}
+	}
 	
 	private void enableFis(String value) {
 		if(value.equalsIgnoreCase("altro")) {

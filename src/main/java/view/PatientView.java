@@ -1,5 +1,7 @@
 package view;
 
+import java.time.LocalDate;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
@@ -25,7 +27,6 @@ public class PatientView extends VerticalLayout implements View{
 	private Label dateOfPlacement;
 	private Label allergy1;
 	private Label allergy2;
-	private Label allergy3;
 	private Label anticoagulant;
 	private TextField placement;
 	private Button save;
@@ -70,7 +71,7 @@ public class PatientView extends VerticalLayout implements View{
 			});
 		
 	}
-
+	
 	@Override
 	public void enter(ViewChangeEvent event) {
 		System.out.println("patient view"+event.getParameters());

@@ -69,7 +69,7 @@ public class LoginView extends VerticalLayout{
             	
             	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
             	
-            	if((localAuth.authenticate(name.getValue(), psw.getValue()))) {
+            	if((localAuth.authenticate(name.getValue().trim(), psw.getValue()))) {
             		if(localAuth.getUser().getType().equalsIgnoreCase("admin")) {
             			goToAddUserView();
             			System.out.println("Login utente admin");

@@ -60,14 +60,18 @@ public class AddPatientView extends FormLayout implements View{
 				anticoagulant, placement, otherP, back, saveCVC);
 		
 		otherP.setEnabled(false);
-		
+		fiscalCode.setMaxLength(16);
 		placement.addValueChangeListener(e -> enableP(placement.getValue()));
 		
+		allergy1.addValueChangeListener(e -> checkAllergy());
+		allergy2.addValueChangeListener(e -> checkAllergy());
+		allergy3.addValueChangeListener(e -> checkAllergy());
 
 		saveCVC.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
             	
+            	if(checkFields()) {
             		Allergy allergy;	
             		if(allergy2.getValue()&&allergy3.getValue()) {
             			allergy = new Allergy("clorexidina", "iodio", anticoagulant.getValue());
@@ -83,12 +87,12 @@ public class AddPatientView extends FormLayout implements View{
             		}
             		String place;
             		if(placement.getValue().toString().equals("ALTRO")) {
-            			place=otherP.getValue();
+            			place=otherP.getValue().trim();
             		}
             		else
             			place=placement.getValue().toString();
             			
-            		if ( dao.PatientDao.addPatient(name.getValue(), surname.getValue(), fiscalCode.getValue(), birthday.getValue(), placementDate.getValue(), allergy, place) || dao.PatientDao.patientExist(fiscalCode.getValue()) ) {
+            		if ( dao.PatientDao.addPatient(name.getValue().trim(), surname.getValue().trim(), fiscalCode.getValue().trim().toUpperCase(), birthday.getValue(), placementDate.getValue(), allergy, place) || dao.PatientDao.patientExist(fiscalCode.getValue()) ) {
             				Notification notif = new Notification("PAZIENTE SALVATO", Notification.Type.TRAY_NOTIFICATION);
             				notif.setDelayMsec(1000);//salvato con successo
             				notif.show(Page.getCurrent());
@@ -100,11 +104,50 @@ public class AddPatientView extends FormLayout implements View{
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());
             			}
+            		} 
+            	else {
+            		Notification notif = new Notification("DATI MANCANTI O ERRATI", Notification.Type.TRAY_NOTIFICATION);
+    				notif.setDelayMsec(1000);//salvato con successo
+    				notif.show(Page.getCurrent());
             		}
+            }
 			});
-		
+	
+	//TODO	
+	//messaggio errore, controllo codice fiscale
+	}
+	
+	private void checkAllergy() {
+		if (allergy1.getValue()) {
+			allergy2.setEnabled(false);
+			allergy2.setValue(false);
+			allergy3.setEnabled(false);
+			allergy3.setValue(false);
+
+		}
+		else {
+			allergy2.setEnabled(true);
+			allergy3.setEnabled(true);
+		}
+	}
+	
+	
+	private boolean checkFields() {	
+		if(birthday.isEmpty())
+			return false;
+		if(birthday.getValue().toString().compareTo(LocalDate.now().toString())>0)
+			return false;
+		if(placementDate.getValue().toString().compareTo(LocalDate.now().toString())>0)
+			return false;
+		if(placement.getValue().equals("ALTRO")) {
+			 return otherP.getValue().isEmpty();
+		}	
+		return (name.getValue().isEmpty()&&surname.getValue().isEmpty()&&fiscalCode.getValue().isEmpty()&&placement.getValue().isEmpty()&&fiscalCode.getValue().matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"));
 
 	}
+	
+	
+	
 	private void enableP(String value) {
 		if(value.equalsIgnoreCase("altro")) {
 			otherP.setEnabled(true);

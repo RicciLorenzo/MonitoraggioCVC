@@ -46,6 +46,7 @@ public class CVCView extends VerticalLayout implements View{
 			}
 		}
 		if(dao.RemovalCVCDao.CVCRemovalExist(id)) {
+			
 			this.addComponents(remL, buildRemoval(Integer.valueOf(id).toString()));
 			this.setComponentAlignment(remL, Alignment.MIDDLE_CENTER);
 		}
@@ -66,6 +67,10 @@ public class CVCView extends VerticalLayout implements View{
 		Button addScore = new Button("Aggiungi Valutazione");
 		Button addRemove = new Button("Aggiungi Rimozione");
 		lay.addComponents(back, addScore, addRemove);
+		if(dao.RemovalCVCDao.CVCRemovalExist(cvcID)) {
+			addScore.setEnabled(false);
+			addRemove.setEnabled(false);
+		}
 		back.addClickListener(e -> back(p.getFiscalCode()));
 		addRemove.addClickListener(e -> goToRemove(cvcID));
 		addScore.addClickListener(e -> goToScore(cvcID));

@@ -25,7 +25,7 @@ public class AddUserView extends VerticalLayout implements View{
 	Label title = new Label("Aggiungi Utente");
 	TextField username= new TextField("Nome Utente");
 	PasswordField password = new PasswordField("Password");
-	PasswordField passwordCheck = new PasswordField("Password");
+	PasswordField passwordCheck = new PasswordField("Conferma Password");
 	TextField name = new TextField("Nome");
 	TextField surname = new TextField("Cognome");
 	NativeSelect<String> type = new NativeSelect<String>("Tipologia Utente", Arrays.asList("Medico", "Operatore", "Infermiere"));
@@ -46,7 +46,7 @@ public class AddUserView extends VerticalLayout implements View{
             @Override
             public void buttonClick(final ClickEvent event) {
 
-            		if (username.isEmpty() || name.isEmpty() || surname.isEmpty() || password.isEmpty()) {
+            		if (checkFields()) {
             			Notification notif = new Notification("DATI MANCANTI", Notification.Type.TRAY_NOTIFICATION);
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());
@@ -70,6 +70,10 @@ public class AddUserView extends VerticalLayout implements View{
 			});
 		
 		
+	}
+	
+	private boolean checkFields() {
+		return username.getValue().isEmpty()&&password.getValue().isEmpty()&&passwordCheck.getValue().isEmpty()&&name.getValue().isEmpty()&&surname.getValue().isEmpty()&&type.getValue().isEmpty();
 	}
 	
 	private void doLogout() {
