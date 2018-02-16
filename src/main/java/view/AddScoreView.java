@@ -68,7 +68,7 @@ public class AddScoreView extends FormLayout implements View{
 		add.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
-            			
+            	int idScore = Math.abs(id.hashCode()^Long.valueOf(System.currentTimeMillis()).hashCode());
         		LocalDate dateS = date.getValue();
         		int point = Integer.valueOf(score.getValue()).intValue();
         		boolean wa = wash.getValue().equalsIgnoreCase("sì")?true:false;
@@ -88,7 +88,8 @@ public class AddScoreView extends FormLayout implements View{
         		}
         		String sig = sign.getValue();
         		//add field requested from medic
-        		ScoreForm scoreDB = new ScoreForm(Integer.valueOf(cvcId).intValue(), dateS, point, wa, ep, set, motMed, med, diffInf.getValue(), diffAsp.getValue(), sospInf.getValue(), obs.getValue(), emo, sig);
+        		
+        		ScoreForm scoreDB = new ScoreForm(idScore, Integer.valueOf(cvcId).intValue(), dateS, point, wa, ep, set, motMed, med, diffInf.getValue(), diffAsp.getValue(), sospInf.getValue(), obs.getValue(), emo, sig);
             	
             		if ( dao.ScoreCVCDao.addScoreCVC(scoreDB)) {
             				Notification notif = new Notification("SCORE SALVATO", Notification.Type.TRAY_NOTIFICATION);
@@ -118,6 +119,7 @@ public class AddScoreView extends FormLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		System.out.println("valore cvc id "+event.getParameters());
 		UI.getCurrent().setContent(new AddScoreView(event.getParameters()));
 		
 	}

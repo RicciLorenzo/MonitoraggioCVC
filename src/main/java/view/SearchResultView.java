@@ -89,12 +89,13 @@ public class SearchResultView extends VerticalLayout implements View{
 	
 	private void goToAddCVC(String fiscalCode) {
 		UI.getCurrent().getNavigator().addView(AddCVCView.NAME, new AddCVCView(fiscalCode));
-		UI.getCurrent().getNavigator().navigateTo(AddCVCView.NAME);
+		UI.getCurrent().getNavigator().navigateTo(AddCVCView.NAME+"/"+fiscalCode);
 	}
 
 	private void goToPatient(Patient p) {
-		UI.getCurrent().getNavigator().addView(PatientView.NAME, new PatientView(p));
-		UI.getCurrent().getNavigator().navigateTo(PatientView.NAME);
+		System.out.println("codeice fiscael"+p.getFiscalCode());
+		UI.getCurrent().getNavigator().addView(PatientView.NAME, new PatientView(p.getFiscalCode()));
+		UI.getCurrent().getNavigator().navigateTo(PatientView.NAME+"/"+p.getFiscalCode());
 	}
 
 	//use model.cvcpreview 

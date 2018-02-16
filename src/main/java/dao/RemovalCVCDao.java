@@ -31,9 +31,10 @@ public class RemovalCVCDao {
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
 			Date sqlDate = java.sql.Date.valueOf(removalCVC.getRemovalDate());
+			
 			String sql = "INSERT INTO "+tableName+"(id_remove, removal_date, motivation, cvc_bacteremia, cvc_tip_culture, closed) VALUES "
-					+ "			("+removalCVC.getId()+", "+sqlDate+", "+removalCVC.getMotivation()+", "+removalCVC.getCVCBact()+", "+removalCVC.getCVCTip()+", true"+")";
-				
+					+ "			("+removalCVC.getId()+", '"+sqlDate+"', '"+removalCVC.getMotivation()+"', "+removalCVC.getCVCBact()+", "+removalCVC.getCVCTip()+", true"+")";
+			System.out.println(sql);
 			return st.executeUpdate(sql)!=0 ? true:false;
 			
 			

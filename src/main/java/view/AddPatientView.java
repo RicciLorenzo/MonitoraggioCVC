@@ -38,7 +38,6 @@ public class AddPatientView extends FormLayout implements View{
 	private NativeSelect<String> placement;
 	private TextField otherP = new TextField("Altro Posizionamento");
 	private Button back = new Button("Annulla");
-	private Button save = new Button("Salva");
 	private Button saveCVC = new Button("Salva e aggiungi CVC");
 	
 	AddPatientView() {
@@ -58,48 +57,12 @@ public class AddPatientView extends FormLayout implements View{
 		setSpacing(true);
 		setSizeFull();
 		addComponents(title, name, surname, fiscalCode, birthday, placementDate, new Label("Allergie"), allergy1, allergy2, allergy3,
-				anticoagulant, placement, otherP, back, save, saveCVC);
+				anticoagulant, placement, otherP, back, saveCVC);
 		
 		otherP.setEnabled(false);
 		
 		placement.addValueChangeListener(e -> enableP(placement.getValue()));
 		
-		save.addClickListener(new ClickListener() {
-            @Override
-            public void buttonClick(final ClickEvent event) {
-            	
-            		Allergy allergy;	
-            		if(allergy2.getValue()&&allergy3.getValue()) {
-            			allergy = new Allergy("clorexidina", "iodio", anticoagulant.getValue());
-            			}
-            		if(allergy2.getValue()) {
-            			allergy = new Allergy("clorexidina", anticoagulant.getValue());
-            		}
-            		if(allergy3.getValue()) {
-            			allergy = new Allergy("iodio", anticoagulant.getValue());
-            		}
-            		else {
-            			allergy = new Allergy("nessuna", anticoagulant.getValue());
-            		}
-            		String place;
-            		if(placement.getValue().toString().equals("ALTRO")) {
-            			place=otherP.getValue();
-            		}
-            		else
-            			place=placement.getValue().toString();
-            			
-            		if ( dao.PatientDao.addPatient(name.getValue(), surname.getValue(), fiscalCode.getValue(), birthday.getValue(), placementDate.getValue(), allergy, place) ) {
-            				Notification notif = new Notification("PAZIENTE SALVATO", Notification.Type.TRAY_NOTIFICATION);
-            				notif.setDelayMsec(1000);//salvato con successo
-            				notif.show(Page.getCurrent());
-            			}
-            		else {
-            			Notification notif = new Notification("DATI ERRATI, PAZIENTE NON SALVATO", Notification.Type.TRAY_NOTIFICATION);
-                		notif.setDelayMsec(1000);
-                		notif.show(Page.getCurrent());
-            			}
-            		}
-			});
 
 		saveCVC.addClickListener(new ClickListener() {
             @Override

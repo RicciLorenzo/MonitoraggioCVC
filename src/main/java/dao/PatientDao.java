@@ -148,12 +148,9 @@ public class PatientDao {
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
 			String sql = "UPDATE "+tableName+" SET placement = '"+place+"' WHERE fiscal_code ILIKE '"+id+"'";
-			
-			st.executeQuery(sql);
-				
-			ResultSet rs = st.getResultSet();
-
-			return rs.first();
+					
+			System.out.println("baggio"+st.executeUpdate(sql));
+			return st.executeUpdate(sql)!=0?true:false;
 			}
 			catch (SQLException e) {
 					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());

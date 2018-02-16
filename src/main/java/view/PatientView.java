@@ -30,7 +30,8 @@ public class PatientView extends VerticalLayout implements View{
 	private TextField placement;
 	private Button save;
 	
-	public PatientView(Patient p) {
+	public PatientView(String code) {
+		Patient p = dao.PatientDao.getPatient(code);
 		name = new Label("Nome: "+p.getName());
 		surname = new Label("Cognome: "+p.getSurname());
 		fiscalCode = new Label("Codice Fiscale: "+p.getFiscalCode());
@@ -40,14 +41,16 @@ public class PatientView extends VerticalLayout implements View{
 			allergy1 = new Label("Nessuna");
 
 		allergy1 = new Label(p.getAllergy().getA0());
-		if(!(p.getAllergy().getA1().isEmpty()))
+		if(!(p.getAllergy().getA1()==null))
 			allergy2 = new Label(p.getAllergy().getA1());
 		
 		anticoagulant = new Label("Terapia anticoagulante: "+(p.getAllergy().getAT()?"Sì":"No"));
 		placement = new TextField("Posizionamento in: ");
 		save = new Button("Salva Modifiche");
-		addComponents(new Label("Modifica Paziente"), name, surname, fiscalCode, birthday, dateOfPlacement, new Label("Allergie:"), allergy1, allergy2, allergy3, anticoagulant, placement, save);
-		
+		this.addComponents(new Label("Modifica Paziente"), name, surname ,fiscalCode, birthday ,dateOfPlacement);
+
+		this.addComponents(new Label("Allergie:"), allergy1,allergy2 ,allergy2);
+		this.addComponents( anticoagulant, placement, save);
 		save.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
@@ -70,8 +73,8 @@ public class PatientView extends VerticalLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		Patient p = dao.PatientDao.getPatient(event.getParameters());
-		UI.getCurrent().setContent(new PatientView(p));
+		System.out.println("patient view"+event.getParameters());
+		UI.getCurrent().setContent(new PatientView(event.getParameters()));
 	}
 	
 	

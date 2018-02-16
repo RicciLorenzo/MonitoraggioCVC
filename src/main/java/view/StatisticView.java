@@ -76,17 +76,17 @@ public class StatisticView extends VerticalLayout implements View {
 	private static LocalDate[] buildLastDay() {
 		LocalDate[] ret = {null,null,null,null,null,null,null,null,null,null,null,null};
 		ret[0]= LocalDate.of(LocalDate.now().getYear(),1,31);
-		ret[1]= LocalDate.of(LocalDate.now().getYear(),1,(LocalDate.now().isLeapYear()?29:28));
-		ret[2]= LocalDate.of(LocalDate.now().getYear(),1,31);
-		ret[3]= LocalDate.of(LocalDate.now().getYear(),1,30);
-		ret[4]= LocalDate.of(LocalDate.now().getYear(),1,31);
-		ret[5]= LocalDate.of(LocalDate.now().getYear(),1,30);
-		ret[6]= LocalDate.of(LocalDate.now().getYear(),1,31);
-		ret[7]= LocalDate.of(LocalDate.now().getYear(),1,31);
-		ret[8]= LocalDate.of(LocalDate.now().getYear(),1,30);
-		ret[9]= LocalDate.of(LocalDate.now().getYear(),1,31);
-		ret[10]= LocalDate.of(LocalDate.now().getYear(),1,30);
-		ret[11]= LocalDate.of(LocalDate.now().getYear(),1,31);
+		ret[1]= LocalDate.of(LocalDate.now().getYear(),2,(LocalDate.now().isLeapYear()?29:28));
+		ret[2]= LocalDate.of(LocalDate.now().getYear(),3,31);
+		ret[3]= LocalDate.of(LocalDate.now().getYear(),4,30);
+		ret[4]= LocalDate.of(LocalDate.now().getYear(),5,31);
+		ret[5]= LocalDate.of(LocalDate.now().getYear(),6,30);
+		ret[6]= LocalDate.of(LocalDate.now().getYear(),7,31);
+		ret[7]= LocalDate.of(LocalDate.now().getYear(),8,31);
+		ret[8]= LocalDate.of(LocalDate.now().getYear(),9,30);
+		ret[9]= LocalDate.of(LocalDate.now().getYear(),10,31);
+		ret[10]= LocalDate.of(LocalDate.now().getYear(),11,30);
+		ret[11]= LocalDate.of(LocalDate.now().getYear(),12,31);
 		return ret;
 	}
 

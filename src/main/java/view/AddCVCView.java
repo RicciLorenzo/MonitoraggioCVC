@@ -139,7 +139,7 @@ public class AddCVCView extends FormLayout implements View{
             		destin=des1.getValue();
             	}
             	
-            	CVCForm cvc= new CVCForm(p, insF, (eco.getValue().equals("DX")?true:false), (rx.getValue().equals("DX")?true:false), compl, pres.getValue(), (tunn.getValue().equals("Sì")?true:false), (cuff.getValue().equals("Sì")?true:false), med, lum.getValue(), fr.getValue(),
+            	CVCForm cvc= new CVCForm(p, insF, (eco.getValue().equals("DX")?true:false), (rx.getValue().equals("Sì")?true:false), compl, pres.getValue(), (tunn.getValue().equals("Sì")?true:false), (cuff.getValue().equals("Sì")?true:false), med, lum.getValue(), fr.getValue(),
             			Float.parseFloat(vein.getValue()), (tip.getValue().equals("Aperta")?true:false), Integer.valueOf(way.getValue()).intValue(), fix, destin, sign.getValue());
  	
             		if ( dao.CVCDao.addCVC(cvc) ) {
@@ -191,9 +191,9 @@ public class AddCVCView extends FormLayout implements View{
 		}
 		else {
 			tunn.setEnabled(false);
-			tunn.clear();
+			tunn.setValue("No");;
 			cuff.setEnabled(false);
-			cuff.clear();
+			cuff.setValue("No");;
 		}
 	}
 

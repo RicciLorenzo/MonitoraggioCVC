@@ -40,8 +40,10 @@ public class CVCView extends VerticalLayout implements View{
 		
 		if(dao.ScoreCVCDao.CVCScoreExist(cvcID)) {
 			ArrayList<ScoreForm> scores = dao.ScoreCVCDao.getScoreCVC(cvcID);
-			for(ScoreForm score: scores)
+			for(ScoreForm score: scores) {
+				System.out.println(score.getDate());
 			this.addComponent(buildScore(score));
+			}
 		}
 		if(dao.RemovalCVCDao.CVCRemovalExist(id)) {
 			this.addComponents(remL, buildRemoval(Integer.valueOf(id).toString()));
@@ -75,8 +77,9 @@ public class CVCView extends VerticalLayout implements View{
 	}
 	
 	private void goToRemove(int cvcID) {
+		System.out.println(String.valueOf(cvcID));
 		UI.getCurrent().getNavigator().addView(AddRemovalCVCView.NAME, new AddRemovalCVCView(String.valueOf(cvcID)));
-		UI.getCurrent().getNavigator().navigateTo(AddRemovalCVCView.NAME);
+		UI.getCurrent().getNavigator().navigateTo(AddRemovalCVCView.NAME+"/"+String.valueOf(cvcID));
 	}
 
 	private void goToScore(int cvcID) {
@@ -201,6 +204,7 @@ public class CVCView extends VerticalLayout implements View{
 	private Component buildScore(ScoreForm score){
 		VerticalLayout lay = new VerticalLayout();
 		Panel pan = new Panel();
+		//System.out.println("data score"+score.getDate());
 		Label date = new Label("Data: "+score.getDate().toString() ); //data score
 		Label scoreN = new Label("Score: "+score.getScore()); //score number
 		Label wash = new Label("Lavaggio: "+(score.getWash()?"Sì":"No")); //lavaggio
@@ -227,7 +231,7 @@ public class CVCView extends VerticalLayout implements View{
 		Label mot = new Label("Motivazione: "+remove.getMotivation());
 		Label tip = new Label("Coltura punta CVC: "+(remove.getCVCTip()?"Sì":"No"));
 		Label bact = new Label("Batteriemia da Catetere correlata: "+(remove.getCVCBact()?"Sì":"No"));
-		Label closed = new Label("Chiuso"+(remove.getClosed()?"Sì":"No"));
+		Label closed = new Label("Chiuso: Sì");
 		
 		lay.addComponents(date, mot, tip, bact, closed);
 		

@@ -1,5 +1,8 @@
 package model;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class CVCForm {
 
 	private int idCVC;
@@ -72,7 +75,7 @@ public class CVCForm {
 	} 
 	
 	public int getId() {
-		return this.idCVC;
+		return (int) Math.abs(this.idCVC^Long.valueOf(System.currentTimeMillis()).hashCode());
 	}
 	
 	public Patient getPatient() {

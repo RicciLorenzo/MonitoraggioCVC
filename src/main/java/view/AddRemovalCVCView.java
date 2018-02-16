@@ -36,7 +36,7 @@ public class AddRemovalCVCView extends FormLayout implements View{
 		setMargin(true);
 		closed.setValue(true);
 		addComponents(dateRemoval, motivation, otherMot, col, inf, closed,add);
-		
+		closed.setEnabled(false);
 		otherMot.setEnabled(false);
 		
 		motivation.addValueChangeListener(e -> enableMot(motivation.getValue()));
@@ -58,6 +58,8 @@ public class AddRemovalCVCView extends FormLayout implements View{
         		boolean colt = col.getValue().equalsIgnoreCase("sì")?true:false;
         		boolean bact = inf.getValue().equalsIgnoreCase("sì")?true:false;
         		boolean clos = closed.getValue();
+        		System.out.println("pane cvane"+Integer.valueOf(id).intValue());
+        		System.out.println(mot);
         		RemovalCVC removal = new RemovalCVC(Integer.valueOf(id).intValue(), date, mot, colt, bact, clos);
             	    			
             		if ( dao.RemovalCVCDao.addRemovalCVC(removal) ) {
@@ -87,7 +89,8 @@ public class AddRemovalCVCView extends FormLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		UI.getCurrent().setContent(new AddRemovalCVCView(event.getParameters()));
+		System.out.println("param"+event.getParameters());
+		UI.getCurrent().setContent(new AddRemovalCVCView(event.getParameters().toString()));
 		
 	}
 	

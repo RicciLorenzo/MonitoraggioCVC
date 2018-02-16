@@ -250,6 +250,7 @@ public class StatisticDao {
 				
 			ResultSet rs = st.getResultSet();
 			rs.next();
+			System.out.println("chest rx"+res[0]+"/n"+sql);
 			res[0]=rs.getInt(1);
 			
 			sql = "SELECT COUNT(chest_rx) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND chest_rx IS FALSE";
