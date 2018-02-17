@@ -239,4 +239,42 @@ public class PatientDao {
 		return false;
 	}
 	
+	
+	public static ArrayList<String> patientCodeNAS(String id) {
+		
+		ArrayList<String> res = new ArrayList<>();
+		System.out.println("Try Database Connection");
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			}
+		
+		
+		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
+			
+			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+			String sql = "SELECT fiscal_code FROM patient WHERE CONCAT(name,' ',surname) ILIKE '"+id+"' OR CONCAT(surname,' ',name) ILIKE '"+id+"'";
+			
+			st.executeQuery(sql);
+				
+			ResultSet rs = st.getResultSet();
+
+			while (rs.next()) {
+				res.add(rs.getString(1));
+				}
+			}
+			catch (SQLException e) {
+					System.out.println("Query error in table: "+tableName+"  "+e.getMessage());
+			}
+
+		} catch (SQLException e) {
+					System.out.println("Connection error to the database check exist"+ e.getMessage());
+				}
+		
+		
+		return res;
+	}
+
+	
 }

@@ -82,6 +82,9 @@ public class AddCVCView extends FormLayout implements View{
 		des2.setEmptySelectionAllowed(false);
 		lum.setEmptySelectionAllowed(false);
 		fr.setEmptySelectionAllowed(false);
+		otherCompT.setMaxLength(30);
+		otherIns.setMaxLength(30);
+		otherFis.setMaxLength(30);
 		sign.setValue(user.getName()+" "+user.getSurname());
 		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns);
 		addComponents(side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);

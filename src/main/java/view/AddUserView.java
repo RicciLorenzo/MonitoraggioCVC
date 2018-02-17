@@ -36,7 +36,9 @@ public class AddUserView extends VerticalLayout implements View{
 		
 		setMargin(true);
 		setSpacing(true);
-		
+		username.setMaxLength(50);
+		name.setMaxLength(30);
+		surname.setMaxLength(30);
 		addComponents(title, username, password, passwordCheck, name, surname, type, save, logout);
 		type.setEmptySelectionAllowed(false);
 		type.setValue("Medico");
@@ -73,6 +75,9 @@ public class AddUserView extends VerticalLayout implements View{
 	}
 	
 	private boolean checkFields() {
+		if(!(username.getValue().trim().matches("[a-zA-Z0-9]*")||name.getValue().matches("[a-zA-Z'0-9òàùèéì ]*")||surname.getValue().matches("[a-zA-Z'0-9òàùèìé ]*")))
+			return false;
+		
 		return username.getValue().isEmpty()&&password.getValue().isEmpty()&&passwordCheck.getValue().isEmpty()&&name.getValue().isEmpty()&&surname.getValue().isEmpty()&&type.getValue().isEmpty();
 	}
 	

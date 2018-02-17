@@ -56,6 +56,9 @@ public class AddPatientView extends FormLayout implements View{
 		setMargin(true);
 		setSpacing(true);
 		setSizeFull();
+		name.setMaxLength(30);
+		surname.setMaxLength(30);
+		otherP.setMaxLength(30);
 		addComponents(title, name, surname, fiscalCode, birthday, placementDate, new Label("Allergie"), allergy1, allergy2, allergy3,
 				anticoagulant, placement, otherP, back, saveCVC);
 		
@@ -141,7 +144,10 @@ public class AddPatientView extends FormLayout implements View{
 			return false;
 		if(placementDate.getValue().toString().compareTo(LocalDate.now().toString())>0)
 			return false;
-			
+		
+		if(!(name.getValue().trim().matches("[a-zA-Z'0-9àòè+ùéì]*")&&surname.getValue().trim().matches("[a-zA-Z'0-9òàùèìé ]*")))
+			return false;
+		
 		if(!placement.isEmpty() && placement.getValue().equals("ALTRO")) {
 			System.out.println("ma rompe il cazzo qua ???");
 			 return otherP.getValue().isEmpty();

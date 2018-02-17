@@ -66,7 +66,7 @@ public class AddScoreView extends FormLayout implements View{
 		sostMed.setEmptySelectionAllowed(false);
 		score.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
 		sign.setValue(user.getName()+" "+user.getSurname());
-		
+		otherEm.setMaxLength(30);
 		addComponents(title,date,score0,score1,score2,score3,score4,score5,score,wash,epa,inf,sostMed,med1,med2,glue,biop,diffInf,diffAsp,sospInf,obs,emCVC,otherEm,sign,add);
 		sign.setEnabled(false);
 		otherEm.setEnabled(false);

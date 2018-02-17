@@ -54,7 +54,7 @@ public class SearchResultView extends VerticalLayout implements View{
 				addComponent(result(cvc));
 			}
 		} 
-		else {
+		else if (!name.contains(" ") ){
 			System.out.println("name per ricerca nome:"+name);
 			for (String fiscalCode: dao.PatientDao.getFiscalFromSName(name)) {
 				System.out.println("path codice nome/cognome"+fiscalCode);
@@ -68,6 +68,23 @@ public class SearchResultView extends VerticalLayout implements View{
 					}
 				
 			}
+		}
+		else {
+			//sql query for name and surname of patient returns arraylist<String> fiscal code
+			//SELECT * FROM patient WHERE CONCAT(name,' ',surname) ILIKE 'mario rossi' OR CONCAT(surname,' ',name) ILIKE 'rossi mario'
+			for (String fiscalCode: dao.PatientDao.patientCodeNAS(name)) {
+				System.out.println("path codice nome+cognome"+fiscalCode);
+				this.addComponent(buildPatient(dao.PatientDao.getPatient(fiscalCode)));
+				for(CVCPreview cvc: dao.CVCDao.CVCPreview(fiscalCode)) {
+					System.out.println("path codice fiscale dopo nome+cognome");
+					
+						
+					
+					addComponent(result(cvc));
+					}
+				
+			}
+		
 		}
 		
 	}
