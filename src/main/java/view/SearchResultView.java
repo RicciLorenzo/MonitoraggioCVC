@@ -174,9 +174,10 @@ public class SearchResultView extends VerticalLayout implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		String code = event.getParameters().trim().replace(' ', '_').replace("'", "''");
 		UI.getCurrent().getNavigator().setErrorView(new SearchResultView(""));
 		System.out.println("ricerca eff???" + event.getParameters());
-		UI.getCurrent().setContent(new SearchResultView(event.getParameters()));
+		UI.getCurrent().setContent(new SearchResultView(code));
 	}
 
 	

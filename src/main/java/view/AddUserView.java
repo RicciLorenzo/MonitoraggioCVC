@@ -56,7 +56,7 @@ public class AddUserView extends VerticalLayout implements View{
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());
             		}
-            		else if(dao.UserDAO.addUser(username.getValue(), Encode.cryptingString(password.getValue()), name.getValue(), surname.getValue(), type.getValue().toString())) {
+            		else if(dao.UserDAO.addUser(username.getValue(), Encode.cryptingString(password.getValue()), name.getValue().replace(' ', '_'), surname.getValue().replace(' ', '_').replace("'","''"), type.getValue().toString())) {
             			Notification notif = new Notification("UTENTE AGGIUNTO", Notification.Type.TRAY_NOTIFICATION);
                 		notif.setDelayMsec(1000);
                 		notif.show(Page.getCurrent());

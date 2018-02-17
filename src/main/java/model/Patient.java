@@ -40,11 +40,11 @@ public class Patient {
 	}
 	
 	public String getName() {
-		return this.name;
+		return this.name.replace('_', ' ');
 	}
 	
 	public String getSurname() {
-		return this.surname;
+		return this.surname.replace('_', ' ');
 	}
 	
 	public String getBirthday() {

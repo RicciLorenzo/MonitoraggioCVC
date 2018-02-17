@@ -92,7 +92,7 @@ public class AddPatientView extends FormLayout implements View{
             		else
             			place=placement.getValue().toString();
             			
-            		if ( dao.PatientDao.addPatient(name.getValue().trim(), surname.getValue().trim(), fiscalCode.getValue().trim().toUpperCase(), birthday.getValue(), placementDate.getValue(), allergy, place) || dao.PatientDao.patientExist(fiscalCode.getValue()) ) {
+            		if ( dao.PatientDao.addPatient(name.getValue().trim().replace(' ', '_'), surname.getValue().trim().replace("'", "''").replace(' ', '_'), fiscalCode.getValue().trim().toUpperCase(), birthday.getValue(), placementDate.getValue(), allergy, place) || dao.PatientDao.patientExist(fiscalCode.getValue()) ) {
             				Notification notif = new Notification("PAZIENTE SALVATO", Notification.Type.TRAY_NOTIFICATION);
             				notif.setDelayMsec(1000);//salvato con successo
             				notif.show(Page.getCurrent());
@@ -146,7 +146,7 @@ public class AddPatientView extends FormLayout implements View{
 			System.out.println("ma rompe il cazzo qua ???");
 			 return otherP.getValue().isEmpty();
 		}	
-		return !(name.getValue().isEmpty()||surname.getValue().isEmpty()||fiscalCode.getValue().isEmpty()||placement.getValue().isEmpty()||fiscalCode.getValue().matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"));
+		return !(name.getValue().isEmpty()||surname.getValue().isEmpty()||fiscalCode.getValue().isEmpty()||placement.getValue().isEmpty()||!(fiscalCode.getValue().matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$")));
 
 	}
 	

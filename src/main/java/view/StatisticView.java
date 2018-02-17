@@ -9,7 +9,9 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -32,7 +34,7 @@ public class StatisticView extends VerticalLayout implements View {
 	private static LocalDate[] dates = buildLastDay();
 	private Button back = new Button("Indietro");
 	private Label date = new Label(LocalDate.now().toString());
-	private Component chartPatient;
+	private Component chartNewPatients;
 	private Component chartInsM;
 	private Component chartDiffI;
 	private Component chartFis;
@@ -42,7 +44,7 @@ public class StatisticView extends VerticalLayout implements View {
 	private Component chartPosE;
 	private Component chartTip;
 	private Component chartWay;
-	private Component chartStruct;
+	private Panel chartStruct;
 
 	
 	
@@ -57,8 +59,10 @@ public class StatisticView extends VerticalLayout implements View {
 			chartPosE = getChartPosE();
 			chartTip = getChartTip();
 			chartWay = getChartWay();
+			chartNewPatients = getChartPatients();
+			chartStruct = getChartStruct();
 			
-			this.addComponents(back, date, chartInsM, chartDiffI, chartPosE, chartRx, chartComp, chartComps, chartFis, chartTip, chartWay);
+			this.addComponents(back, date, chartNewPatients, chartInsM, chartDiffI, chartPosE, chartRx, chartComp, chartComps, chartFis, chartTip, chartWay, chartStruct);
 			this.setComponentAlignment(date, Alignment.TOP_CENTER);
 			this.setComponentAlignment(back, Alignment.TOP_RIGHT);
 			this.setComponentAlignment(chartInsM, Alignment.MIDDLE_CENTER);
@@ -70,6 +74,9 @@ public class StatisticView extends VerticalLayout implements View {
 			this.setComponentAlignment(chartFis, Alignment.MIDDLE_CENTER);
 			this.setComponentAlignment(chartTip, Alignment.MIDDLE_CENTER);
 			this.setComponentAlignment(chartWay, Alignment.MIDDLE_CENTER);
+			this.setComponentAlignment(chartNewPatients, Alignment.MIDDLE_CENTER);
+			this.setComponentAlignment(chartStruct, Alignment.MIDDLE_CENTER);
+			
 
 	}
 	
@@ -150,6 +157,138 @@ public class StatisticView extends VerticalLayout implements View {
 		return chart;
 		
 	}
+	
+	private Panel getChartStruct() {
+		HorizontalLayout hor = new HorizontalLayout();
+		Panel pan = new Panel();
+		Component chart1 = getChartStructures1();
+		Component chart2= getChartStructures2();
+		hor.setMargin(true);
+		hor.setSpacing(true);
+		hor.addComponents(chart1, chart2);
+		hor.setComponentAlignment(chart1, Alignment.MIDDLE_LEFT);
+		hor.setComponentAlignment(chart2, Alignment.MIDDLE_RIGHT);
+		pan.setContent(hor);
+		return pan;
+	}
+	
+	private Component getChartStructures1() {
+		
+		HighChart chart = null;	
+		
+		ChartConfiguration column = new ChartConfiguration();
+		column.setTitle("Statistica Utilizzo Strutture");
+		column.setChartType(ChartType.COLUMN);
+		
+		Axis x = buildAxis();
+		column.setxAxis(x);
+		
+		ColumnChartPlotOptions columnOptions = new ColumnChartPlotOptions();
+		column.setPlotOptions(columnOptions);
+		
+		List<HighChartsData> urgentValues = new ArrayList<>();
+		List<HighChartsData> programmedValues = new ArrayList<>();
+		List<HighChartsData> thirdValues = new ArrayList<>();
+		List<HighChartsData> fourthValues = new ArrayList<>();
+		List<HighChartsData> fifthValues = new ArrayList<>();
+
+		
+		
+		for(LocalDate d : dates) {
+			int[] values = dao.StatisticDao.getStruct(d);
+			
+			urgentValues.add(new IntData(values[0]));
+			programmedValues.add(new IntData(values[1]));
+			thirdValues.add(new IntData(values[2]));
+			fourthValues.add(new IntData(values[3]));
+			fifthValues.add(new IntData(values[4]));
+
+
+		}
+		
+		ColumnChartSeries urgentColumn = new ColumnChartSeries("CICC", urgentValues);
+		ColumnChartSeries programmedColumn = new ColumnChartSeries("PICC", programmedValues);
+		ColumnChartSeries thirdColumn = new ColumnChartSeries("FICC", thirdValues);
+		ColumnChartSeries fourthColumn = new ColumnChartSeries("Midline", fourthValues);
+		ColumnChartSeries fifthColumn = new ColumnChartSeries("Minimidline", fifthValues);
+
+
+
+		
+		column.getSeriesList().add(urgentColumn);
+		column.getSeriesList().add(programmedColumn);
+		column.getSeriesList().add(thirdColumn);
+		column.getSeriesList().add(fourthColumn);
+		column.getSeriesList().add(fifthColumn);
+
+		
+		
+		try {
+			chart = HighChartFactory.renderChart(column);
+		}
+		catch (HighChartsException e){
+			e.printStackTrace();
+		}
+		
+		return chart;
+		
+	}
+	
+	private Component getChartStructures2() {
+		
+		HighChart chart = null;	
+		
+		ChartConfiguration column = new ChartConfiguration();
+		column.setTitle("Statistica Utilizzo Strutture");
+		column.setChartType(ChartType.COLUMN);
+		
+		Axis x = buildAxis();
+		column.setxAxis(x);
+		
+		ColumnChartPlotOptions columnOptions = new ColumnChartPlotOptions();
+		column.setPlotOptions(columnOptions);
+		
+		List<HighChartsData> urgentValues = new ArrayList<>();
+		List<HighChartsData> programmedValues = new ArrayList<>();
+		List<HighChartsData> thirdValues = new ArrayList<>();
+		List<HighChartsData> fourthValues = new ArrayList<>();
+
+		
+		for(LocalDate d : dates) {
+			int[] values = dao.StatisticDao.getStruct(d);
+			
+			urgentValues.add(new IntData(values[5]));
+			programmedValues.add(new IntData(values[6]));
+			thirdValues.add(new IntData(values[7]));
+			fourthValues.add(new IntData(values[8]));
+
+
+		}
+		
+		ColumnChartSeries urgentColumn = new ColumnChartSeries("Port-a-cath", urgentValues);
+		ColumnChartSeries programmedColumn = new ColumnChartSeries("Broviac", programmedValues);
+		ColumnChartSeries thirdColumn = new ColumnChartSeries("Quinton", thirdValues);
+		ColumnChartSeries fourthColumn = new ColumnChartSeries("Tesio", fourthValues);
+
+
+		
+		column.getSeriesList().add(urgentColumn);
+		column.getSeriesList().add(programmedColumn);
+		column.getSeriesList().add(thirdColumn);
+		column.getSeriesList().add(fourthColumn);
+
+		
+		try {
+			chart = HighChartFactory.renderChart(column);
+		}
+		catch (HighChartsException e){
+			e.printStackTrace();
+		}
+		
+		return chart;
+		
+	}
+	
 	
 	private Component getChartInsM() {
 		
@@ -427,6 +566,7 @@ public class StatisticView extends VerticalLayout implements View {
 		List<HighChartsData> programmedValues = new ArrayList<>();
 		List<HighChartsData> thirdValues = new ArrayList<>();
 		List<HighChartsData> fourthValues = new ArrayList<>();
+		List<HighChartsData> fifthValues = new ArrayList<>();
 
 		
 		for(LocalDate d : dates) {
@@ -436,18 +576,24 @@ public class StatisticView extends VerticalLayout implements View {
 			programmedValues.add(new IntData(values[1]));
 			thirdValues.add(new IntData(values[2]));
 			fourthValues.add(new IntData(values[3]));
+			fifthValues.add(new IntData(values[4]));
+
 		}
 		
 		ColumnChartSeries urgentColumn = new ColumnChartSeries("Griplock", urgentValues);
 		ColumnChartSeries programmedColumn = new ColumnChartSeries("Statlock", programmedValues);
 		ColumnChartSeries thirdColumn = new ColumnChartSeries("Securacath", thirdValues);
-		ColumnChartSeries fourthColumn = new ColumnChartSeries("Altro", fourthValues);
+		ColumnChartSeries fourthColumn = new ColumnChartSeries("Punti Sutura", fourthValues);
+		ColumnChartSeries fifthColumn = new ColumnChartSeries("Altro", fifthValues);
+
 
 		
 		column.getSeriesList().add(urgentColumn);
 		column.getSeriesList().add(programmedColumn);
 		column.getSeriesList().add(thirdColumn);
 		column.getSeriesList().add(fourthColumn);
+		column.getSeriesList().add(fifthColumn);
+
 		
 		try {
 			chart = HighChartFactory.renderChart(column);
@@ -499,6 +645,45 @@ public class StatisticView extends VerticalLayout implements View {
 		column.getSeriesList().add(thirdColumn);
 		column.getSeriesList().add(fourthColumn);
 		
+		try {
+			chart = HighChartFactory.renderChart(column);
+		}
+		catch (HighChartsException e){
+			e.printStackTrace();
+		}
+		
+		return chart;
+	}
+	
+	private Component getChartPatients() {
+		
+		HighChart chart = null;	
+		
+		ChartConfiguration column = new ChartConfiguration();
+		column.setTitle("Statistica Nuovi Pazienti");
+		column.setChartType(ChartType.COLUMN);
+		
+		Axis x = buildAxis();
+		column.setxAxis(x);
+		
+		ColumnChartPlotOptions columnOptions = new ColumnChartPlotOptions();
+		column.setPlotOptions(columnOptions);
+		
+		List<HighChartsData> urgentValues = new ArrayList<>();
+
+
+		
+		for(LocalDate d : dates) {
+			
+			urgentValues.add(new IntData(dao.StatisticDao.getNumPatient(d)));
+
+		}
+		
+		ColumnChartSeries urgentColumn = new ColumnChartSeries("Nuovi Pazienti", urgentValues);
+
+		
+		column.getSeriesList().add(urgentColumn);
+
 		try {
 			chart = HighChartFactory.renderChart(column);
 		}

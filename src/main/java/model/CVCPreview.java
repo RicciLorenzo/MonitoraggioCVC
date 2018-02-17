@@ -28,11 +28,11 @@ public class CVCPreview {
 	}
 	
 	public String getName() {
-		return name;
+		return name.replace('_', ' ');
 	}
 	
 	public String getSurname() {
-		return surname;
+		return surname.replace('_', ' ').replace("\'", "'");
 	}
 	
 	public String getBirthday() {

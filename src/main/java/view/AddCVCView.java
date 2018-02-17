@@ -35,7 +35,7 @@ public class AddCVCView extends FormLayout implements View{
 	private User user = localAuth.getUser();
 	
 	private Label title = new Label("Aggiungi CVC");
-	private TextField fc = new TextField("Codice Fiscale Paziente");
+	private Label fc;
 	private RadioButtonGroup<String> insertionM = new RadioButtonGroup<>("Modalità Inserimento", Arrays.asList("Urgente","Programmato"));
 	private CheckBox insertionD = new CheckBox("Difficoltà Inserimento");
 	private RadioButtonGroup<String> eco = new RadioButtonGroup<>("Posizionamento Ecoguidato", Arrays.asList("Sì","No"));
@@ -72,8 +72,8 @@ public class AddCVCView extends FormLayout implements View{
 
 	
 	public AddCVCView(){
+		fc = new Label("");
 		setMargin(true);
-		fc.setEnabled(false);
 		vein.setMaxLength(4);
 		pres.setEmptySelectionAllowed(false);
 		ins.setEmptySelectionAllowed(false);
@@ -82,11 +82,10 @@ public class AddCVCView extends FormLayout implements View{
 		des2.setEmptySelectionAllowed(false);
 		lum.setEmptySelectionAllowed(false);
 		fr.setEmptySelectionAllowed(false);
-		des2.setEnabled(false);	
-		des1.addValueChangeListener(e -> enableDes(des1.getValue()));
-		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns,
-        		side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
-	
+		sign.setValue(user.getName()+" "+user.getSurname());
+		addComponents(title, fc, insertionM, insertionD, eco, rx, complication, ema, punct, pnx, otherCompC, otherCompT, pres, tunn, cuff, ins, otherIns);
+		addComponents(side, fis, otherFis, tip, way, med1, med2, glue, biop, des1, des2, vein, lum, fr, sign,add);
+		sign.setEnabled(false);
 		ema.setEnabled(false);
 		punct.setEnabled(false);
 		pnx.setEnabled(false);
@@ -96,7 +95,7 @@ public class AddCVCView extends FormLayout implements View{
 		complication.addValueChangeListener(e -> enableComp(complication.getValue()));
 		
 		otherCompC.addValueChangeListener(e -> enableOtherComp(otherCompC.getValue()));
-		
+
 		tunn.setEnabled(false);
 		cuff.setEnabled(false);
 		
@@ -115,7 +114,7 @@ public class AddCVCView extends FormLayout implements View{
             public void buttonClick(final ClickEvent event) {
             		
             	if(checkFields()) {
-            	Patient p = dao.PatientDao.getPatient(fc.getValue());
+            	Patient p = dao.PatientDao.getPatient(fc.getValue().replaceAll("Codice Fiscale: ", ""));
             	String insertion="";
             	if(String.valueOf(ins.getValue()).equals("Altro")) {
             		insertion=otherIns.getValue();
@@ -183,6 +182,7 @@ public class AddCVCView extends FormLayout implements View{
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 	}
 	
+
 	private boolean checkFields() {
 		if(otherCompC.getValue()) {
 			return !otherCompT.getValue().isEmpty();
@@ -193,24 +193,20 @@ public class AddCVCView extends FormLayout implements View{
 		if(!fis.isEmpty() && fis.getValue().equals("Altro")) {
 			return !otherFis.getValue().isEmpty();
 		}
+		
 		boolean veinCheck=false;
-		if(Float.parseFloat(vein.getValue())>0.00&&Float.parseFloat(vein.getValue())<=9.99)
+		if(Float.parseFloat(vein.getValue().replace(',', '.'))>0.00&&Float.parseFloat(vein.getValue().replace(',', '.'))<=9.99)
 			veinCheck=true;
 		
-		return !(insertionM.isEmpty()||eco.isEmpty()||rx.isEmpty()||pres.isEmpty()||ins.isEmpty()||side.isEmpty()||fis.isEmpty()||tip.isEmpty()||way.isEmpty()||med1.isEmpty()||med2.isEmpty()||des1.isEmpty()||vein.isEmpty()||veinCheck||lum.isEmpty()||fr.isEmpty()||sign.getValue().isEmpty());
+		if(des1.getValue().equalsIgnoreCase("ospedale")) {
+			return !des2.isEmpty();
+		}
+		
+		return !(insertionM.isEmpty()||eco.isEmpty()||rx.isEmpty()||pres.isEmpty()||ins.isEmpty()||side.isEmpty()||fis.isEmpty()||tip.isEmpty()||way.isEmpty()||med1.isEmpty()||med2.isEmpty()||des1.isEmpty()||vein.isEmpty()||!veinCheck||lum.isEmpty()||fr.isEmpty()||sign.getValue().isEmpty());
 	}
 	
 	
-	private void enableDes(String value) {
-		if(value.equals("Ospedale")) {
-			des2.setEnabled(true);
-		}
-		else {
-			des2.setEnabled(false);
-			des2.setValue("");
-		}
-	}
-	
+
 	private void enableFis(String value) {
 		if(value.equalsIgnoreCase("altro")) {
 			otherFis.setEnabled(true);
@@ -260,7 +256,8 @@ public class AddCVCView extends FormLayout implements View{
 
 	public AddCVCView(String fiscalCode) {
 		this();
-		fc.setValue(fiscalCode);
+		fc.setValue("Codice Fiscale: "+fiscalCode);
+
 		}
 
 	private void enableComp(boolean state) {

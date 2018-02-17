@@ -19,9 +19,9 @@ public class StatisticDao {
 	//for all dates(passed date) is the last day of the month or the current day
 	
 	
-	//griplock, statlock, securacath, other
+	//griplock, statlock, securacath, punti sutura, other
 	public static int[] getFis(LocalDate date) {
-		int[] res = {0,0,0,0};
+		int[] res = {0,0,0,0,0};
 
 		System.out.println("Try Database Connection");
 		try {
@@ -62,13 +62,21 @@ public class StatisticDao {
 			rs.next();
 			res[2]=rs.getInt(1);
 			
-			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (fastening IS NOT NULL OR fastening NOT ILIKE 'griplock' OR fastening NOT ILIKE 'statlock' OR fastening NOT ILIKE 'securacath' )";
+			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND fastening ILIKE 'punti_sutura' ";
 			
 			st.executeQuery(sql);
 				
 			rs = st.getResultSet();
 			rs.next();
 			res[3]=rs.getInt(1);
+			
+			sql = "SELECT COUNT(fastening) FROM "+tableName+" JOIN Patient P ON patient_label=fiscal_code WHERE (P.date_of_placement BETWEEN '"+first+"' AND '"+last+"' ) AND (fastening IS NOT NULL OR fastening NOT ILIKE 'griplock' OR fastening NOT ILIKE 'statlock' OR fastening NOT ILIKE 'securacath' )";
+			
+			st.executeQuery(sql);
+				
+			rs = st.getResultSet();
+			rs.next();
+			res[4]=rs.getInt(1);
 			
 			}
 			catch (SQLException e) {

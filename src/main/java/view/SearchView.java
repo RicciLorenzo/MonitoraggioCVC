@@ -71,6 +71,7 @@ public class SearchView extends VerticalLayout implements View{
 	private void doSearch(String code) {
 		if (code==null)
 			code="";
+		
 		UI.getCurrent().getNavigator().addView(SearchResultView.NAME, new SearchResultView(code));
 		UI.getCurrent().getNavigator().navigateTo(SearchResultView.NAME +"/" + code);
 	}
