@@ -44,15 +44,17 @@ public class SearchResultView extends VerticalLayout implements View{
 		}
 		if(name.matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$")) {
 			System.out.println("path codice fiscale normale");
-		for(CVCPreview cvc: dao.CVCDao.CVCPreview(name)) {
-			if(first) {
-				this.addComponent(buildPatient(dao.PatientDao.getPatient(cvc.getFiscalCode())));
-				first=false;
-			}
-			addComponent(result(cvc));
+			for(CVCPreview cvc: dao.CVCDao.CVCPreview(name)) {
+				System.out.println("ci entro qua cod fisclae");
+				if(first) {
+					this.addComponent(buildPatient(dao.PatientDao.getPatient(cvc.getFiscalCode())));
+					first=false;
+				}
+				addComponent(result(cvc));
 			}
 		} 
 		else {
+			System.out.println("name per ricerca nome:"+name);
 			for (String fiscalCode: dao.PatientDao.getFiscalFromSName(name)) {
 				System.out.println("path codice nome/cognome"+fiscalCode);
 				for(CVCPreview cvc: dao.CVCDao.CVCPreview(fiscalCode)) {

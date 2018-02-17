@@ -178,6 +178,7 @@ public class CVCDao {
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
 			String sql = "SELECT id_cvc, patient_label, insertion_site, insertion_site_side FROM "+tableName+" WHERE patient_label ILIKE '"+id+"'";
+			System.out.println(sql);
 			st.executeQuery(sql);
 			ResultSet rs = st.getResultSet();
 			while(rs.next()) {
