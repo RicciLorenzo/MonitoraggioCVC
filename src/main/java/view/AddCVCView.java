@@ -7,6 +7,9 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+
+import main.Authentication;
+
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
@@ -20,12 +23,17 @@ import model.Complication;
 import model.Insertion;
 import model.Medication;
 import model.Patient;
+import model.User;
 
 @SuppressWarnings("serial")
 
 public class AddCVCView extends FormLayout implements View{
-
+	
 	public final static String NAME = "ADD_CVC";
+	
+	private Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
+	private User user = localAuth.getUser();
+	
 	private Label title = new Label("Aggiungi CVC");
 	private TextField fc = new TextField("Codice Fiscale Paziente");
 	private RadioButtonGroup<String> insertionM = new RadioButtonGroup<>("Modalità Inserimento", Arrays.asList("Urgente","Programmato"));
@@ -177,19 +185,19 @@ public class AddCVCView extends FormLayout implements View{
 	
 	private boolean checkFields() {
 		if(otherCompC.getValue()) {
-			return otherCompT.getValue().isEmpty();
+			return !otherCompT.getValue().isEmpty();
 		}
-		if(ins.getValue().equals("Altro")) {
-			return otherIns.getValue().isEmpty();
+		if(!ins.isEmpty() && ins.getValue().equals("Altro")) {
+			return !otherIns.getValue().isEmpty();
 		}
-		if(fis.getValue().equals("Altro")) {
-			return otherFis.getValue().isEmpty();
+		if(!fis.isEmpty() && fis.getValue().equals("Altro")) {
+			return !otherFis.getValue().isEmpty();
 		}
 		boolean veinCheck=false;
 		if(Float.parseFloat(vein.getValue())>0.00&&Float.parseFloat(vein.getValue())<=9.99)
 			veinCheck=true;
 		
-		return insertionM.isEmpty()&&eco.isEmpty()&&rx.isEmpty()&&pres.isEmpty()&&ins.isEmpty()&&side.isEmpty()&&fis.isEmpty()&&tip.isEmpty()&&way.isEmpty()&&med1.isEmpty()&&med2.isEmpty()&&des1.isEmpty()&&vein.isEmpty()&&veinCheck&&lum.isEmpty()&&fr.isEmpty()&&sign.getValue().isEmpty();
+		return !(insertionM.isEmpty()||eco.isEmpty()||rx.isEmpty()||pres.isEmpty()||ins.isEmpty()||side.isEmpty()||fis.isEmpty()||tip.isEmpty()||way.isEmpty()||med1.isEmpty()||med2.isEmpty()||des1.isEmpty()||vein.isEmpty()||veinCheck||lum.isEmpty()||fr.isEmpty()||sign.getValue().isEmpty());
 	}
 	
 	

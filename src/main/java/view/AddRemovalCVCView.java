@@ -8,6 +8,9 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+
+import main.Authentication;
+
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
@@ -16,12 +19,17 @@ import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import model.RemovalCVC;
+import model.User;
 
 @SuppressWarnings("serial")
 
 public class AddRemovalCVCView extends FormLayout implements View{
 	
 	public static final String NAME = "REMOVE_CVC";
+	
+	private Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
+	private User user = localAuth.getUser();
+	
 	private String id;
 	private DateField dateRemoval = new DateField("Data rimozione", LocalDate.now());
 	private RadioButtonGroup<String> motivation = new RadioButtonGroup<>("Motivazione", Arrays.asList("Dislocazione", "Sospetta infezione", "Infezione da CVC", "Autorimozione", "Difficoltà aspirazione", "Sostituzione", "Decesso", "Altro"));
@@ -84,10 +92,10 @@ public class AddRemovalCVCView extends FormLayout implements View{
 	}
 
 	private boolean checkFields() {
-		if(motivation.getValue().equals("Altro")) {
+		if(!motivation.isEmpty() && motivation.getValue().equals("Altro")) {
 			return otherMot.getValue().isEmpty();
 		}
-		return dateRemoval.isEmpty()&&motivation.getValue().isEmpty()&&col.getValue().isEmpty()&&inf.getValue().isEmpty();
+		return !(dateRemoval.isEmpty()||motivation.getValue().isEmpty()||col.getValue().isEmpty()||inf.getValue().isEmpty());
 	}
 	
 	private void enableMot(String value) {

@@ -113,7 +113,7 @@ public class AddPatientView extends FormLayout implements View{
             }
 			});
 	
-	//TODO	
+	//TODO	GTNCGN01D23M164F
 	//messaggio errore, controllo codice fiscale
 	}
 	
@@ -135,14 +135,18 @@ public class AddPatientView extends FormLayout implements View{
 	private boolean checkFields() {	
 		if(birthday.isEmpty())
 			return false;
+		System.out.println("codeice fiscale giusto ???"+fiscalCode.getValue().matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"));
+		
 		if(birthday.getValue().toString().compareTo(LocalDate.now().toString())>0)
 			return false;
 		if(placementDate.getValue().toString().compareTo(LocalDate.now().toString())>0)
 			return false;
-		if(placement.getValue().equals("ALTRO")) {
+			
+		if(!placement.isEmpty() && placement.getValue().equals("ALTRO")) {
+			System.out.println("ma rompe il cazzo qua ???");
 			 return otherP.getValue().isEmpty();
 		}	
-		return (name.getValue().isEmpty()&&surname.getValue().isEmpty()&&fiscalCode.getValue().isEmpty()&&placement.getValue().isEmpty()&&fiscalCode.getValue().matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"));
+		return !(name.getValue().isEmpty()||surname.getValue().isEmpty()||fiscalCode.getValue().isEmpty()||placement.getValue().isEmpty()||fiscalCode.getValue().matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"));
 
 	}
 	

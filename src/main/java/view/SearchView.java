@@ -24,12 +24,13 @@ public class SearchView extends VerticalLayout implements View{
 	private Button logout = new Button("Logout");
 	private Button addP = new Button("Aggiungi Paziente");
 	private Button stat = new Button("Statistiche");
-	
+
 	private Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
 	protected User user = localAuth.getUser();
 	
 	public SearchView() {
-		
+		Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
+		user = localAuth.getUser();
 		VerticalLayout contentView = new VerticalLayout();
 		new Navigator(UI.getCurrent(), contentView);
         UI.getCurrent().getNavigator().addView("", SearchView.class);

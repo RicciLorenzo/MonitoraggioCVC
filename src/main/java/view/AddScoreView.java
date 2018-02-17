@@ -19,14 +19,20 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
+import main.Authentication;
 import model.Medication;
 import model.ScoreForm;
+import model.User;
 
 @SuppressWarnings("serial")
 
 public class AddScoreView extends FormLayout implements View{
 
 	public static final String NAME = "ADD_SCORE";
+	
+	private Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
+	private User user = localAuth.getUser();
+	
 	private String cvcId;
 	private Label title = new Label("Aggingi valutazione CVC");
 	private DateField date = new DateField("Data", LocalDate.now());
@@ -115,10 +121,10 @@ public class AddScoreView extends FormLayout implements View{
 	}
 	
 	private boolean checkFields() {
-		if(emCVC.getValue().equals("Altro")) {
+		if(!emCVC.isEmpty() && emCVC.getValue().equals("Altro")) {
 			return otherEm.getValue().isEmpty();
 		}
-		return date.isEmpty()&&score.isEmpty()&&wash.isEmpty()&&epa.isEmpty()&&inf.isEmpty()&&sostMed.isEmpty()&&med1.isEmpty()&&med2.isEmpty()&&sign.getValue().isEmpty();
+		return !(date.isEmpty()||score.isEmpty()||wash.isEmpty()||epa.isEmpty()||inf.isEmpty()||sostMed.isEmpty()||med1.isEmpty()||med2.isEmpty()||sign.getValue().isEmpty());
 	}
 
 	private void enableEm(String value) {

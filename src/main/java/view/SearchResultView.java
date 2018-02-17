@@ -28,7 +28,9 @@ public class SearchResultView extends VerticalLayout implements View{
 	
 	
 	public SearchResultView(String name) {
-		
+		if(name.matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$")) {
+			System.out.println("Codice fiscale");
+		}
 		System.out.println(name);
 		setMargin(true);
 		setSpacing(true);
@@ -36,18 +38,37 @@ public class SearchResultView extends VerticalLayout implements View{
 		nores.setVisible(false);
 		setComponentAlignment(back, Alignment.TOP_RIGHT);
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
-		if(name.equals("") || !(dao.PatientDao.patientExist(name)))
-			nores.setVisible(true);
 		boolean first = true;
+		if(name.equals("") || (!(dao.PatientDao.patientExist(name)) && !(dao.PatientDao.patientExistNS(name)))) {
+			nores.setVisible(true);
+		}
+		if(name.matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$")) {
+			System.out.println("path codice fiscale normale");
 		for(CVCPreview cvc: dao.CVCDao.CVCPreview(name)) {
 			if(first) {
 				this.addComponent(buildPatient(dao.PatientDao.getPatient(cvc.getFiscalCode())));
 				first=false;
 			}
 			addComponent(result(cvc));
+			}
+		} 
+		else {
+			for (String fiscalCode: dao.PatientDao.getFiscalFromSName(name)) {
+				System.out.println("path codice nome/cognome"+fiscalCode);
+				for(CVCPreview cvc: dao.CVCDao.CVCPreview(fiscalCode)) {
+					System.out.println("path codice fiscale dopo nome/cognome");
+					if(first) {
+						this.addComponent(buildPatient(dao.PatientDao.getPatient(cvc.getFiscalCode())));
+						first=false;
+					}
+					addComponent(result(cvc));
+					}
+				
+			}
 		}
 		
 	}
+
 	
 	private Component buildPatient(Patient p) {
 		HorizontalLayout hor = new HorizontalLayout();
