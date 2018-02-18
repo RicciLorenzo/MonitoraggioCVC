@@ -79,7 +79,6 @@ public class AddCVCView extends FormLayout implements View{
 		ins.setEmptySelectionAllowed(false);
 		fis.setEmptySelectionAllowed(false);
 		way.setItemCaptionGenerator(item -> item + " " + ((item=="1")?"via":"vie"));
-		des2.setEmptySelectionAllowed(false);
 		lum.setEmptySelectionAllowed(false);
 		fr.setEmptySelectionAllowed(false);
 		otherCompT.setMaxLength(30);

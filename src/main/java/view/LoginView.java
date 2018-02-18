@@ -36,7 +36,6 @@ public class LoginView extends VerticalLayout{
     		
     		addComponent(title);
         title.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
-        
         setComponentAlignment(title, Alignment.TOP_CENTER);
         
         addComponent(name);

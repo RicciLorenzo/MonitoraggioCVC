@@ -1,5 +1,6 @@
 package view;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -61,6 +62,7 @@ public class SearchView extends VerticalLayout implements View{
 		Button searchButton = new Button("Ricerca Paziente");
 		searchButton.addClickListener(event -> doSearch(searchPatient.getValue().trim()));
 		search.addComponents(searchPatient, searchButton);
+		searchButton.setClickShortcut(KeyCode.ENTER);
 		search.setComponentAlignment(searchButton, Alignment.MIDDLE_RIGHT);
 		search.setMargin(true);
 		search.setSpacing(true);
