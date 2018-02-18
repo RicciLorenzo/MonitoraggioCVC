@@ -1,5 +1,6 @@
 package view;
 
+import com.vaadin.annotations.Title;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -18,6 +19,7 @@ import main.MyUI;
 import model.User;
 
 @SuppressWarnings("serial")
+@Title("rombo di merda")
 
 public class SearchView extends VerticalLayout implements View{
 

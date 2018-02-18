@@ -1,6 +1,7 @@
 package view;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
@@ -17,6 +18,8 @@ import com.vaadin.ui.Notification;
 
 @SuppressWarnings("serial")
 @Theme("mytheme")
+
+
 
 public class LoginView extends VerticalLayout{
 	 

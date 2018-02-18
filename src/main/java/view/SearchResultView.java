@@ -1,5 +1,6 @@
 package view;
 
+import com.vaadin.annotations.Title;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
@@ -16,6 +17,7 @@ import model.CVCPreview;
 import model.Patient;
 
 @SuppressWarnings("serial")
+
 
 public class SearchResultView extends VerticalLayout implements View{
 
