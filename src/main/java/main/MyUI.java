@@ -12,16 +12,11 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
-
 import model.User;
-import view.AddCVCView;
-import view.AddPatientView;
-import view.AddRemovalCVCView;
-import view.AddScoreView;
 import view.AddUserView;
-import view.CVCView;
 import view.LoginView;
 import view.SearchView;
+
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -67,8 +62,8 @@ public class MyUI extends UI {
     User user = localAuth.getUser();
     	Page.getCurrent().setTitle("CVC");
     	
-    	setContent(new LoginView());
-    /*
+    	//setContent(new LoginView());
+    
     	if(user==null) {
     		setContent(new LoginView());
     		}
@@ -80,7 +75,7 @@ public class MyUI extends UI {
     		setContent(new SearchView()); 
     		System.out.println("view di ricerca");  		
     	}
-   */
+   
     }
     
  
