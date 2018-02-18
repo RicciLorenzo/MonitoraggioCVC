@@ -198,10 +198,16 @@ public class AddCVCView extends FormLayout implements View{
 		}
 		
 		boolean veinCheck=false;
-		if(Float.parseFloat(vein.getValue().replace(',', '.'))>0.00&&Float.parseFloat(vein.getValue().replace(',', '.'))<=9.99)
+		if(vein.isEmpty()) {
+			return false;
+		}
+		
+		else if(Float.parseFloat(vein.getValue().replace(',', '.'))>0.00&&Float.parseFloat(vein.getValue().replace(',', '.'))<=9.99)
 			veinCheck=true;
 		
-		if(des1.getValue().equalsIgnoreCase("ospedale")) {
+		if(des1.isEmpty())
+			return false;
+		else if(des1.getValue().equalsIgnoreCase("ospedale")) {
 			return !des2.isEmpty();
 		}
 		

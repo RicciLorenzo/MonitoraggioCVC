@@ -39,7 +39,7 @@ public class SearchResultView extends VerticalLayout implements View{
 		setComponentAlignment(back, Alignment.TOP_RIGHT);
 		back.addClickListener(event -> UI.getCurrent().getNavigator().navigateTo(""));
 		boolean first = true;
-		if(name.equals("") || (!(dao.PatientDao.patientExist(name)) && !(dao.PatientDao.patientExistNS(name)))) {
+		if(name.equals("") || (!(dao.PatientDao.patientExist(name)) && !(dao.PatientDao.patientExistNS(name)) && !(dao.PatientDao.patientExistNAS(name)))) {
 			nores.setVisible(true);
 		}
 		if(name.matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$")) {
@@ -54,11 +54,14 @@ public class SearchResultView extends VerticalLayout implements View{
 				addComponent(result(cvc));
 			}
 		} 
-		else if (!name.contains(" ") ){
+		else if (!dao.PatientDao.patientExistNAS(name)){
 			System.out.println("name per ricerca nome:"+name);
 			for (String fiscalCode: dao.PatientDao.getFiscalFromSName(name)) {
 				System.out.println("path codice nome/cognome"+fiscalCode);
 				this.addComponent(buildPatient(dao.PatientDao.getPatient(fiscalCode)));
+				
+			}
+			for (String fiscalCode: dao.PatientDao.getFiscalFromSName(name)) {
 				for(CVCPreview cvc: dao.CVCDao.CVCPreview(fiscalCode)) {
 					System.out.println("path codice fiscale dopo nome/cognome");
 					
@@ -68,6 +71,7 @@ public class SearchResultView extends VerticalLayout implements View{
 					}
 				
 			}
+			
 		}
 		else {
 			//sql query for name and surname of patient returns arraylist<String> fiscal code
