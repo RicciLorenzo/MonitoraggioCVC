@@ -22,6 +22,7 @@ import model.User;
 public class SearchView extends VerticalLayout implements View{
 
 	private Label title = new Label("Ricerca dei CVC");
+
 	private Button logout = new Button("Logout");
 	private Button addP = new Button("Aggiungi Paziente");
 	private Button stat = new Button("Statistiche");
@@ -34,6 +35,8 @@ public class SearchView extends VerticalLayout implements View{
 		user = localAuth.getUser();
 		VerticalLayout contentView = new VerticalLayout();
 		new Navigator(UI.getCurrent(), contentView);
+		Label auth = new Label("<p>Benvenuto <strong>"+user.getType().toUpperCase()+"</strong> "+user.getName()+"</p>");
+		auth.setContentMode(com.vaadin.shared.ui.ContentMode.HTML);
         UI.getCurrent().getNavigator().addView("", SearchView.class);
         UI.getCurrent().getNavigator().setErrorView(SearchView.class);
         UI.getCurrent().getNavigator().addView(StatisticView.NAME, StatisticView.class);
@@ -47,8 +50,9 @@ public class SearchView extends VerticalLayout implements View{
 		addP.addClickListener(event -> addCVC());
 		
 		Component search = search();
-		addComponents(logout, title, search, addP, stat);
+		addComponents(auth, logout, title, search, addP, stat);
 		setComponentAlignment(logout, Alignment.TOP_RIGHT);
+		setComponentAlignment(auth, Alignment.TOP_RIGHT);
 		setMargin(true);
 		setSpacing(true);
 	}
@@ -58,7 +62,8 @@ public class SearchView extends VerticalLayout implements View{
 		search.setSizeUndefined();
 		Panel pan = new Panel();
 		pan.setSizeUndefined();
-		TextField searchPatient = new TextField("Codice Fiscale Paziente");
+		TextField searchPatient = new TextField("Nome, Cognome o Codice Fiscale Paziente");
+		searchPatient.setPlaceholder("Nome, Cognome o CF");
 		Button searchButton = new Button("Ricerca Paziente");
 		searchButton.addClickListener(event -> doSearch(searchPatient.getValue().trim()));
 		search.addComponents(searchPatient, searchButton);

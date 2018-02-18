@@ -45,6 +45,7 @@ public class PatientView extends VerticalLayout implements View{
 		
 		anticoagulant = new Label("Terapia anticoagulante: "+(p.getAllergy().getAT()?"Sì":"No"));
 		placement = new TextField("Posizionamento in: ");
+		placement.setPlaceholder("Nuovo Reparto");
 		save = new Button("Salva Modifiche");
 		this.addComponents(new Label("Modifica Paziente"), name, surname ,fiscalCode, birthday ,dateOfPlacement);
 
