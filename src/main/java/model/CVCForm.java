@@ -72,7 +72,7 @@ public class CVCForm {
 	} 
 	
 	public int getId() {
-		return (int) Math.abs(this.idCVC^Long.valueOf(System.currentTimeMillis()).hashCode());
+		return (int) Math.abs(this.patient.getFiscalCode().hashCode()^Long.valueOf(System.currentTimeMillis()).hashCode());
 	}
 	
 	public Patient getPatient() {

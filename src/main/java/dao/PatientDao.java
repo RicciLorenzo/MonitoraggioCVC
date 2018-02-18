@@ -239,6 +239,7 @@ public class PatientDao {
 		return false;
 	}
 	
+	//TODO add check exist NAS 
 	
 	public static ArrayList<String> patientCodeNAS(String id) {
 		
@@ -254,7 +255,7 @@ public class PatientDao {
 		try (Connection con = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)){
 			
 			try (Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-			String sql = "SELECT fiscal_code FROM patient WHERE CONCAT(name,' ',surname) ILIKE '"+id+"' OR CONCAT(surname,' ',name) ILIKE '"+id+"'";
+			String sql = "SELECT fiscal_code FROM patient WHERE CONCAT(name,'_',surname) ILIKE '"+id+"' OR CONCAT(surname,'_',name) ILIKE '"+id+"'";
 			
 			st.executeQuery(sql);
 				

@@ -5,10 +5,12 @@ import java.util.Arrays;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
@@ -36,9 +38,14 @@ public class AddScoreView extends FormLayout implements View{
 	private String cvcId;
 	private Label title = new Label("Aggingi valutazione CVC");
 	private DateField date = new DateField("Data", LocalDate.now());
+	//TODO set image dimension
+	private Image img0 = new Image("descriozione ???0", new ThemeResource("img/score0.png"));
 	private Label score0 = new Label("1 -Cute sana, integra, senza segni di flogosi");
+	private Image img1 = new Image("descriozione ???1", new ThemeResource("img/score1.png"));
 	private Label score1 = new Label("2 -Iperemia al punto di uscita del CVC < 1cm con o senza fibrina");
+	private Image img2 = new Image("descriozione ???2", new ThemeResource("img/score2.png"));
 	private Label score2 = new Label("3 -Iperemia al punto di uscita del CVC compresa tra 1 e 2cm con o senza fibrina");
+	private Image img3 = new Image("descriozione ???3", new ThemeResource("img/score3.png"));
 	private Label score3 = new Label("4 -Iperemia, secrezioni e/o pus, con o senza fibrina");
 	private Label score4 = new Label("5 -Eritema, tumefazione/indurimento del tratto sottocutaneo del CVC > a 2cm dal sito d'uscita");
 	private Label score5 = new Label("6 -Eritema/necrosi della cute al di sopra della camera del Port o presenza di essudato");
@@ -67,7 +74,15 @@ public class AddScoreView extends FormLayout implements View{
 		score.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
 		sign.setValue(user.getName()+" "+user.getSurname());
 		otherEm.setMaxLength(30);
-		addComponents(title,date,score0,score1,score2,score3,score4,score5,score,wash,epa,inf,sostMed,med1,med2,glue,biop,diffInf,diffAsp,sospInf,obs,emCVC,otherEm,sign,add);
+		img0.setHeight(300, Unit.PIXELS);
+		img0.setWidth(300, Unit.PIXELS);
+		img1.setHeight(300, Unit.PIXELS);
+		img1.setWidth(300, Unit.PIXELS);
+		img2.setHeight(300, Unit.PIXELS);
+		img2.setWidth(300, Unit.PIXELS);
+		img3.setHeight(300, Unit.PIXELS);
+		img3.setWidth(300, Unit.PIXELS);
+		addComponents(title,date,img0,score0,img1,score1,img2,score2,img3,score3,score4,score5,score,wash,epa,inf,sostMed,med1,med2,glue,biop,diffInf,diffAsp,sospInf,obs,emCVC,otherEm,sign,add);
 		sign.setEnabled(false);
 		otherEm.setEnabled(false);
 		
