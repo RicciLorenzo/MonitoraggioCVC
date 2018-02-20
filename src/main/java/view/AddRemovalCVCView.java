@@ -34,6 +34,7 @@ public class AddRemovalCVCView extends FormLayout implements View{
 	private Button add = new Button("Aggiungi");
 	
 	public AddRemovalCVCView(String formId) {
+		Page.getCurrent().setTitle("Rimozione Catetere");
 		this.id=formId;
 		setMargin(true);
 		closed.setValue(true);

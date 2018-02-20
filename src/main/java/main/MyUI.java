@@ -59,8 +59,8 @@ public class MyUI extends UI {
     	
     	System.out.println("view???");
     	Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
-    User user = localAuth.getUser();
-    	Page.getCurrent().setTitle("CVC");
+    	User user = localAuth.getUser();
+    	Page.getCurrent().setTitle("Gestore Cateteri - LOGIN");
     	
     	//setContent(new LoginView());
     

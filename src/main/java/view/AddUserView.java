@@ -34,6 +34,7 @@ public class AddUserView extends VerticalLayout implements View{
 	
 	public AddUserView() {
 		
+		Page.getCurrent().setTitle("Aggiungi Utente");
 		setMargin(true);
 		setSpacing(true);
 		username.setMaxLength(50);

@@ -72,6 +72,7 @@ public class AddCVCView extends FormLayout implements View{
 
 	
 	public AddCVCView(){
+		Page.getCurrent().setTitle("Aggiunta Catetere");
 		fc = new Label("");
 		setMargin(true);
 		vein.setMaxLength(4);

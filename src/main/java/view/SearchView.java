@@ -5,6 +5,7 @@ import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -33,6 +34,7 @@ public class SearchView extends VerticalLayout implements View{
 	protected User user = localAuth.getUser();
 	
 	public SearchView() {
+		Page.getCurrent().setTitle("Ricerca paziente");
 		Authentication localAuth = (Authentication) UI.getCurrent().getSession().getAttribute("AUTH");
 		user = localAuth.getUser();
 		VerticalLayout contentView = new VerticalLayout();

@@ -68,6 +68,7 @@ public class AddScoreView extends FormLayout implements View{
 	private Button add = new Button("Aggiungi");
 	
 	public AddScoreView(String id) {
+		Page.getCurrent().setTitle("Aggiungi Valutazione");
 		this.cvcId=id;
 		setMargin(true);
 		sostMed.setEmptySelectionAllowed(false);

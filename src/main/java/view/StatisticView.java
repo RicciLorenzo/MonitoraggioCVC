@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -49,6 +50,7 @@ public class StatisticView extends VerticalLayout implements View {
 	
 	
 	public StatisticView() {
+			Page.getCurrent().setTitle("Statistiche");
 			back.addClickListener(e -> UI.getCurrent().getNavigator().navigateTo(""));
 			chartInsM = getChartInsM();
 			chartDiffI = getChartDiffI();

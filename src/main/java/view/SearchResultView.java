@@ -3,6 +3,7 @@ package view;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -30,6 +31,7 @@ public class SearchResultView extends VerticalLayout implements View{
 	
 	
 	public SearchResultView(String name) {
+		Page.getCurrent().setTitle("Risultati Ricerca");
 		if(name.matches("^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$")) {
 			System.out.println("Codice fiscale");
 		}

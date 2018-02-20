@@ -30,6 +30,7 @@ public class PatientView extends VerticalLayout implements View{
 	private Button save;
 	
 	public PatientView(String code) {
+		Page.getCurrent().setTitle("Paziente");
 		Patient p = dao.PatientDao.getPatient(code);
 		name = new Label("Nome: "+p.getName());
 		surname = new Label("Cognome: "+p.getSurname());

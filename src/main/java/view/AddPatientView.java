@@ -41,7 +41,7 @@ public class AddPatientView extends FormLayout implements View{
 	private Button saveCVC = new Button("Salva e aggiungi CVC");
 	
 	AddPatientView() {
-		
+		Page.getCurrent().setTitle("Aggiunta Paziente");
 		System.out.println("add_patient");
 		placementList.add("UTI");
 		placementList.add("PS");
