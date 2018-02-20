@@ -26,7 +26,7 @@ public class AddRemovalCVCView extends FormLayout implements View{
 	
 	private String id;
 	private DateField dateRemoval = new DateField("Data rimozione", LocalDate.now());
-	private RadioButtonGroup<String> motivation = new RadioButtonGroup<>("Motivazione", Arrays.asList("Dislocazione", "Sospetta infezione", "Infezione da CVC", "Autorimozione", "Difficoltà aspirazione", "Sostituzione", "Decesso", "Altro"));
+	private RadioButtonGroup<String> motivation = new RadioButtonGroup<>("Motivazione", Arrays.asList("Fine trattamento","Dislocazione", "Sospetta infezione", "Infezione da CVC", "Autorimozione", "Difficoltà aspirazione", "Sostituzione", "Decesso", "Altro"));
 	private TextField otherMot = new TextField("Specificare altro");
 	private RadioButtonGroup<String> col = new RadioButtonGroup<>("Coltura Punta CVC", Arrays.asList("Sì", "No"));
 	private RadioButtonGroup<String> inf = new RadioButtonGroup<>("Batteriemia da catetere correlata", Arrays.asList("Sì", "No"));
