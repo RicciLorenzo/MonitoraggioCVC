@@ -23,7 +23,26 @@ public class CVCForm {
 	private int nWay;
 	private String fasteningType;
 
-	
+	/**
+	 * Da usare per creare un oggetto senza id che verrà usato per l'inserimento nel DB
+	 * @param patient 
+	 * @param insertion
+	 * @param eco
+	 * @param chest
+	 * @param complication
+	 * @param type
+	 * @param tunneled
+	 * @param uncuffed
+	 * @param medication
+	 * @param lumi
+	 * @param french
+	 * @param vein
+	 * @param tip
+	 * @param way
+	 * @param fastening
+	 * @param destination
+	 * @param sign
+	 */
 	public CVCForm(Patient patient, Insertion insertion, boolean eco, boolean chest, 
 			Complication complication, String type, boolean tunneled, boolean uncuffed, Medication medication, int lumi, int french, float vein, boolean tip,
 			int way, String fastening, String destination, String sign ) {
@@ -47,6 +66,27 @@ public class CVCForm {
 		this.sign = sign;
 	} 
 	
+	/**
+	 * Da usare per recuperare la scheda cvc dal DB
+	 * @param idCVC
+	 * @param patient
+	 * @param insertion
+	 * @param eco
+	 * @param chest
+	 * @param complication
+	 * @param type
+	 * @param tunneled
+	 * @param uncuffed
+	 * @param medication
+	 * @param lumi
+	 * @param french
+	 * @param vein
+	 * @param tip
+	 * @param way
+	 * @param fastening
+	 * @param destination
+	 * @param sign
+	 */
 	public CVCForm(int idCVC, Patient patient, Insertion insertion, boolean eco, boolean chest, 
 			Complication complication, String type, boolean tunneled, boolean uncuffed, Medication medication, int lumi, int french, float vein, boolean tip,
 			int way, String fastening, String destination, String sign ) {
