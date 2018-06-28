@@ -14,7 +14,7 @@ import model.Patient;
 
 public class PatientDao {
 
-	private final static String jdbcUrl = "jdbc:postgresql://localhost:5432/tesi";
+	private final static String jdbcUrl = "jdbc:postgresql://localhost:5432/postgres";
 	private final static String jdbcUsername = "postgres";
 	private final static String jdbcPassword = "ciao";
 	private final static String tableName = "Patient";
