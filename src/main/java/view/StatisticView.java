@@ -3,6 +3,8 @@ package view;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -12,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -46,7 +49,7 @@ public class StatisticView extends VerticalLayout implements View {
 	private Component chartTip;
 	private Component chartWay;
 	private Panel chartStruct;
-
+	private NativeSelect<Integer> dateSelect;
 	
 	
 	public StatisticView() {
@@ -63,9 +66,15 @@ public class StatisticView extends VerticalLayout implements View {
 			chartWay = getChartWay();
 			chartNewPatients = getChartPatients();
 			chartStruct = getChartStruct();
+			List<Integer> dates= IntStream.range(1900, LocalDate.now().getYear()+100).mapToObj(i->i).collect(Collectors.toList());
+			dateSelect = new NativeSelect<Integer>("Seleziona un anno", dates);
+			dateSelect.setEmptySelectionAllowed(false);
+			dateSelect.setSelectedItem(LocalDate.now().getYear());
 			
-			this.addComponents(back, date, chartNewPatients, chartInsM, chartDiffI, chartPosE, chartRx, chartComp, chartComps, chartFis, chartTip, chartWay, chartStruct);
+			
+			this.addComponents(back, date, dateSelect, chartNewPatients, chartInsM, chartDiffI, chartPosE, chartRx, chartComp, chartComps, chartFis, chartTip, chartWay, chartStruct);
 			this.setComponentAlignment(date, Alignment.TOP_CENTER);
+			this.setComponentAlignment(dateSelect, Alignment.TOP_CENTER);
 			this.setComponentAlignment(back, Alignment.TOP_RIGHT);
 			this.setComponentAlignment(chartInsM, Alignment.MIDDLE_CENTER);
 			this.setComponentAlignment(chartDiffI, Alignment.MIDDLE_CENTER);
